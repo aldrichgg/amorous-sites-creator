@@ -71,12 +71,8 @@ const CreateMemory: React.FC = () => {
     }
   };
   
-  // Componentes para cada etapa
+  // Componentes para cada etapa - Reordered to make plan selection the last step
   const steps = [
-    <PlanSelection 
-      selectedPlan={selectedPlan} 
-      onSelectPlan={setSelectedPlan} 
-    />,
     <SpotifyInput 
       spotifyUrl={spotifyUrl} 
       onSpotifyUrlChange={setSpotifyUrl} 
@@ -115,6 +111,10 @@ const CreateMemory: React.FC = () => {
     <EmailInput 
       email={email} 
       onEmailChange={setEmail} 
+    />,
+    <PlanSelection 
+      selectedPlan={selectedPlan} 
+      onSelectPlan={setSelectedPlan} 
     />
   ];
   
@@ -145,7 +145,7 @@ const CreateMemory: React.FC = () => {
                   <Heart className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold">Memoryiit</h1>
+                  <h1 className="text-xl font-bold">Loveiit</h1>
                   <div className="flex items-center">
                     <div className="w-3 h-3 rounded-full bg-green-500 mr-1"></div>
                     <span className="text-xs text-green-400">Criar memória</span>

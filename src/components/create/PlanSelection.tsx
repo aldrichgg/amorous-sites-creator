@@ -30,8 +30,8 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
     {
       id: 'forever',
       name: 'Para sempre',
-      price: 54,
-      discountedPrice: 27,
+      price: 54.00,
+      discountedPrice: 27.00,
       popular: true,
       features: [
         { name: 'Texto dedicado', included: true },
@@ -48,8 +48,8 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
     {
       id: 'annual',
       name: 'Anual',
-      price: 45,
-      discountedPrice: 22.50,
+      price: 34.00,
+      discountedPrice: 17.00,
       features: [
         { name: 'Texto dedicado', included: true },
         { name: 'Contador em tempo real', included: true },
@@ -122,22 +122,7 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
             <div className="p-6 bg-black/60 backdrop-blur-sm">
               <h3 className="text-2xl font-bold text-white mb-2">{plan.name}</h3>
               
-              <div className="mb-6">
-                {plan.discountedPrice ? (
-                  <div className="flex items-baseline">
-                    <span className="text-gray-400 line-through text-lg">R${plan.price.toFixed(2)}</span>
-                    <span className="text-3xl font-bold text-white ml-2">R${plan.discountedPrice.toFixed(2)}</span>
-                    <span className="text-gray-400 text-sm ml-1">/uma vez</span>
-                  </div>
-                ) : (
-                  <div className="flex items-baseline">
-                    <span className="text-3xl font-bold text-white">R${plan.price.toFixed(2)}</span>
-                    <span className="text-gray-400 text-sm ml-1">/ano</span>
-                  </div>
-                )}
-              </div>
-              
-              <ul className="space-y-3">
+              <ul className="space-y-3 mb-6">
                 {plan.features.map((feature, featureIdx) => (
                   <motion.li 
                     key={featureIdx}
@@ -155,6 +140,23 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
                   </motion.li>
                 ))}
               </ul>
+              
+              <div className="mt-auto">
+                {plan.discountedPrice ? (
+                  <div>
+                    <span className="text-red-500 line-through text-lg font-semibold block">R$ {plan.price.toFixed(2).replace('.', ',')}</span>
+                    <div className="flex items-baseline">
+                      <span className="text-3xl font-bold text-white">R$ {plan.discountedPrice.toFixed(2).replace('.', ',')}</span>
+                      <span className="text-gray-400 text-sm ml-1">{plan.id === 'forever' ? '/uma vez' : '/por ano'}</span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex items-baseline">
+                    <span className="text-3xl font-bold text-white">R$ {plan.price.toFixed(2).replace('.', ',')}</span>
+                    <span className="text-gray-400 text-sm ml-1">{plan.id === 'forever' ? '/uma vez' : '/por ano'}</span>
+                  </div>
+                )}
+              </div>
             </div>
             
             {selectedPlan === plan.id && (
