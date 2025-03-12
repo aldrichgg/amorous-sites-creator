@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Hero from '../components/Hero';
@@ -5,11 +6,16 @@ import Navbar from '../components/Layout/Navbar';
 import Footer from '../components/Layout/Footer';
 import Steps from '../components/Steps';
 import PricingPlans from '../components/PricingPlans';
+import PromoBar from '../components/PromoBar';
+
 const Index = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  return <div className="bg-black min-h-screen text-white">
+  
+  return (
+    <div className="bg-black min-h-screen text-white">
+      <PromoBar />
       <Navbar />
       
       <main>
@@ -112,6 +118,8 @@ const Index = () => {
       </main>
       
       <Footer />
-    </div>;
+    </div>
+  );
 };
+
 export default Index;

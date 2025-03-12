@@ -8,7 +8,7 @@ const PromoBar = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="w-full bg-pink-400 text-white py-2 px-4 text-center text-sm flex items-center justify-center relative animate-pulse-soft">
+    <div className="w-full bg-pink-400 text-white py-2 px-4 text-center text-sm flex items-center justify-center relative">
       <span className="mr-1">♥</span> Dia internacional das mulheres! Memórias temáticas - Todos os planos com 50% de desconto!
       <button 
         onClick={() => setIsVisible(false)}
