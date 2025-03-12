@@ -39,7 +39,7 @@ const PlanCard = ({
           <div className="text-5xl font-bold text-white mb-1">
             R${price.toFixed(2).replace('.', ',')}
           </div>
-          <div className="text-gray-400 text-sm mb-4">Pagamento Anual</div>
+          <div className="text-gray-400 text-sm mb-4">Pagamento Único</div>
           <div className="h-px bg-gray-700 w-full my-6"></div>
         </div>
         
