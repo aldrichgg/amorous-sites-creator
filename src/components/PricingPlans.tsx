@@ -1,15 +1,20 @@
+
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Check } from 'lucide-react';
+import { Check, X } from 'lucide-react';
+import { motion } from 'framer-motion';
+import StarBackground from './StarBackground';
+
 interface PlanProps {
   title: string;
   price: number;
-  features: string[];
+  features: { text: string; included: boolean }[];
   isPopular?: boolean;
   type: 'completo' | 'basico';
   activeTab: string;
   onTabChange: (tab: string) => void;
 }
+
 const PlanCard = ({
   title,
   price,
@@ -20,78 +25,165 @@ const PlanCard = ({
   onTabChange
 }: PlanProps) => {
   const isActive = activeTab === type;
-  return <div className={`bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden transition-all duration-300 ${isActive ? 'transform scale-105 shadow-xl' : 'opacity-80'}`}>
+  
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className={`bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden transition-all duration-300 ${isActive ? 'transform scale-105 shadow-xl' : 'opacity-80'}`}
+    >
       <div className="flex">
-        <button className={`w-1/2 py-3 text-center font-medium transition-colors duration-300 ${activeTab === 'completo' ? 'bg-memblue text-white' : 'bg-gray-800 text-gray-300'}`} onClick={() => onTabChange('completo')}>
+        <button 
+          className={`w-1/2 py-3 text-center font-medium transition-colors duration-300 ${
+            activeTab === 'completo' ? 'bg-memblue text-white' : 'bg-gray-800 text-gray-300'
+          } hover:bg-opacity-90`}
+          onClick={() => onTabChange('completo')}
+        >
           Completo
         </button>
-        <button className={`w-1/2 py-3 text-center font-medium transition-colors duration-300 ${activeTab === 'basico' ? 'bg-memblue text-white' : 'bg-gray-800 text-gray-300'}`} onClick={() => onTabChange('basico')}>
+        <button 
+          className={`w-1/2 py-3 text-center font-medium transition-colors duration-300 ${
+            activeTab === 'basico' ? 'bg-memblue text-white' : 'bg-gray-800 text-gray-300'
+          } hover:bg-opacity-90`}
+          onClick={() => onTabChange('basico')}
+        >
           Básico
         </button>
       </div>
       
       <div className="p-6">
-        {isPopular && <div className="bg-memblue/20 text-memcyan text-xs font-semibold px-3 py-1 rounded-full w-fit mx-auto mb-3">
+        {isPopular && (
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+            className="bg-memblue/20 text-memcyan text-xs font-semibold px-3 py-1 rounded-full w-fit mx-auto mb-3"
+          >
             MAIS POPULAR
-          </div>}
+          </motion.div>
+        )}
         
         <div className="text-center">
-          <div className="text-5xl font-bold text-white mb-1">
+          <motion.div 
+            initial={{ scale: 0.9 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="text-5xl font-bold text-white mb-1"
+          >
             R${price.toFixed(2).replace('.', ',')}
-          </div>
+          </motion.div>
           <div className="text-gray-400 text-sm mb-4">Pagamento Único</div>
           <div className="h-px bg-gray-700 w-full my-6"></div>
         </div>
         
         <ul className="space-y-3 mb-6">
-          {features.map((feature, index) => <li key={index} className="flex items-center text-gray-300">
-              <Check size={18} className="text-memcyan mr-2 shrink-0" />
-              {feature}
-            </li>)}
+          {features.map((feature, index) => (
+            <motion.li 
+              key={index} 
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.1 * index, duration: 0.3 }}
+              className="flex items-center text-gray-300 group"
+            >
+              {feature.included ? (
+                <Check size={18} className="text-memcyan mr-2 group-hover:scale-110 transition-transform duration-200" />
+              ) : (
+                <X size={18} className="text-red-500 mr-2 group-hover:scale-110 transition-transform duration-200" />
+              )}
+              <span className="group-hover:text-white transition-colors duration-200">{feature.text}</span>
+            </motion.li>
+          ))}
         </ul>
         
         <div className="relative">
-          <div className="absolute -inset-0.5 bg-gradient-to-r from-memblue to-memcyan rounded-full blur opacity-75"></div>
-          <Link to="/create" className="relative block w-full text-center bg-gradient-to-r from-memblue to-memcyan hover:from-memblue-dark hover:to-memcyan-dark text-white font-medium rounded-full py-3 px-4 transition-all duration-300">
+          <div className="absolute -inset-0.5 bg-gradient-to-r from-memblue to-memcyan rounded-full blur opacity-75 group-hover:opacity-100 transition-opacity"></div>
+          <Link
+            to="/create"
+            className="relative block w-full text-center bg-gradient-to-r from-memblue to-memcyan hover:from-memblue-dark hover:to-memcyan-dark text-white font-medium rounded-full py-3 px-4 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
+          >
             Começar agora
           </Link>
         </div>
       </div>
-    </div>;
+    </motion.div>
+  );
 };
+
 const PricingPlans = () => {
   const [activeTab, setActiveTab] = useState('completo');
+  
   const plans = {
     completo: {
       title: 'Completo',
       price: 27,
-      features: ['7 fotos', 'Para sempre', 'Selecionar chuva de emoji', 'Selecionar música', 'Contador regressivo', 'Mensagem personalizada', 'Suporte prioritário'],
+      features: [
+        { text: '7 fotos', included: true },
+        { text: 'Para sempre', included: true },
+        { text: 'Selecionar chuva de emoji', included: true },
+        { text: 'Selecionar música', included: true },
+        { text: 'Contador regressivo', included: true },
+        { text: 'Mensagem personalizada', included: true },
+        { text: 'Suporte prioritário', included: true }
+      ],
       isPopular: true
     },
     basico: {
       title: 'Básico',
       price: 17,
-      features: ['3 fotos', 'Duração de um ano', 'Selecionar chuva de emoji', 'Selecionar música', 'Mensagem básica', 'Suporte por email'],
+      features: [
+        { text: '3 fotos', included: true },
+        { text: 'Duração de um ano', included: true },
+        { text: 'Selecionar chuva de emoji', included: false },
+        { text: 'Selecionar música', included: false },
+        { text: 'Contador regressivo', included: true },
+        { text: 'Mensagem básica', included: true },
+        { text: 'Suporte por email', included: true }
+      ],
       isPopular: false
     }
   };
-  return <section className="py-20 px-4 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-black via-memblue/10 to-black pointer-events-none"></div>
+  
+  return (
+    <section className="py-20 px-4 relative overflow-hidden">
+      <StarBackground />
       
       <div className="container mx-auto relative z-10">
-        <div className="text-center mb-16">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
             Nossos <span className="text-gradient">Planos</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
             Escolha o plano ideal para eternizar suas memórias
           </p>
-        </div>
+        </motion.div>
         
-        <div className="max-w-md mx-auto">
-          <PlanCard title={plans[activeTab as keyof typeof plans].title} price={plans[activeTab as keyof typeof plans].price} features={plans[activeTab as keyof typeof plans].features} isPopular={plans[activeTab as keyof typeof plans].isPopular} type={activeTab as 'completo' | 'basico'} activeTab={activeTab} onTabChange={setActiveTab} />
-        </div>
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="max-w-md mx-auto"
+        >
+          <PlanCard 
+            title={plans[activeTab as keyof typeof plans].title} 
+            price={plans[activeTab as keyof typeof plans].price} 
+            features={plans[activeTab as keyof typeof plans].features} 
+            isPopular={plans[activeTab as keyof typeof plans].isPopular} 
+            type={activeTab as 'completo' | 'basico'} 
+            activeTab={activeTab} 
+            onTabChange={setActiveTab} 
+          />
+        </motion.div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default PricingPlans;
