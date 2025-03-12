@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, Music } from 'lucide-react';
+import { ExternalLink, Music, AlertCircle } from 'lucide-react';
 
 interface SpotifyInputProps {
   spotifyUrl: string;
@@ -13,13 +13,20 @@ const SpotifyInput: React.FC<SpotifyInputProps> = ({
   onSpotifyUrlChange
 }) => {
   const [inputValue, setInputValue] = useState(spotifyUrl);
+  const [error, setError] = useState<string | null>(null);
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
+    setError(null);
   };
   
   const handleBlur = () => {
-    onSpotifyUrlChange(inputValue);
+    if (inputValue && !inputValue.includes('spotify.com/track/')) {
+      setError('Por favor, insira um link válido do Spotify (ex: https://open.spotify.com/track/ID)');
+    } else {
+      setError(null);
+      onSpotifyUrlChange(inputValue);
+    }
   };
   
   const handleSpotifyOpen = () => {
@@ -62,8 +69,25 @@ const SpotifyInput: React.FC<SpotifyInputProps> = ({
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder="https://open.spotify.com/track/..."
-            className="w-full pl-10 px-4 py-3 rounded-lg bg-black/60 border border-memblue/30 text-white focus:outline-none focus:ring-2 focus:ring-memcyan transition-all duration-300 placeholder-gray-500"
+            className={`w-full pl-10 px-4 py-3 rounded-lg bg-black/60 border ${error ? 'border-red-500' : 'border-memblue/30'} text-white focus:outline-none focus:ring-2 focus:ring-memcyan transition-all duration-300 placeholder-gray-500`}
           />
+        </div>
+        
+        {error && (
+          <div className="text-red-500 text-sm flex items-center">
+            <AlertCircle className="w-4 h-4 mr-2" />
+            {error}
+          </div>
+        )}
+        
+        <div className="text-gray-400 text-sm bg-black/40 p-3 rounded-lg">
+          <p className="mb-2">Como pegar o link da música:</p>
+          <ol className="list-decimal pl-5 space-y-1">
+            <li>Abra o Spotify e encontre a música desejada</li>
+            <li>Clique com o botão direito na música e selecione "Compartilhar"</li>
+            <li>Selecione "Copiar link"</li>
+            <li>Cole o link aqui</li>
+          </ol>
         </div>
         
         <motion.button

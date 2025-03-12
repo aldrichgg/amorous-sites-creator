@@ -51,6 +51,17 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
     }
   };
 
+  // Extract track ID from Spotify URL
+  const extractSpotifyTrackId = (url: string) => {
+    if (!url) return null;
+    
+    // Try to match patterns like https://open.spotify.com/track/49RRBsYse5dBDRubOhCEkE
+    const match = url.match(/track\/([a-zA-Z0-9]+)/);
+    return match ? match[1] : null;
+  };
+
+  const spotifyTrackId = extractSpotifyTrackId(spotifyUrl);
+
   return (
     <div className="w-full max-w-lg mx-auto mt-8">
       <motion.h3 
@@ -107,8 +118,25 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
             </div>
           )}
           
-          {/* Spotify */}
-          {spotifyUrl && (
+          {/* Spotify Embed */}
+          {spotifyTrackId && (
+            <div className="mb-4">
+              <iframe 
+                title="Spotify Embed"
+                style={{ borderRadius: '12px' }} 
+                src={`https://open.spotify.com/embed/track/${spotifyTrackId}?utm_source=generator`} 
+                width="100%" 
+                height="152" 
+                frameBorder="0" 
+                allowFullScreen 
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                loading="lazy"
+              ></iframe>
+            </div>
+          )}
+          
+          {/* Spotify indication (when URL exists but embed not shown) */}
+          {spotifyUrl && !spotifyTrackId && (
             <div className="flex items-center text-gray-300 text-sm mb-4">
               <Music className="w-4 h-4 mr-2 text-green-500" />
               <span>Música vinculada</span>
