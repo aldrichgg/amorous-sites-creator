@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
@@ -22,10 +21,8 @@ import PromoBar from '../components/PromoBar';
 const CreateMemory: React.FC = () => {
   const navigate = useNavigate();
   
-  // Estado para controlar a etapa atual
   const [currentStep, setCurrentStep] = useState(0);
   
-  // Estados para os dados do formulário
   const [selectedPlan, setSelectedPlan] = useState('forever');
   const [spotifyUrl, setSpotifyUrl] = useState('');
   const [selectedEmoji, setSelectedEmoji] = useState('😊');
@@ -36,16 +33,13 @@ const CreateMemory: React.FC = () => {
   const [pageName, setPageName] = useState('');
   const [email, setEmail] = useState('');
   
-  // Número total de etapas
   const totalSteps = 9;
   
-  // Avançar para a próxima etapa
   const handleNext = () => {
     if (currentStep < totalSteps - 1) {
       setCurrentStep(currentStep + 1);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      // Finalizar o processo
       console.log('Formulário completo:', {
         selectedPlan,
         spotifyUrl,
@@ -58,12 +52,10 @@ const CreateMemory: React.FC = () => {
         email
       });
       
-      // Redirecionar para uma página de confirmação ou pagamento
-      // navigate('/payment');
+      navigate('/payment');
     }
   };
   
-  // Voltar para a etapa anterior
   const handlePrevious = () => {
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
@@ -71,7 +63,6 @@ const CreateMemory: React.FC = () => {
     }
   };
   
-  // Componentes para cada etapa - Reordenados para colocar a seleção de plano por último
   const steps = [
     <PageTitleInput 
       title={pageTitle} 
@@ -118,7 +109,6 @@ const CreateMemory: React.FC = () => {
     />
   ];
   
-  // Efeito para rolar para o topo quando o componente é montado
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -130,7 +120,7 @@ const CreateMemory: React.FC = () => {
       <PromoBar />
       <Navbar />
       
-      <main className="container mx-auto px-4 py-8 relative z-10 pt-40">
+      <main className="container mx-auto px-4 py-8 relative z-10 pt-32">
         <div className="flex items-center justify-center mb-8">
           <motion.div 
             className="bg-gradient-to-r from-memblue to-memcyan p-0.5 rounded-full"
