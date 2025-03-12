@@ -53,17 +53,17 @@ const SpotifyInput: React.FC<SpotifyInputProps> = ({
         transition={{ duration: 0.5, delay: 0.3 }}
       >
         <div className="relative">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <Music className="h-5 w-5 text-memcyan" />
+          </div>
           <input
             type="text"
             value={inputValue}
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder="https://open.spotify.com/track/..."
-            className="w-full px-4 py-3 rounded-lg bg-black/60 border border-memblue/30 text-white focus:outline-none focus:ring-2 focus:ring-memcyan transition-all duration-300 placeholder-gray-500"
+            className="w-full pl-10 px-4 py-3 rounded-lg bg-black/60 border border-memblue/30 text-white focus:outline-none focus:ring-2 focus:ring-memcyan transition-all duration-300 placeholder-gray-500"
           />
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <Music className="h-5 w-5 text-memcyan" />
-          </div>
         </div>
         
         <motion.button

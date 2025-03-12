@@ -1,7 +1,8 @@
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Check, Star, X } from 'lucide-react';
+import { useToast } from "@/hooks/use-toast";
 
 interface PlanFeature {
   name: string;
@@ -26,6 +27,9 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
   selectedPlan, 
   onSelectPlan 
 }) => {
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const { toast } = useToast();
+  
   const plans: Plan[] = [
     {
       id: 'forever',
@@ -63,6 +67,22 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
       ]
     }
   ];
+
+  const handleChoosePlan = () => {
+    setShowPaymentModal(true);
+  };
+
+  const handlePaymentSelection = (method: 'pix' | 'card') => {
+    toast({
+      title: "Método de pagamento selecionado",
+      description: `Você escolheu pagar com ${method === 'pix' ? 'PIX' : 'Cartão de crédito'}`,
+    });
+    setShowPaymentModal(false);
+  };
+
+  const closeModal = () => {
+    setShowPaymentModal(false);
+  };
 
   return (
     <div className="w-full max-w-4xl mx-auto py-4">
@@ -151,23 +171,67 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
         ))}
       </div>
       
-      <div className="mt-8 space-y-3 max-w-lg mx-auto">
+      <div className="mt-8 max-w-lg mx-auto">
         <motion.button
+          onClick={handleChoosePlan}
           className="w-full bg-gradient-to-r from-memblue to-memcyan text-white font-medium py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center hover:opacity-90"
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >
-          PIX ou Cartão (Apenas Brasil)
-        </motion.button>
-        
-        <motion.button
-          className="w-full bg-white/10 hover:bg-white/20 text-white font-medium py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          Cartão de crédito
+          Escolher este plano
         </motion.button>
       </div>
+      
+      {/* Payment Modal */}
+      <AnimatePresence>
+        {showPaymentModal && (
+          <motion.div
+            className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeModal}
+          >
+            <motion.div
+              className="bg-black/90 border border-white/10 rounded-xl p-6 max-w-md w-full mx-4"
+              initial={{ scale: 0.9, y: 20, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.9, y: 20, opacity: 0 }}
+              transition={{ type: "spring", damping: 25 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h3 className="text-2xl font-bold text-white mb-4 text-center">Escolha a forma de pagamento</h3>
+              
+              <div className="space-y-3 mt-6">
+                <motion.button
+                  onClick={() => handlePaymentSelection('pix')}
+                  className="w-full bg-gradient-to-r from-memblue to-memcyan text-white font-medium py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  PIX (Apenas Brasil)
+                </motion.button>
+                
+                <motion.button
+                  onClick={() => handlePaymentSelection('card')}
+                  className="w-full bg-white/10 hover:bg-white/20 text-white font-medium py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Cartão de crédito
+                </motion.button>
+              </div>
+              
+              <button 
+                className="mt-4 text-gray-400 hover:text-white text-sm mx-auto block"
+                onClick={closeModal}
+              >
+                Cancelar
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
