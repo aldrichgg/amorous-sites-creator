@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Heart, Calendar, Music, Image as ImageIcon } from 'lucide-react';
 
@@ -22,6 +22,20 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
   selectedEmoji,
   photos
 }) => {
+  const [spotifyTrackId, setSpotifyTrackId] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Extract Spotify track ID when spotifyUrl changes
+    if (spotifyUrl) {
+      const match = spotifyUrl.match(/track\/([a-zA-Z0-9]+)/);
+      const id = match ? match[1] : null;
+      console.log("Extracted Spotify track ID:", id, "from URL:", spotifyUrl);
+      setSpotifyTrackId(id);
+    } else {
+      setSpotifyTrackId(null);
+    }
+  }, [spotifyUrl]);
+
   // Format date for display
   const formatDate = (date: Date | null) => {
     if (!date) return '';
@@ -50,17 +64,6 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
       return `${diffDays} ${diffDays === 1 ? 'dia' : 'dias'}`;
     }
   };
-
-  // Extract track ID from Spotify URL
-  const extractSpotifyTrackId = (url: string) => {
-    if (!url) return null;
-    
-    // Try to match patterns like https://open.spotify.com/track/49RRBsYse5dBDRubOhCEkE
-    const match = url.match(/track\/([a-zA-Z0-9]+)/);
-    return match ? match[1] : null;
-  };
-
-  const spotifyTrackId = extractSpotifyTrackId(spotifyUrl);
 
   return (
     <div className="w-full max-w-lg mx-auto mt-8">

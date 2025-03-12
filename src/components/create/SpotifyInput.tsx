@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Music, AlertCircle } from 'lucide-react';
 
@@ -15,13 +15,19 @@ const SpotifyInput: React.FC<SpotifyInputProps> = ({
   const [inputValue, setInputValue] = useState(spotifyUrl);
   const [error, setError] = useState<string | null>(null);
   
+  // Validate Spotify URL
+  const validateSpotifyUrl = (url: string): boolean => {
+    if (!url) return true; // Empty is valid
+    return url.includes('spotify.com/track/');
+  };
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
     setError(null);
   };
   
   const handleBlur = () => {
-    if (inputValue && !inputValue.includes('spotify.com/track/')) {
+    if (inputValue && !validateSpotifyUrl(inputValue)) {
       setError('Por favor, insira um link válido do Spotify (ex: https://open.spotify.com/track/ID)');
     } else {
       setError(null);
