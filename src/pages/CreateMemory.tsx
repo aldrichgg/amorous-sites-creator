@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
@@ -120,7 +121,7 @@ const CreateMemory: React.FC = () => {
       <PromoBar />
       <Navbar />
       
-      <main className="container mx-auto px-4 py-8 relative z-10 pt-32">
+      <main className="container mx-auto px-4 py-8 relative z-10 pt-32 pb-20">
         <div className="flex items-center justify-center mb-8">
           <motion.div 
             className="bg-gradient-to-r from-memblue to-memcyan p-0.5 rounded-full"
@@ -131,13 +132,13 @@ const CreateMemory: React.FC = () => {
           >
             <div className="bg-black rounded-full p-2">
               <div className="flex items-center space-x-2 px-4 py-2">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-memblue to-memcyan flex items-center justify-center">
-                  <Heart className="w-5 h-5 text-white" />
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-r from-memblue to-memcyan flex items-center justify-center">
+                  <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold">Loveiit</h1>
+                  <h1 className="text-lg sm:text-xl font-bold">Loveiit</h1>
                   <div className="flex items-center">
-                    <div className="w-3 h-3 rounded-full bg-green-500 mr-1"></div>
+                    <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-green-500 mr-1"></div>
                     <span className="text-xs text-green-400">Criar memória</span>
                   </div>
                 </div>
@@ -148,7 +149,7 @@ const CreateMemory: React.FC = () => {
         
         <CreationStepper currentStep={currentStep} totalSteps={totalSteps} />
         
-        <div className="max-w-4xl mx-auto glass-card rounded-xl p-6 mb-8">
+        <div className="max-w-4xl mx-auto glass-card rounded-xl p-4 sm:p-6 mb-8">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentStep}

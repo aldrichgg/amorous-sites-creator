@@ -37,7 +37,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
   return (
     <div className="w-full max-w-lg mx-auto pb-6">
       <motion.h2 
-        className="text-3xl font-bold mb-4 text-center text-white"
+        className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 text-center text-white"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -46,7 +46,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
       </motion.h2>
       
       <motion.p 
-        className="text-gray-300 mb-6 text-center"
+        className="text-gray-300 text-sm sm:text-base mb-4 sm:mb-6 text-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
@@ -60,32 +60,32 @@ const DatePicker: React.FC<DatePickerProps> = ({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
       >
-        <div className="flex items-center justify-between p-4 border-b border-gray-700">
+        <div className="flex items-center justify-between p-3 sm:p-4 border-b border-gray-700">
           <button 
             onClick={prevMonth}
-            className="p-2 rounded-full hover:bg-gray-800 transition-colors"
+            className="p-1 sm:p-2 rounded-full hover:bg-gray-800 transition-colors"
           >
-            <ChevronLeft className="w-5 h-5 text-gray-400" />
+            <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
           </button>
           
-          <h2 className="text-white text-lg font-medium">
+          <h2 className="text-white text-base sm:text-lg font-medium">
             {format(currentMonth, 'MMMM yyyy', { locale: pt })}
           </h2>
           
           <button 
             onClick={nextMonth}
-            className="p-2 rounded-full hover:bg-gray-800 transition-colors"
+            className="p-1 sm:p-2 rounded-full hover:bg-gray-800 transition-colors"
           >
-            <ChevronRight className="w-5 h-5 text-gray-400" />
+            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
           </button>
         </div>
         
-        <div className="p-3">
-          <div className="grid grid-cols-7 mb-2">
+        <div className="p-2 sm:p-3">
+          <div className="grid grid-cols-7 mb-1 sm:mb-2">
             {daysOfWeek.map((day, i) => (
               <div 
                 key={i} 
-                className="h-8 flex items-center justify-center text-sm text-gray-500 font-medium"
+                className="h-6 sm:h-8 flex items-center justify-center text-xs sm:text-sm text-gray-500 font-medium"
               >
                 {day}
               </div>
@@ -94,7 +94,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
           
           <div className="grid grid-cols-7 gap-1">
             {Array.from({ length: new Date(monthStart).getDay() }).map((_, i) => (
-              <div key={`empty-${i}`} className="h-8"></div>
+              <div key={`empty-${i}`} className="h-6 sm:h-8"></div>
             ))}
             
             {daysInMonth.map((day, i) => {
@@ -102,7 +102,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
               return (
                 <button
                   key={i}
-                  className={`h-8 w-8 rounded-full flex items-center justify-center text-sm transition-colors ${
+                  className={`h-6 w-6 sm:h-8 sm:w-8 rounded-full flex items-center justify-center text-xs sm:text-sm transition-colors ${
                     isToday(day) ? 'text-memcyan font-bold' : 
                     isSameMonth(day, currentMonth) ? 'text-white' : 'text-gray-600'
                   } ${

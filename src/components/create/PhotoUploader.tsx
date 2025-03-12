@@ -65,7 +65,7 @@ const PhotoUploader: React.FC<PhotoUploaderProps> = ({
   return (
     <div className="w-full max-w-lg mx-auto pb-6">
       <motion.h2 
-        className="text-3xl font-bold mb-4 text-center text-white"
+        className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 text-center text-white"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -74,7 +74,7 @@ const PhotoUploader: React.FC<PhotoUploaderProps> = ({
       </motion.h2>
       
       <motion.p 
-        className="text-gray-300 mb-6 text-center"
+        className="text-gray-300 text-sm sm:text-base mb-4 sm:mb-6 text-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
@@ -83,7 +83,7 @@ const PhotoUploader: React.FC<PhotoUploaderProps> = ({
       </motion.p>
       
       <motion.div
-        className="space-y-6"
+        className="space-y-4 sm:space-y-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
@@ -92,7 +92,7 @@ const PhotoUploader: React.FC<PhotoUploaderProps> = ({
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
-          className={`border-2 border-dashed rounded-xl p-8 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 ${
+          className={`border-2 border-dashed rounded-xl p-4 sm:p-8 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 ${
             isDragging ? 'border-memcyan bg-memcyan/10' : 'border-gray-600 hover:border-gray-400'
           }`}
         >
@@ -105,16 +105,16 @@ const PhotoUploader: React.FC<PhotoUploaderProps> = ({
             disabled={photos.length >= maxPhotos}
           />
           
-          <Upload className={`w-10 h-10 mb-2 ${isDragging ? 'text-memcyan' : 'text-gray-400'}`} />
+          <Upload className={`w-8 h-8 sm:w-10 sm:h-10 mb-2 ${isDragging ? 'text-memcyan' : 'text-gray-400'}`} />
           
-          <p className="text-center text-gray-300">
+          <p className="text-center text-gray-300 text-sm sm:text-base">
             Clique para adicionar fotos<br />
-            <span className="text-sm text-gray-500">PNG, JPG, JPEG, GIF (max. {maxPhotos} fotos)</span>
+            <span className="text-xs sm:text-sm text-gray-500">PNG, JPG, JPEG, GIF (max. {maxPhotos} fotos)</span>
           </p>
         </label>
         
         {photos.length > 0 && (
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
             <AnimatePresence>
               {photos.map((photo, index) => (
                 <motion.div
@@ -132,7 +132,7 @@ const PhotoUploader: React.FC<PhotoUploaderProps> = ({
                   />
                   
                   <motion.button
-                    className="absolute top-2 right-2 w-6 h-6 rounded-full bg-red-500 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="absolute top-2 right-2 w-6 h-6 rounded-full bg-red-500 flex items-center justify-center opacity-80 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={() => removePhoto(index)}
@@ -151,9 +151,9 @@ const PhotoUploader: React.FC<PhotoUploaderProps> = ({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
-              className="bg-red-500/20 rounded-lg p-3 text-red-300 text-sm flex items-center"
+              className="bg-red-500/20 rounded-lg p-2 sm:p-3 text-red-300 text-xs sm:text-sm flex items-center"
             >
-              <Image className="w-5 h-5 mr-2" />
+              <Image className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
               Nenhuma foto selecionada ainda
             </motion.div>
           </div>
