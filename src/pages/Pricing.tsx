@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import Navbar from '../components/Layout/Navbar';
 import Footer from '../components/Layout/Footer';
 import PricingTabs from '../components/PricingCard';
+import PromoBar from '../components/PromoBar';
 
 const Pricing = () => {
   useEffect(() => {
@@ -11,9 +12,10 @@ const Pricing = () => {
 
   return (
     <div className="bg-black min-h-screen text-white">
+      <PromoBar />
       <Navbar />
       
-      <main className="pt-32 pb-20 px-4">
+      <main className="pt-40 pb-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16 animate-fade-in">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">

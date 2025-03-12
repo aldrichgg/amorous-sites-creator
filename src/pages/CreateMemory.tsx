@@ -127,10 +127,10 @@ const CreateMemory: React.FC = () => {
     <div className="min-h-screen bg-black text-white relative overflow-hidden">
       <StarBackground intensity="medium" color="mixed" />
       
-      <Navbar />
       <PromoBar />
+      <Navbar />
       
-      <main className="container mx-auto px-4 py-8 relative z-10">
+      <main className="container mx-auto px-4 py-8 relative z-10 pt-40">
         <div className="flex items-center justify-center mb-8">
           <motion.div 
             className="bg-gradient-to-r from-memblue to-memcyan p-0.5 rounded-full"
