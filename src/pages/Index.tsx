@@ -18,7 +18,7 @@ const Index = () => {
       <PromoBar />
       <Navbar />
       
-      <main className="pt-24">
+      <main>
         <Hero />
         
         <section className="py-20 px-4">
