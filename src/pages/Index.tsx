@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Hero from '../components/Hero';
@@ -6,14 +5,11 @@ import Navbar from '../components/Layout/Navbar';
 import Footer from '../components/Layout/Footer';
 import Steps from '../components/Steps';
 import PricingPlans from '../components/PricingPlans';
-
 const Index = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  return (
-    <div className="bg-black min-h-screen text-white">
+  return <div className="bg-black min-h-screen text-white">
       <Navbar />
       
       <main>
@@ -33,10 +29,7 @@ const Index = () => {
             <Steps />
             
             <div className="mt-16 text-center">
-              <Link
-                to="/create"
-                className="btn-gradient text-white font-medium rounded-full py-3 px-8 inline-block transition-all duration-300 hover:shadow-lg"
-              >
+              <Link to="/create" className="btn-gradient text-white font-medium rounded-full py-3 px-8 inline-block transition-all duration-300 hover:shadow-lg">
                 Criar site
               </Link>
             </div>
@@ -54,11 +47,7 @@ const Index = () => {
                 <div className="relative">
                   <div className="absolute -inset-1 bg-gradient-to-r from-memblue to-memcyan rounded-3xl blur opacity-50"></div>
                   <div className="relative rounded-3xl overflow-hidden">
-                    <img 
-                      src="/lovable-uploads/d25b6ba1-8d8c-4842-9cc4-74142010deb2.png" 
-                      alt="Loveiit mobile preview" 
-                      className="w-full h-auto"
-                    />
+                    
                   </div>
                 </div>
               </div>
@@ -97,10 +86,7 @@ const Index = () => {
                     <span className="text-gray-300">Compartilhe instantaneamente via QR Code ou link</span>
                   </li>
                 </ul>
-                <Link
-                  to="/pricing"
-                  className="btn-gradient text-white font-medium rounded-full py-3 px-8 inline-block transition-all duration-300 hover:shadow-lg"
-                >
+                <Link to="/pricing" className="btn-gradient text-white font-medium rounded-full py-3 px-8 inline-block transition-all duration-300 hover:shadow-lg">
                   Ver preços
                 </Link>
               </div>
@@ -116,10 +102,7 @@ const Index = () => {
             <p className="text-gray-300 max-w-2xl mx-auto mb-10">
               Em apenas alguns cliques, você pode criar uma memória especial para compartilhar com quem você ama.
             </p>
-            <Link
-              to="/create"
-              className="btn-gradient text-white font-bold rounded-full py-4 px-10 inline-block text-lg transition-all duration-300 hover:shadow-lg"
-            >
+            <Link to="/create" className="btn-gradient text-white font-bold rounded-full py-4 px-10 inline-block text-lg transition-all duration-300 hover:shadow-lg">
               Criar site agora
             </Link>
           </div>
@@ -129,8 +112,6 @@ const Index = () => {
       </main>
       
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
