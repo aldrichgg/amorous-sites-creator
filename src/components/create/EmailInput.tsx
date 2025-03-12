@@ -90,24 +90,6 @@ const EmailInput: React.FC<EmailInputProps> = ({
           </motion.p>
         )}
       </motion.div>
-      
-      <div className="mt-6 space-y-2">
-        <motion.button
-          className="w-full bg-gray-500 hover:bg-gray-600 text-white font-medium py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          PIX ou Cartão (Apenas Brasil)
-        </motion.button>
-        
-        <motion.button
-          className="w-full bg-gray-500 hover:bg-gray-600 text-white font-medium py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          Cartão de crédito
-        </motion.button>
-      </div>
     </div>
   );
 };

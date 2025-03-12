@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Check, X } from 'lucide-react';
+import { Check, Star, X } from 'lucide-react';
 
 interface PlanFeature {
   name: string;
@@ -99,8 +99,8 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
             onClick={() => onSelectPlan(plan.id)}
           >
             {plan.popular && (
-              <div className="absolute top-0 right-0 bg-yellow-500 text-black text-xs font-semibold px-3 py-1 rounded-bl-md">
-                ★ Mais escolhido
+              <div className="absolute top-0 right-0 bg-yellow-500 text-black text-xs font-semibold px-3 py-1 rounded-bl-md flex items-center">
+                <Star className="h-3 w-3 mr-1" /> Mais escolhido
               </div>
             )}
             
@@ -149,6 +149,24 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
             )}
           </motion.div>
         ))}
+      </div>
+      
+      <div className="mt-8 space-y-3 max-w-lg mx-auto">
+        <motion.button
+          className="w-full bg-gradient-to-r from-memblue to-memcyan text-white font-medium py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center hover:opacity-90"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          PIX ou Cartão (Apenas Brasil)
+        </motion.button>
+        
+        <motion.button
+          className="w-full bg-white/10 hover:bg-white/20 text-white font-medium py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          Cartão de crédito
+        </motion.button>
       </div>
     </div>
   );
