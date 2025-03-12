@@ -71,33 +71,8 @@ const CreateMemory: React.FC = () => {
     }
   };
   
-  // Componentes para cada etapa - Invertida para seguir a ordem correta
+  // Componentes para cada etapa - Reordenados para colocar a seleção de plano por último
   const steps = [
-    <PlanSelection 
-      selectedPlan={selectedPlan} 
-      onSelectPlan={setSelectedPlan} 
-    />,
-    <SpotifyInput 
-      spotifyUrl={spotifyUrl} 
-      onSpotifyUrlChange={setSpotifyUrl} 
-    />,
-    <EmojiSelector 
-      selectedEmoji={selectedEmoji} 
-      onEmojiSelect={setSelectedEmoji} 
-    />,
-    <PhotoUploader 
-      maxPhotos={selectedPlan === 'forever' ? 7 : 3} 
-      photos={photos} 
-      onPhotosChange={setPhotos} 
-    />,
-    <MessageEditor 
-      message={message} 
-      onMessageChange={setMessage} 
-    />,
-    <DatePicker 
-      selectedDate={startDate} 
-      onDateChange={setStartDate} 
-    />,
     <PageTitleInput 
       title={pageTitle} 
       onTitleChange={setPageTitle} 
@@ -115,6 +90,31 @@ const CreateMemory: React.FC = () => {
     <EmailInput 
       email={email} 
       onEmailChange={setEmail} 
+    />,
+    <DatePicker 
+      selectedDate={startDate} 
+      onDateChange={setStartDate} 
+    />,
+    <MessageEditor 
+      message={message} 
+      onMessageChange={setMessage} 
+    />,
+    <SpotifyInput 
+      spotifyUrl={spotifyUrl} 
+      onSpotifyUrlChange={setSpotifyUrl} 
+    />,
+    <EmojiSelector 
+      selectedEmoji={selectedEmoji} 
+      onEmojiSelect={setSelectedEmoji} 
+    />,
+    <PhotoUploader 
+      maxPhotos={selectedPlan === 'forever' ? 7 : 3} 
+      photos={photos} 
+      onPhotosChange={setPhotos} 
+    />,
+    <PlanSelection 
+      selectedPlan={selectedPlan} 
+      onSelectPlan={setSelectedPlan} 
     />
   ];
   
