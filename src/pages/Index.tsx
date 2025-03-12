@@ -5,6 +5,7 @@ import Hero from '../components/Hero';
 import Navbar from '../components/Layout/Navbar';
 import Footer from '../components/Layout/Footer';
 import Steps from '../components/Steps';
+import PricingPlans from '../components/PricingPlans';
 
 const Index = () => {
   useEffect(() => {
@@ -42,6 +43,8 @@ const Index = () => {
           </div>
         </section>
         
+        <PricingPlans />
+        
         <section className="py-20 px-4 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-black via-memblue/10 to-black pointer-events-none"></div>
           
@@ -53,7 +56,7 @@ const Index = () => {
                   <div className="relative rounded-3xl overflow-hidden">
                     <img 
                       src="/lovable-uploads/d25b6ba1-8d8c-4842-9cc4-74142010deb2.png" 
-                      alt="Memoryiit mobile preview" 
+                      alt="Loveiit mobile preview" 
                       className="w-full h-auto"
                     />
                   </div>

@@ -18,7 +18,7 @@ const Footer = () => {
                 <path d="M50 60C53.3137 60 56 57.3137 56 54C56 50.6863 53.3137 48 50 48C46.6863 48 44 50.6863 44 54C44 57.3137 46.6863 60 50 60Z" />
               </svg>
             </div>
-            <span className="text-white font-bold text-xl">Memoryiit</span>
+            <span className="text-white font-bold text-xl">Loveiit</span>
           </div>
           <p className="text-gray-400 text-sm mb-6">
             Copyright © {currentYear} - Todos os direitos reservados

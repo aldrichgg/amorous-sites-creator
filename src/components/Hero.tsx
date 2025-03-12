@@ -1,15 +1,20 @@
+
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Star, ChevronRight } from 'lucide-react';
+
 const Hero = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoaded(true);
     }, 300);
     return () => clearTimeout(timer);
   }, []);
-  return <div className="min-h-screen bg-black bg-mesh relative flex flex-col justify-center items-center pt-16 overflow-hidden">
+
+  return (
+    <div className="min-h-screen bg-black bg-mesh relative flex flex-col justify-center items-center pt-16 overflow-hidden">
       <div className={`container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 transition-all duration-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         <div className="max-w-3xl mx-auto text-center mb-20">
           <div className="inline-block bg-white/10 backdrop-blur-sm rounded-full px-4 py-1.5 mb-6">
@@ -79,6 +84,8 @@ const Hero = () => {
       <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-purple-500/10 rounded-full blur-3xl animate-float" style={{
       animationDelay: '2s'
     }}></div>
-    </div>;
+    </div>
+  );
 };
+
 export default Hero;

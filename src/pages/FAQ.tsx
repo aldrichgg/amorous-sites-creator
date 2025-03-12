@@ -20,7 +20,7 @@ const FAQ = () => {
               Perguntas Frequentes (FAQ)
             </h1>
             <p className="text-gray-400 max-w-2xl mx-auto">
-              Encontre respostas para as perguntas mais comuns sobre o Memoryiit
+              Encontre respostas para as perguntas mais comuns sobre o Loveiit
             </p>
           </div>
           
