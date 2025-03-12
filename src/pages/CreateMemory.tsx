@@ -1,12 +1,11 @@
-
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Heart } from 'lucide-react';
 
 import Navbar from '../components/Layout/Navbar';
 import Footer from '../components/Layout/Footer';
 import StarBackground from '../components/StarBackground';
+import CreateHeader from '../components/create/CreateHeader';
+import StepContent from '../components/create/StepContent';
 import PlanSelection from '../components/create/PlanSelection';
 import SpotifyInput from '../components/create/SpotifyInput';
 import EmojiSelector from '../components/create/EmojiSelector';
@@ -15,7 +14,6 @@ import MessageEditor from '../components/create/MessageEditor';
 import DatePicker from '../components/create/DatePicker';
 import PageTitleInput from '../components/create/PageTitleInput';
 import EmailInput from '../components/create/EmailInput';
-import NavigationButtons from '../components/create/NavigationButtons';
 import CreationStepper from '../components/CreationStepper';
 import PromoBar from '../components/PromoBar';
 import MemoryPreview from '../components/create/MemoryPreview';
@@ -65,7 +63,6 @@ const CreateMemory: React.FC = () => {
     }
   };
   
-  // Check if required fields are filled for each step
   const isStepValid = () => {
     switch (currentStep) {
       case 0: // Page title
@@ -140,89 +137,30 @@ const CreateMemory: React.FC = () => {
       <Navbar />
       
       <main className="container mx-auto px-4 py-8 relative z-10 pt-32 pb-20">
-        <div className="flex items-center justify-center mb-8">
-          <motion.div 
-            className="bg-gradient-to-r from-memblue to-memcyan p-0.5 rounded-full"
-            animate={{ 
-              boxShadow: ['0 0 5px rgba(59, 130, 246, 0.5)', '0 0 20px rgba(59, 130, 246, 0.8)', '0 0 5px rgba(59, 130, 246, 0.5)'],
-            }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            <div className="bg-black rounded-full p-2">
-              <div className="flex items-center space-x-2 px-4 py-2">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-r from-memblue to-memcyan flex items-center justify-center">
-                  <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                </div>
-                <div>
-                  <h1 className="text-lg sm:text-xl font-bold">Loveiit</h1>
-                  <div className="flex items-center">
-                    <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-green-500 mr-1"></div>
-                    <span className="text-xs text-green-400">Criar memória</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
+        <CreateHeader />
+        <CreationStepper currentStep={currentStep} totalSteps={steps.length} />
         
-        <CreationStepper currentStep={currentStep} totalSteps={totalSteps} />
+        <StepContent
+          currentStep={currentStep}
+          onNext={handleNext}
+          onPrevious={handlePrevious}
+          isFirstStep={currentStep === 0}
+          isLastStep={currentStep === steps.length - 1}
+          isStepValid={isStepValid()}
+        >
+          {steps[currentStep]}
+        </StepContent>
         
-        <div className="max-w-4xl mx-auto glass-card rounded-xl p-4 sm:p-6 mb-8">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentStep}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.3 }}
-            >
-              {steps[currentStep]}
-            </motion.div>
-          </AnimatePresence>
-          
-          <NavigationButtons 
-            onPrevious={handlePrevious}
-            onNext={handleNext}
-            isFirstStep={currentStep === 0}
-            isLastStep={currentStep === totalSteps - 1}
-            isDisabled={!isStepValid()}
-          />
-        </div>
-        
-        {/* Preview Section */}
         <div className="mt-12 mb-8">
-          <motion.h2 
-            className="text-2xl font-bold mb-6 text-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            Visualização da Página
-          </motion.h2>
-          
-          <motion.div
-            className="bg-gradient-to-r from-gray-900 to-black p-0.5 rounded-xl overflow-hidden"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <div className="bg-black/50 backdrop-blur-sm rounded-xl p-4 sm:p-6 relative overflow-hidden">
-              <div className="absolute inset-0 opacity-30">
-                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-memblue/10 to-transparent"></div>
-                <div className="absolute bottom-0 right-0 text-9xl opacity-5">{selectedEmoji}</div>
-              </div>
-              
-              <MemoryPreview
-                pageTitle={pageTitle}
-                pageName={pageName}
-                startDate={startDate}
-                message={message}
-                spotifyUrl={spotifyUrl}
-                selectedEmoji={selectedEmoji}
-                photos={photos}
-              />
-            </div>
-          </motion.div>
+          <MemoryPreview
+            pageTitle={pageTitle}
+            pageName={pageName}
+            startDate={startDate}
+            message={message}
+            spotifyUrl={spotifyUrl}
+            selectedEmoji={selectedEmoji}
+            photos={photos}
+          />
         </div>
       </main>
       
