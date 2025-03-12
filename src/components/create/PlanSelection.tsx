@@ -64,29 +64,17 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
     }
   ];
 
-  const fadeInUpVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: i * 0.1,
-        duration: 0.5,
-        ease: "easeOut"
-      }
-    })
-  };
-
   return (
     <div className="w-full max-w-4xl mx-auto py-4">
       <motion.h2 
-        className="text-3xl font-bold mb-6 text-center text-white"
+        className="text-3xl font-bold mb-4 text-center text-white"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
         Plano
       </motion.h2>
+      
       <motion.p 
         className="text-gray-300 mb-8 text-center"
         initial={{ opacity: 0 }}
@@ -100,12 +88,9 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
         {plans.map((plan, idx) => (
           <motion.div
             key={plan.id}
-            custom={idx}
-            variants={fadeInUpVariants}
-            initial="hidden"
-            animate="visible"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: idx * 0.1, duration: 0.5 }}
             className={`relative rounded-xl overflow-hidden cursor-pointer transition-all duration-300 ${
               selectedPlan === plan.id 
                 ? 'ring-2 ring-memcyan shadow-lg shadow-memcyan/20' 
@@ -114,13 +99,13 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
             onClick={() => onSelectPlan(plan.id)}
           >
             {plan.popular && (
-              <div className="absolute top-0 right-0 bg-memcyan text-black text-xs font-semibold px-3 py-1 rounded-bl-md">
+              <div className="absolute top-0 right-0 bg-yellow-500 text-black text-xs font-semibold px-3 py-1 rounded-bl-md">
                 ★ Mais escolhido
               </div>
             )}
             
             <div className="p-6 bg-black/60 backdrop-blur-sm">
-              <h3 className="text-2xl font-bold text-white mb-2">{plan.name}</h3>
+              <h3 className="text-2xl font-bold text-white mb-4">{plan.name}</h3>
               
               <ul className="space-y-3 mb-6">
                 {plan.features.map((feature, featureIdx) => (
@@ -141,7 +126,7 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
                 ))}
               </ul>
               
-              <div className="mt-auto">
+              <div className="mt-6">
                 {plan.discountedPrice ? (
                   <div>
                     <span className="text-red-500 line-through text-lg font-semibold block">R$ {plan.price.toFixed(2).replace('.', ',')}</span>
@@ -160,12 +145,7 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
             </div>
             
             {selectedPlan === plan.id && (
-              <motion.div 
-                className="absolute inset-0 border-2 border-memcyan rounded-xl pointer-events-none"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3 }}
-              />
+              <div className="absolute inset-0 border-2 border-memcyan rounded-xl pointer-events-none" />
             )}
           </motion.div>
         ))}

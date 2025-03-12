@@ -100,7 +100,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
             {daysInMonth.map((day, i) => {
               const isSelected = selectedDate ? isSameDay(day, selectedDate) : false;
               return (
-                <motion.button
+                <button
                   key={i}
                   className={`h-8 w-8 rounded-full flex items-center justify-center text-sm transition-colors ${
                     isToday(day) ? 'text-memcyan font-bold' : 
@@ -108,21 +108,10 @@ const DatePicker: React.FC<DatePickerProps> = ({
                   } ${
                     isSelected ? 'bg-memblue text-white' : 'hover:bg-gray-800'
                   }`}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
                   onClick={() => onDateChange(day)}
                 >
                   {format(day, 'd')}
-                  {isSelected && (
-                    <motion.div
-                      className="absolute inset-0 rounded-full bg-memblue"
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ duration: 0.3 }}
-                      style={{ zIndex: -1 }}
-                    />
-                  )}
-                </motion.button>
+                </button>
               );
             })}
           </div>
