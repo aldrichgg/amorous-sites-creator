@@ -1,12 +1,12 @@
 
-import { Check } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 interface PricingCardProps {
   title: string;
   price: number;
-  features: string[];
+  features: { text: string; included: boolean }[];
   isPopular?: boolean;
   handleTabChange: (tab: string) => void;
   activeTab: string;
@@ -53,8 +53,12 @@ const PricingCard: React.FC<PricingCardProps> = ({
           <ul className="space-y-3 mb-6">
             {features.map((feature, index) => (
               <li key={index} className="flex items-center text-gray-700 dark:text-gray-300">
-                <Check size={18} className="text-memblue mr-2" />
-                {feature}
+                {feature.included ? (
+                  <Check size={18} className="text-memblue mr-2" />
+                ) : (
+                  <X size={18} className="text-red-500 mr-2" />
+                )}
+                {feature.text}
               </li>
             ))}
           </ul>
@@ -83,20 +87,20 @@ const PricingTabs = () => {
       title: 'Completo',
       price: 27,
       features: [
-        '7 fotos',
-        'Para sempre',
-        'Selecionar chuva de emoji',
-        'Selecionar música'
+        { text: '7 fotos', included: true },
+        { text: 'Para sempre', included: true },
+        { text: 'Selecionar chuva de emoji', included: true },
+        { text: 'Selecionar música', included: true }
       ]
     },
     basico: {
       title: 'Básico',
       price: 17,
       features: [
-        '3 fotos',
-        'Duração de um ano',
-        'Selecionar chuva de emoji',
-        'Selecionar música'
+        { text: '3 fotos', included: true },
+        { text: 'Duração de um ano', included: true },
+        { text: 'Selecionar chuva de emoji', included: false },
+        { text: 'Selecionar música', included: false }
       ]
     }
   };

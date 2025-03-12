@@ -1,15 +1,18 @@
+
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Check } from 'lucide-react';
+import { Check, X } from 'lucide-react';
+
 interface PlanProps {
   title: string;
   price: number;
-  features: string[];
+  features: { text: string; included: boolean }[];
   isPopular?: boolean;
   type: 'completo' | 'basico';
   activeTab: string;
   onTabChange: (tab: string) => void;
 }
+
 const PlanCard = ({
   title,
   price,
@@ -45,8 +48,11 @@ const PlanCard = ({
         
         <ul className="space-y-3 mb-6">
           {features.map((feature, index) => <li key={index} className="flex items-center text-gray-300">
-              <Check size={18} className="text-memcyan mr-2 shrink-0" />
-              {feature}
+              {feature.included ? 
+                <Check size={18} className="text-memcyan mr-2 shrink-0" /> : 
+                <X size={18} className="text-red-500 mr-2 shrink-0" />
+              }
+              {feature.text}
             </li>)}
         </ul>
         
@@ -59,22 +65,40 @@ const PlanCard = ({
       </div>
     </div>;
 };
+
 const PricingPlans = () => {
   const [activeTab, setActiveTab] = useState('completo');
+  
   const plans = {
     completo: {
       title: 'Completo',
       price: 27,
-      features: ['7 fotos', 'Para sempre', 'Selecionar chuva de emoji', 'Selecionar música', 'Contador regressivo', 'Mensagem personalizada', 'Suporte prioritário'],
+      features: [
+        { text: '7 fotos', included: true },
+        { text: 'Para sempre', included: true },
+        { text: 'Selecionar chuva de emoji', included: true },
+        { text: 'Selecionar música', included: true },
+        { text: 'Contador regressivo', included: true },
+        { text: 'Mensagem personalizada', included: true },
+        { text: 'Suporte prioritário', included: true }
+      ],
       isPopular: true
     },
     basico: {
       title: 'Básico',
       price: 17,
-      features: ['3 fotos', 'Duração de um ano', 'Selecionar chuva de emoji', 'Selecionar música', 'Mensagem básica', 'Suporte por email'],
+      features: [
+        { text: '3 fotos', included: true },
+        { text: 'Duração de um ano', included: true },
+        { text: 'Selecionar chuva de emoji', included: false },
+        { text: 'Selecionar música', included: false },
+        { text: 'Mensagem básica', included: true },
+        { text: 'Suporte por email', included: true }
+      ],
       isPopular: false
     }
   };
+  
   return <section className="py-20 px-4 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black via-memblue/10 to-black pointer-events-none"></div>
       
@@ -89,9 +113,18 @@ const PricingPlans = () => {
         </div>
         
         <div className="max-w-md mx-auto">
-          <PlanCard title={plans[activeTab as keyof typeof plans].title} price={plans[activeTab as keyof typeof plans].price} features={plans[activeTab as keyof typeof plans].features} isPopular={plans[activeTab as keyof typeof plans].isPopular} type={activeTab as 'completo' | 'basico'} activeTab={activeTab} onTabChange={setActiveTab} />
+          <PlanCard 
+            title={plans[activeTab as keyof typeof plans].title} 
+            price={plans[activeTab as keyof typeof plans].price} 
+            features={plans[activeTab as keyof typeof plans].features} 
+            isPopular={plans[activeTab as keyof typeof plans].isPopular} 
+            type={activeTab as 'completo' | 'basico'} 
+            activeTab={activeTab} 
+            onTabChange={setActiveTab} 
+          />
         </div>
       </div>
     </section>;
 };
+
 export default PricingPlans;
