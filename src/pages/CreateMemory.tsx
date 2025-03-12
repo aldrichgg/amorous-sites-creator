@@ -71,35 +71,11 @@ const CreateMemory: React.FC = () => {
     }
   };
   
-  // Componentes para cada etapa - Reordered to make plan selection the last step
+  // Componentes para cada etapa - Reordenado para inverter a ordem dos passos
   const steps = [
-    <SpotifyInput 
-      spotifyUrl={spotifyUrl} 
-      onSpotifyUrlChange={setSpotifyUrl} 
-    />,
-    <EmojiSelector 
-      selectedEmoji={selectedEmoji} 
-      onEmojiSelect={setSelectedEmoji} 
-    />,
-    <PhotoUploader 
-      maxPhotos={selectedPlan === 'forever' ? 7 : 3} 
-      photos={photos} 
-      onPhotosChange={setPhotos} 
-    />,
-    <MessageEditor 
-      message={message} 
-      onMessageChange={setMessage} 
-    />,
-    <DatePicker 
-      selectedDate={startDate} 
-      onDateChange={setStartDate} 
-    />,
-    <PageTitleInput 
-      title={pageTitle} 
-      onTitleChange={setPageTitle} 
-      label="Título da página" 
-      description="Escreva o título da página. Ex: Te amo há: ou Nossas memórias ou etc!" 
-      placeholder="Digite o título da página" 
+    <EmailInput 
+      email={email} 
+      onEmailChange={setEmail} 
     />,
     <PageTitleInput 
       title={pageName} 
@@ -108,9 +84,33 @@ const CreateMemory: React.FC = () => {
       description="Escreva o nome da página (Usado no link para acessar). Ex: Gabriel & Clara ou Feliz Aniversário ou etc!" 
       placeholder="Escreva o nome da página (Usado no link para acessar)" 
     />,
-    <EmailInput 
-      email={email} 
-      onEmailChange={setEmail} 
+    <PageTitleInput 
+      title={pageTitle} 
+      onTitleChange={setPageTitle} 
+      label="Título da página" 
+      description="Escreva o título da página. Ex: Te amo há: ou Nossas memórias ou etc!" 
+      placeholder="Digite o título da página" 
+    />,
+    <DatePicker 
+      selectedDate={startDate} 
+      onDateChange={setStartDate} 
+    />,
+    <MessageEditor 
+      message={message} 
+      onMessageChange={setMessage} 
+    />,
+    <PhotoUploader 
+      maxPhotos={selectedPlan === 'forever' ? 7 : 3} 
+      photos={photos} 
+      onPhotosChange={setPhotos} 
+    />,
+    <EmojiSelector 
+      selectedEmoji={selectedEmoji} 
+      onEmojiSelect={setSelectedEmoji} 
+    />,
+    <SpotifyInput 
+      spotifyUrl={spotifyUrl} 
+      onSpotifyUrlChange={setSpotifyUrl} 
     />,
     <PlanSelection 
       selectedPlan={selectedPlan} 
