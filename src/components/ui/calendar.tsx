@@ -1,7 +1,7 @@
 
 import * as React from "react";
 import { ChevronLeft, ChevronRight, Heart } from "lucide-react";
-import { DayPicker } from "react-day-picker";
+import { DayPicker, type DayProps } from "react-day-picker";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
@@ -57,7 +57,7 @@ function Calendar({
         IconRight: ({ ..._props }) => <ChevronRight className="h-4 w-4" />,
         Day: (props) => {
           // Add a heart shape for selected days
-          const isSelected = props.day?.isSelected && !props.day?.isDisabled;
+          const isSelected = Boolean(props.selected) && !props.disabled;
           
           if (isSelected) {
             return (
