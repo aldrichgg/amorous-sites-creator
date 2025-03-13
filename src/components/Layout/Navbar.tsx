@@ -30,9 +30,9 @@ const Navbar = () => {
   const closeMenu = () => setIsOpen(false);
 
   return (
-    <header className={`fixed w-full top-10 z-40 transition-all duration-300 ${scrolled ? 'bg-black/80 backdrop-blur-lg shadow-lg' : 'bg-transparent'}`}>
+    <header className={`fixed w-full top-0 z-40 transition-all duration-300 ${scrolled ? 'bg-black/80 backdrop-blur-lg shadow-lg' : 'bg-transparent'}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 mt-10">
           <div className="flex items-center">
             <Link to="/" className="flex items-center" onClick={closeMenu}>
               <div className="h-8 w-8 mr-2">
@@ -126,3 +126,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
