@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Image as ImageIcon, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Image as ImageIcon } from 'lucide-react';
 import {
   Carousel,
   CarouselContent,
@@ -8,7 +8,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { useEmblaCarousel } from 'embla-carousel-react';
+// Properly import from embla-carousel-react
+import useEmblaCarousel from 'embla-carousel-react';
 
 interface PhotosCarouselProps {
   photos: string[];
