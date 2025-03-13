@@ -13,7 +13,6 @@ import CreateMemory from "./pages/CreateMemory";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import CookieConsent from "./components/CookieConsent";
-import PromoBar from "./components/PromoBar";
 
 const queryClient = new QueryClient();
 
@@ -23,7 +22,6 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <PromoBar />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/faq" element={<FAQ />} />
