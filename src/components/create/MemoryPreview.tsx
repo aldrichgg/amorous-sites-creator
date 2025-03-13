@@ -50,55 +50,38 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
   const previewHeight = isMobile ? "600px" : "700px";
 
   return (
-    <div className="w-full mx-auto mt-8 flex justify-center">
-      <div className="flex flex-col items-center">
-        <motion.h3 
-          className="text-lg sm:text-xl font-semibold mb-4 text-center text-white"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          Prévia da sua página
-        </motion.h3>
-        
-        <motion.div
-          className="relative"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          style={{ maxWidth: "100%" }}
-        >
-          <MobileDeviceFrame previewWidth={previewWidth} previewHeight={previewHeight}>
-            {/* Browser content */}
-            <div className="w-full h-full overflow-hidden bg-gradient-to-b from-gray-900 to-black flex flex-col">
-              <BrowserHeader pageName={pageName} />
+    <div className="w-full mx-auto flex justify-center">
+      <div className="flex flex-col items-center w-full">
+        <MobileDeviceFrame previewWidth={previewWidth} previewHeight={previewHeight}>
+          {/* Browser content */}
+          <div className="w-full h-full overflow-y-auto bg-gradient-to-b from-gray-900 to-black flex flex-col">
+            <BrowserHeader pageName={pageName} />
+            
+            {/* Content */}
+            <div className="flex-1 overflow-y-auto p-4 relative">
+              {/* Emoji Rain Effect */}
+              {selectedEmoji && <EmojiRain emoji={selectedEmoji} />}
               
-              {/* Content */}
-              <div className="flex-1 overflow-y-auto p-4 relative">
-                {/* Emoji Rain Effect */}
-                {selectedEmoji && <EmojiRain emoji={selectedEmoji} />}
-                
-                <SpotifyPlayer spotifyTrackId={spotifyTrackId} spotifyUrl={spotifyUrl} />
-                <PhotosCarousel photos={photos} />
-                
-                {/* Title */}
-                <div className="text-center mb-2">
-                  <h1 className="text-xl sm:text-2xl font-bold text-white">{pageTitle || 'Título da Memória'}</h1>
-                </div>
-                
-                <DateCounter startDate={startDate} />
-                <MessageDisplay message={message} />
-                
-                {/* Selected emoji as background */}
-                {selectedEmoji && (
-                  <div className="absolute bottom-4 right-4 text-4xl sm:text-5xl opacity-20">
-                    {selectedEmoji}
-                  </div>
-                )}
+              <SpotifyPlayer spotifyTrackId={spotifyTrackId} spotifyUrl={spotifyUrl} />
+              <PhotosCarousel photos={photos} />
+              
+              {/* Title */}
+              <div className="text-center mb-2">
+                <h1 className="text-xl sm:text-2xl font-bold text-white">{pageTitle || 'Título da Memória'}</h1>
               </div>
+              
+              <DateCounter startDate={startDate} />
+              <MessageDisplay message={message} />
+              
+              {/* Selected emoji as background */}
+              {selectedEmoji && (
+                <div className="absolute bottom-4 right-4 text-4xl sm:text-5xl opacity-20">
+                  {selectedEmoji}
+                </div>
+              )}
             </div>
-          </MobileDeviceFrame>
-        </motion.div>
+          </div>
+        </MobileDeviceFrame>
         
         <motion.p 
           className="text-xs text-gray-400 mt-2 text-center"

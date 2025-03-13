@@ -1,18 +1,19 @@
 
-import { useState } from 'react';
-import { 
-  format, 
-  addMonths, 
-  subMonths, 
-  startOfMonth, 
-  endOfMonth, 
+import { useState, useCallback } from 'react';
+import {
+  startOfMonth,
+  endOfMonth,
   eachDayOfInterval,
-  setMonth,
+  addMonths,
+  subMonths,
+  addYears,
+  subYears,
+  format,
   isSameDay,
-  isSameMonth,
-  isToday
+  isToday,
+  isSameMonth
 } from 'date-fns';
-import { pt } from 'date-fns/locale';
+import { ptBR } from 'date-fns/locale';
 
 interface UseDatePickerReturn {
   currentMonth: Date;
@@ -20,10 +21,10 @@ interface UseDatePickerReturn {
   currentYear: number;
   daysInMonth: Date[];
   formattedMonth: string;
+  toggleMonthSelector: () => void;
+  handleMonthSelection: (month: number) => void;
   prevMonth: () => void;
   nextMonth: () => void;
-  toggleMonthSelector: () => void;
-  handleMonthSelection: (monthIndex: number) => void;
   prevYear: () => void;
   nextYear: () => void;
   isDaySelected: (day: Date, selectedDate: Date | null) => boolean;
@@ -35,56 +36,51 @@ export const useDatePicker = (): UseDatePickerReturn => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [showMonthSelector, setShowMonthSelector] = useState(false);
   
-  // Get days of the month
-  const monthStart = startOfMonth(currentMonth);
-  const monthEnd = endOfMonth(currentMonth);
-  const daysInMonth = eachDayOfInterval({ start: monthStart, end: monthEnd });
-  
-  // Format the current month
-  const formattedMonth = format(currentMonth, 'MMMM yyyy', { locale: pt });
-  
-  // Current year
   const currentYear = currentMonth.getFullYear();
   
-  // Previous month
-  const prevMonth = () => {
-    setCurrentMonth(subMonths(currentMonth, 1));
-  };
+  // Get all days in current month
+  const daysInMonth = eachDayOfInterval({
+    start: startOfMonth(currentMonth),
+    end: endOfMonth(currentMonth)
+  });
   
-  // Next month
-  const nextMonth = () => {
-    setCurrentMonth(addMonths(currentMonth, 1));
-  };
+  // Format month for display (e.g., "Maio 2023")
+  const formattedMonth = format(currentMonth, 'MMMM yyyy', { locale: ptBR });
   
   // Toggle month selector
-  const toggleMonthSelector = () => {
-    setShowMonthSelector(!showMonthSelector);
-  };
+  const toggleMonthSelector = useCallback(() => {
+    setShowMonthSelector(prev => !prev);
+  }, []);
   
   // Handle month selection
-  const handleMonthSelection = (monthIndex: number) => {
-    const newDate = setMonth(currentMonth, monthIndex);
+  const handleMonthSelection = useCallback((month: number) => {
+    const newDate = new Date(currentMonth);
+    newDate.setMonth(month);
     setCurrentMonth(newDate);
     setShowMonthSelector(false);
-  };
+  }, [currentMonth]);
   
-  // Previous year
-  const prevYear = () => {
-    const newDate = setMonth(currentMonth, currentMonth.getMonth());
-    newDate.setFullYear(currentYear - 1);
-    setCurrentMonth(newDate);
-  };
+  // Navigation methods
+  const prevMonth = useCallback(() => {
+    setCurrentMonth(prev => subMonths(prev, 1));
+  }, []);
   
-  // Next year
-  const nextYear = () => {
-    const newDate = setMonth(currentMonth, currentMonth.getMonth());
-    newDate.setFullYear(currentYear + 1);
-    setCurrentMonth(newDate);
-  };
+  const nextMonth = useCallback(() => {
+    setCurrentMonth(prev => addMonths(prev, 1));
+  }, []);
   
-  // Day selection helpers
+  const prevYear = useCallback(() => {
+    setCurrentMonth(prev => subYears(prev, 1));
+  }, []);
+  
+  const nextYear = useCallback(() => {
+    setCurrentMonth(prev => addYears(prev, 1));
+  }, []);
+  
+  // Helper methods for days
   const isDaySelected = (day: Date, selectedDate: Date | null): boolean => {
-    return selectedDate ? isSameDay(day, selectedDate) : false;
+    if (!selectedDate) return false;
+    return isSameDay(day, selectedDate);
   };
   
   const isDayToday = (day: Date): boolean => {
@@ -101,14 +97,14 @@ export const useDatePicker = (): UseDatePickerReturn => {
     currentYear,
     daysInMonth,
     formattedMonth,
-    prevMonth,
-    nextMonth,
     toggleMonthSelector,
     handleMonthSelection,
+    prevMonth,
+    nextMonth,
     prevYear,
     nextYear,
     isDaySelected,
     isDayToday,
-    isDayInCurrentMonth,
+    isDayInCurrentMonth
   };
 };

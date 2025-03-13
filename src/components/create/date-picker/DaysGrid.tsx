@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { format, isSameDay, isSameMonth, isToday } from 'date-fns';
+import { format } from 'date-fns';
 import { useDatePicker } from './useDatePicker';
 
 interface DaysGridProps {
