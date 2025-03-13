@@ -15,10 +15,16 @@ const SpotifyInput: React.FC<SpotifyInputProps> = ({
   const [inputValue, setInputValue] = useState(spotifyUrl);
   const [error, setError] = useState<string | null>(null);
   
-  // Validate Spotify URL
+  // Improved Spotify URL validation
   const validateSpotifyUrl = (url: string): boolean => {
     if (!url) return true; // Empty is valid
-    return url.includes('spotify.com/track/');
+    
+    // Check for common Spotify URL patterns
+    const isTrackUrl = url.includes('spotify.com/track/');
+    const isOpenSpotifyUrl = url.includes('open.spotify.com');
+    const hasTrackId = /track\/([a-zA-Z0-9]+)/.test(url);
+    
+    return (isTrackUrl || (isOpenSpotifyUrl && hasTrackId));
   };
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

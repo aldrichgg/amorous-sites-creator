@@ -36,10 +36,40 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
   useEffect(() => {
     // Extract Spotify track ID when spotifyUrl changes
     if (spotifyUrl) {
-      const match = spotifyUrl.match(/track\/([a-zA-Z0-9]+)/);
-      const id = match ? match[1] : null;
-      console.log("Extracted Spotify track ID:", id, "from URL:", spotifyUrl);
-      setSpotifyTrackId(id);
+      // Improved track ID extraction
+      try {
+        // Handle standard format: spotify.com/track/ID
+        const match = spotifyUrl.match(/track\/([a-zA-Z0-9]+)/);
+        if (match && match[1]) {
+          console.log("Extracted Spotify track ID:", match[1], "from URL:", spotifyUrl);
+          setSpotifyTrackId(match[1]);
+          return;
+        }
+        
+        // Handle spotify:track:ID format
+        const uriMatch = spotifyUrl.match(/spotify:track:([a-zA-Z0-9]+)/);
+        if (uriMatch && uriMatch[1]) {
+          console.log("Extracted Spotify track ID from URI:", uriMatch[1]);
+          setSpotifyTrackId(uriMatch[1]);
+          return;
+        }
+        
+        // Try URL object for embedded parameters
+        const url = new URL(spotifyUrl);
+        const trackParam = url.searchParams.get('track');
+        if (trackParam) {
+          console.log("Extracted Spotify track ID from params:", trackParam);
+          setSpotifyTrackId(trackParam);
+          return;
+        }
+        
+        // No valid ID found
+        console.log("No valid Spotify track ID found in URL:", spotifyUrl);
+        setSpotifyTrackId(null);
+      } catch (e) {
+        console.log("Error parsing Spotify URL:", e);
+        setSpotifyTrackId(null);
+      }
     } else {
       setSpotifyTrackId(null);
     }
