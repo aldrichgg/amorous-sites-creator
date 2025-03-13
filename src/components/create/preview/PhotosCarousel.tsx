@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/carousel";
 // Properly import from embla-carousel-react
 import useEmblaCarousel from 'embla-carousel-react';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
 
 interface PhotosCarouselProps {
   photos: string[];
@@ -56,11 +57,11 @@ const PhotosCarousel: React.FC<PhotosCarouselProps> = ({ photos }) => {
         <CarouselContent>
           {photos.map((photo, index) => (
             <CarouselItem key={index}>
-              <div className="aspect-[4/3] rounded-lg overflow-hidden bg-transparent flex items-center justify-center">
+              <div className="rounded-lg overflow-hidden bg-transparent flex items-center justify-center max-h-[400px]">
                 <img 
                   src={photo} 
                   alt={`Memory photo ${index + 1}`} 
-                  className="w-full h-full object-contain rounded-lg"
+                  className="w-auto h-auto max-w-full max-h-[400px] object-contain rounded-lg mx-auto"
                   style={{ border: '1px solid rgba(156, 163, 175, 0.4)' }}
                 />
               </div>
