@@ -6,7 +6,6 @@ import Navbar from '../components/Layout/Navbar';
 import Footer from '../components/Layout/Footer';
 import Steps from '../components/Steps';
 import PricingPlans from '../components/PricingPlans';
-import PromoBar from '../components/PromoBar';
 import { FlipWords } from '../components/ui/flip-words';
 
 const Index = () => {
@@ -18,7 +17,6 @@ const Index = () => {
   
   return (
     <div className="bg-black min-h-screen text-white">
-      <PromoBar />
       <Navbar />
       
       <main>
