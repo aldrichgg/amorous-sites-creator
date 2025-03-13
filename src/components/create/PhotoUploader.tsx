@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Upload, X, Image } from 'lucide-react';
@@ -47,8 +46,6 @@ const PhotoUploader: React.FC<PhotoUploaderProps> = ({
     const remainingSlots = maxPhotos - photos.length;
     
     Array.from(files).slice(0, remainingSlots).forEach(file => {
-      // Normally, you'd upload the file to a server here and get a URL back
-      // For this example, we'll create a local object URL
       const objectUrl = URL.createObjectURL(file);
       newPhotos.push(objectUrl);
     });
@@ -129,7 +126,7 @@ const PhotoUploader: React.FC<PhotoUploaderProps> = ({
                     <img
                       src={photo}
                       alt={`Photo ${index + 1}`}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover border-2 border-gray-400/40 rounded-md"
                     />
                   </div>
                   
