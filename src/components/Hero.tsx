@@ -2,9 +2,11 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Star, ChevronRight } from 'lucide-react';
+import { FlipWords } from '@/components/ui/flip-words';
 
 const Hero = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const flipWords = ["suas memórias", "seus momentos", "suas experiências"];
 
   useEffect(() => {
     setIsLoaded(true);
@@ -24,7 +26,9 @@ const Hero = () => {
           
           <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white leading-tight">
             Personalize <br />
-            <span className="text-gradient animate-text-shimmer bg-[length:200%_auto]">suas memórias</span>
+            <span className="text-gradient animate-text-shimmer bg-[length:200%_auto]">
+              <FlipWords words={flipWords} className="text-gradient animate-text-shimmer text-4xl md:text-5xl" />
+            </span>
           </h1>
           
           <p className="text-gray-300 text-lg md:text-xl mb-8">

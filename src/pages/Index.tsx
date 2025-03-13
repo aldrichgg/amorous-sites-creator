@@ -7,8 +7,11 @@ import Footer from '../components/Layout/Footer';
 import Steps from '../components/Steps';
 import PricingPlans from '../components/PricingPlans';
 import PromoBar from '../components/PromoBar';
+import { FlipWords } from '../components/ui/flip-words';
 
 const Index = () => {
+  const flipWords = ["seus momentos", "suas memórias", "suas experiências"];
+  
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -60,7 +63,7 @@ const Index = () => {
               
               <div className="lg:w-1/2">
                 <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                  Personalize suas memórias!
+                  Personalize <FlipWords words={flipWords} className="text-gradient ml-2" />
                 </h2>
                 <p className="text-gray-300 mb-6">
                   Preencha o formulário, receba seu site único e um QR Code para compartilhar.
