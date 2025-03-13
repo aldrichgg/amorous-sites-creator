@@ -40,22 +40,22 @@ const DaysGrid: React.FC<DaysGridProps> = ({
         ))}
         
         {daysInMonth.map((day, i) => {
-          const isSelected = isDaySelected(day, selectedDate);
-          const isToday = isDayToday(day);
+          const isSelected = selectedDate ? isDaySelected(day, selectedDate) : false;
+          const isCurrentDay = isDayToday(day);
           const isCurrentMonth = isDayInCurrentMonth(day, currentMonth);
           
           return (
             <button
               key={i}
               className={`h-8 w-8 sm:h-10 sm:w-10 rounded-full flex items-center justify-center text-xs sm:text-sm transition-all duration-200 relative
-                ${isToday && !isSelected ? 'text-memcyan font-bold' : ''}
+                ${isCurrentDay && !isSelected ? 'text-memcyan font-bold' : ''}
                 ${isCurrentMonth ? 'text-white' : 'text-gray-600'}
                 ${isSelected 
                   ? 'bg-gradient-to-r from-memblue to-memcyan text-white font-medium shadow-lg shadow-memcyan/20' 
                   : 'hover:bg-gray-800/70'}`}
               onClick={() => onDateSelect(day)}
             >
-              {isToday && !isSelected && (
+              {isCurrentDay && !isSelected && (
                 <span className="absolute inset-0 rounded-full border border-memcyan animate-pulse"></span>
               )}
               {format(day, 'd')}

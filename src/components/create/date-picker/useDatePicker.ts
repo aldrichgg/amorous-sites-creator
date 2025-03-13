@@ -28,7 +28,7 @@ interface UseDatePickerReturn {
   nextYear: () => void;
   isDaySelected: (day: Date, selectedDate: Date | null) => boolean;
   isDayToday: (day: Date) => boolean;
-  isDayInCurrentMonth: (day: Date) => boolean;
+  isDayInCurrentMonth: (day: Date, currentMonth?: Date) => boolean;
 }
 
 export const useDatePicker = (): UseDatePickerReturn => {
@@ -91,8 +91,8 @@ export const useDatePicker = (): UseDatePickerReturn => {
     return isToday(day);
   };
   
-  const isDayInCurrentMonth = (day: Date): boolean => {
-    return isSameMonth(day, currentMonth);
+  const isDayInCurrentMonth = (day: Date, monthToCheck: Date = currentMonth): boolean => {
+    return isSameMonth(day, monthToCheck);
   };
   
   return {
