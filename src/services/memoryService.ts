@@ -13,7 +13,7 @@ export const createMemory = async (memory: Memory, photos: string[]): Promise<st
         page_title: memory.pageTitle,
         page_name: memory.pageName,
         email: memory.email,
-        start_date: memory.startDate,
+        start_date: memory.startDate.toISOString(), // Convert Date to ISO string
         message: memory.message,
         spotify_url: memory.spotifyUrl,
         spotify_track_id: memory.spotifyTrackId,
@@ -142,7 +142,7 @@ const mapDatabaseToMemory = (data: any): Memory => {
     spotifyUrl: data.spotify_url,
     spotifyTrackId: data.spotify_track_id,
     selectedEmoji: data.selected_emoji,
-    selectedPlan: data.selected_plan,
+    selectedPlan: data.selected_plan as 'annual' | 'forever',
     createdAt: new Date(data.created_at)
   };
 };

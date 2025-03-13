@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight, CheckCircle2, Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { createMemory } from '@/services/memoryService';
+import { Memory } from '@/types/memory';
 
 interface NavigationButtonsProps {
   onPrevious: () => void;
@@ -42,7 +43,7 @@ const NavigationButtons: React.FC<NavigationButtonsProps> = ({
         .replace(/[^\w-]+/g, ''); // Remove non-alphanumeric characters
         
       // Map data to our memory service format
-      const memoryToSave = {
+      const memoryToSave: Memory = {
         pageTitle: memoryData.pageTitle,
         pageName: pageName,
         email: memoryData.email,
