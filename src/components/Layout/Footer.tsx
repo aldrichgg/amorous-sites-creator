@@ -6,7 +6,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-black py-8 px-4">
+    <footer className="bg-gray-900 py-8 px-4 border-t border-gray-800">
       <div className="container mx-auto">
         <div className="flex flex-col items-center justify-center">
           <div className="flex items-center mb-3">
@@ -20,24 +20,24 @@ const Footer = () => {
             </div>
             <span className="text-white font-bold text-xl">Loveiit</span>
           </div>
-          <p className="text-gray-400 text-sm mb-6">
+          <p className="text-gray-300 text-sm mb-6">
             Copyright © {currentYear} - Todos os direitos reservados
           </p>
-          <p className="text-gray-400 text-sm flex items-center mb-6">
+          <p className="text-gray-300 text-sm flex items-center mb-6">
             Feito com <Heart size={14} className="mx-1 text-red-500 fill-red-500" /> por Davi Souza
           </p>
 
-          <div className="flex space-x-4 text-center mb-6">
+          <div className="flex flex-wrap justify-center gap-4 mb-6">
             <Link to="/legal" className="text-memblue hover:text-memblue-light text-sm uppercase transition-colors">
               LEGAL
             </Link>
-            <Link to="/terms" className="text-gray-400 hover:text-white text-sm transition-colors">
+            <Link to="/terms" className="text-gray-300 hover:text-white text-sm transition-colors">
               Termos de uso
             </Link>
-            <Link to="/privacy" className="text-gray-400 hover:text-white text-sm transition-colors">
+            <Link to="/privacy" className="text-gray-300 hover:text-white text-sm transition-colors">
               Política de privacidade
             </Link>
-            <Link to="/cnpj" className="text-gray-400 hover:text-white text-sm transition-colors">
+            <Link to="/cnpj" className="text-gray-300 hover:text-white text-sm transition-colors">
               CNPJ: 00.000.000/0001-00
             </Link>
           </div>
