@@ -6,7 +6,6 @@ import { Heart, Calendar, Music, Camera, Share2, Loader2 } from 'lucide-react';
 import { toast } from "sonner";
 
 import StarBackground from '../components/StarBackground';
-import Footer from '../components/Layout/Footer';
 import SpotifyPlayer from '../components/create/preview/SpotifyPlayer';
 import PhotosCarousel from '../components/create/preview/PhotosCarousel';
 import DateCounter from '../components/create/preview/DateCounter';
@@ -219,10 +218,6 @@ const MemoryDisplay = () => {
             </div>
           </main>
         )}
-        
-        <div className="relative z-20 mt-auto">
-          <Footer />
-        </div>
       </div>
     </div>
   );
