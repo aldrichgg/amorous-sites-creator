@@ -9,6 +9,7 @@ import SpotifyPlayer from './preview/SpotifyPlayer';
 import PhotosCarousel from './preview/PhotosCarousel';
 import DateCounter from './preview/DateCounter';
 import MessageDisplay from './preview/MessageDisplay';
+import EmojiRain from './preview/EmojiRain';
 
 interface MemoryPreviewProps {
   pageTitle: string;
@@ -74,6 +75,9 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
               
               {/* Content */}
               <div className="flex-1 overflow-y-auto p-4 relative">
+                {/* Emoji Rain Effect */}
+                {selectedEmoji && <EmojiRain emoji={selectedEmoji} />}
+                
                 <SpotifyPlayer spotifyTrackId={spotifyTrackId} spotifyUrl={spotifyUrl} />
                 <PhotosCarousel photos={photos} />
                 
