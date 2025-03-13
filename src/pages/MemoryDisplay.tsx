@@ -12,6 +12,7 @@ import DateCounter from '../components/create/preview/DateCounter';
 import MessageDisplay from '../components/create/preview/MessageDisplay';
 import EmojiRain from '../components/create/preview/EmojiRain';
 import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 import { getMemoryByPageName } from '@/services/memoryService';
 import { Memory, MemoryPhoto } from '@/types/memory';
 
@@ -121,43 +122,16 @@ const MemoryDisplay = () => {
                 <EmojiRain emoji={memoryData.selectedEmoji} />
               )}
               
-              {/* Main Content Card */}
+              {/* Main Content Card with new order */}
               <motion.div 
                 className="glass-card rounded-2xl overflow-hidden backdrop-blur-sm mb-8"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                {/* Photos Carousel */}
-                {photos && photos.length > 0 && (
-                  <div className="p-4">
-                    <PhotosCarousel photos={photos} />
-                  </div>
-                )}
-                
-                {/* Counter */}
-                <div className="px-4 py-6 text-center">
-                  <div className="flex items-center justify-center gap-2 mb-2 text-memcyan">
-                    <Calendar className="w-5 h-5" />
-                    <h2 className="text-xl font-medium">Contador de Tempo</h2>
-                  </div>
-                  <DateCounter startDate={memoryData.startDate} />
-                </div>
-                
-                {/* Message */}
-                {memoryData.message && (
-                  <div className="px-4 pb-6">
-                    <div className="flex items-center justify-center gap-2 mb-2 text-memcyan">
-                      <Heart className="w-5 h-5" />
-                      <h2 className="text-xl font-medium">Mensagem</h2>
-                    </div>
-                    <MessageDisplay message={memoryData.message} />
-                  </div>
-                )}
-                
-                {/* Spotify Player - only display for forever plan */}
+                {/* 1. Spotify Player at the top - only display for forever plan */}
                 {memoryData.selectedPlan === 'forever' && memoryData.spotifyTrackId && (
-                  <div className="px-4 pb-6">
+                  <div className="px-4 pt-6 pb-2">
                     <div className="flex items-center justify-center gap-2 mb-2 text-memcyan">
                       <Music className="w-5 h-5" />
                       <h2 className="text-xl font-medium">Nossa Música</h2>
@@ -169,7 +143,44 @@ const MemoryDisplay = () => {
                   </div>
                 )}
                 
-                {/* Photos Grid (if there are photos) */}
+                {/* 2. Photos Carousel */}
+                {photos && photos.length > 0 && (
+                  <div className="p-4">
+                    <PhotosCarousel photos={photos} />
+                  </div>
+                )}
+                
+                {/* 3. Page Title */}
+                <div className="px-4 pt-2 pb-2 text-center">
+                  <h2 className="text-2xl font-bold text-white">{memoryData.pageTitle}</h2>
+                </div>
+                
+                {/* 4. Counter */}
+                <div className="px-4 py-2 text-center">
+                  <div className="flex items-center justify-center gap-2 mb-2 text-memcyan">
+                    <Calendar className="w-5 h-5" />
+                    <h2 className="text-xl font-medium">Contador de Tempo</h2>
+                  </div>
+                  <DateCounter startDate={memoryData.startDate} />
+                </div>
+                
+                {/* Separator line */}
+                <div className="px-8 py-2">
+                  <Separator className="bg-gray-700" />
+                </div>
+                
+                {/* 5. Message */}
+                {memoryData.message && (
+                  <div className="px-4 py-4">
+                    <div className="flex items-center justify-center gap-2 mb-2 text-memcyan">
+                      <Heart className="w-5 h-5" />
+                      <h2 className="text-xl font-medium">Mensagem</h2>
+                    </div>
+                    <MessageDisplay message={memoryData.message} />
+                  </div>
+                )}
+                
+                {/* Photos Grid (if there are photos) - moved to bottom */}
                 {photos && photos.length > 1 && (
                   <div className="px-4 pb-6">
                     <div className="flex items-center justify-center gap-2 mb-2 text-memcyan">

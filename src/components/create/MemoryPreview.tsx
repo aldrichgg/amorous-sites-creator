@@ -10,6 +10,7 @@ import PhotosCarousel from './preview/PhotosCarousel';
 import DateCounter from './preview/DateCounter';
 import MessageDisplay from './preview/MessageDisplay';
 import EmojiRain from './preview/EmojiRain';
+import { Separator } from "@/components/ui/separator";
 
 interface MemoryPreviewProps {
   pageTitle: string;
@@ -126,23 +127,31 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
                 <BrowserHeader pageName={pageName} />
               </div>
               
-              {/* Content */}
+              {/* Content with the new order */}
               <div className="flex-1 overflow-y-auto p-4 relative">
                 {/* Emoji Rain Effect - only in premium plan */}
                 {showEmojiRain && selectedEmoji && <EmojiRain emoji={selectedEmoji} />}
                 
-                {/* Spotify Player - only in premium plan */}
+                {/* 1. Spotify Player at the top - only in premium plan */}
                 {showSpotify && <SpotifyPlayer spotifyTrackId={spotifyTrackId} spotifyUrl={spotifyUrl} />}
                 
-                {/* Photos Carousel - with limit based on plan */}
+                {/* 2. Photos Carousel - with limit based on plan */}
                 <PhotosCarousel photos={limitedPhotos} />
                 
-                {/* Title */}
-                <div className="text-center mb-2">
+                {/* 3. Title */}
+                <div className="text-center mt-4 mb-2">
                   <h1 className="text-xl sm:text-2xl font-bold text-white">{pageTitle || 'Título da Memória'}</h1>
                 </div>
                 
+                {/* 4. Date Counter */}
                 <DateCounter startDate={startDate} />
+                
+                {/* Separator line */}
+                <div className="my-4">
+                  <Separator className="bg-gray-700" />
+                </div>
+                
+                {/* 5. Message */}
                 <MessageDisplay message={message} />
                 
                 {/* Selected emoji as background - visible in both plans */}
