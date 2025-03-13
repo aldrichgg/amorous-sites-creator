@@ -18,7 +18,8 @@ const MobileDeviceFrame: React.FC<MobileDeviceFrameProps> = ({
       style={{ 
         width: previewWidth, 
         height: previewHeight,
-        maxWidth: "100%"
+        maxWidth: "100%",
+        aspectRatio: "9/19" // Standard smartphone aspect ratio
       }}
     >
       {/* Device notch */}

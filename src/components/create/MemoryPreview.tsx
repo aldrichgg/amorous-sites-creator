@@ -45,9 +45,9 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
     }
   }, [spotifyUrl]);
 
-  // Adjust for smaller screens
-  const previewWidth = isMobile ? "95%" : "350px";
-  const previewHeight = isMobile ? "600px" : "700px";
+  // Adjust for smaller screens with more natural phone dimensions
+  const previewWidth = isMobile ? "280px" : "320px";
+  const previewHeight = isMobile ? "580px" : "650px";
 
   return (
     <div className="w-full mx-auto mt-8 flex justify-center">
