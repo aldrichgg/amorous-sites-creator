@@ -8,11 +8,12 @@ const Footer = () => {
   const isCreatePage = location.pathname.includes('/create');
 
   return (
-    <footer className={`${isCreatePage ? 'bg-gray-900' : 'bg-gray-900 backdrop-blur-lg'} py-8 px-4 border-t border-gray-800 relative z-10`}>
+    <footer className={`${isCreatePage ? 'bg-gray-900' : 'bg-gray-900 backdrop-blur-lg'} py-8 md:py-10 px-4 border-t border-gray-800 relative z-10`}>
       <div className="container mx-auto">
-        <div className="flex flex-col items-center justify-center">
-          <div className="flex items-center mb-3">
-            <div className="h-8 w-8 mr-2">
+        <div className="flex flex-col items-center">
+          {/* Logo and brand */}
+          <div className="flex items-center mb-6">
+            <div className="h-10 w-10 mr-2">
               <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                   <path id="heart-a" d="M7.64648437,1.19311523 C8.33056641,5.30135091 6.96142578,7.94555664 3.5390625,9.12573242 C0.116699219,10.3059082 -0.801757813,12.9492188 0.783691406,17.0556641 L3,19.2653809 L12.5229492,9.54785156 C13.5050456,6.41617839 12.8082682,3.82950846 10.4326172,1.7878418 C8.8577474,0.574951172 7.92903646,0.376708984 7.64648437,1.19311523 Z"></path>
@@ -20,19 +21,19 @@ const Footer = () => {
                 </defs>
                 <g fill="none" fillRule="evenodd" transform="translate(1 2)">
                   <g transform="translate(8)">
-                    <mask id="heart-b" fill="#ffffff">
+                    <mask id="heart-footer-b" fill="#ffffff">
                       <use xlinkHref="#heart-a"></use>
                     </mask>
                     <use fill="#D8D8D8" xlinkHref="#heart-a"></use>
-                    <g fill="#FF3A3A" mask="url(#heart-b)">
+                    <g fill="#FFA0A0" mask="url(#heart-footer-b)">
                       <rect width="24" height="24" transform="translate(-9 -2)"></rect>
                     </g>
                   </g>
-                  <mask id="heart-d" fill="#ffffff">
+                  <mask id="heart-footer-d" fill="#ffffff">
                     <use xlinkHref="#heart-c"></use>
                   </mask>
                   <use fill="#000000" fillRule="nonzero" xlinkHref="#heart-c"></use>
-                  <g fill="#FF0000" mask="url(#heart-d)">
+                  <g fill="#7600FF" mask="url(#heart-footer-d)">
                     <rect width="24" height="24" transform="translate(-1 -2)"></rect>
                   </g>
                 </g>
@@ -41,12 +42,13 @@ const Footer = () => {
             <span className="text-white font-bold text-xl">Loveiit</span>
           </div>
           
-          <div className="w-full max-w-md mb-6">
-            <div className="h-px bg-gray-800 w-full my-4"></div>
+          {/* Navigation sections */}
+          <div className="w-full max-w-4xl mb-6">
+            <div className="h-px bg-gray-800 w-full mb-6"></div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-y-8 gap-x-4 text-left md:text-center">
               <div>
-                <h3 className="text-white font-semibold mb-2">Loveiit</h3>
+                <h3 className="text-white font-semibold text-lg mb-3">Loveiit</h3>
                 <ul className="space-y-2">
                   <li>
                     <Link to="/" className="text-gray-400 hover:text-white text-sm transition-colors">
@@ -67,7 +69,7 @@ const Footer = () => {
               </div>
               
               <div>
-                <h3 className="text-white font-semibold mb-2">Ajuda</h3>
+                <h3 className="text-white font-semibold text-lg mb-3">Ajuda</h3>
                 <ul className="space-y-2">
                   <li>
                     <Link to="/faq" className="text-gray-400 hover:text-white text-sm transition-colors">
@@ -87,13 +89,13 @@ const Footer = () => {
                 </ul>
               </div>
               
-              <div>
-                <h3 className="text-white font-semibold mb-2">Contato</h3>
+              <div className="col-span-2 md:col-span-1">
+                <h3 className="text-white font-semibold text-lg mb-3">Contato</h3>
                 <ul className="space-y-2">
                   <li>
                     <a 
                       href="mailto:contato@loveiit.com.br" 
-                      className="text-gray-400 hover:text-white text-sm transition-colors"
+                      className="text-gray-400 hover:text-white text-sm transition-colors flex items-center md:justify-center"
                     >
                       contato@loveiit.com.br
                     </a>
@@ -103,7 +105,7 @@ const Footer = () => {
                       href="https://casadosdados.com.br/solucao/cnpj/50195991-aldrich-larchert-azevedo-carvalho-da-gama-50195991000183" 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      className="text-gray-400 hover:text-white text-sm transition-colors"
+                      className="text-gray-400 hover:text-white text-sm transition-colors flex items-center md:justify-center"
                     >
                       CNPJ: 50.195.991/0001-83
                     </a>
@@ -113,15 +115,16 @@ const Footer = () => {
             </div>
           </div>
           
-          <div className="w-full max-w-md">
+          {/* Copyright and credits */}
+          <div className="w-full max-w-4xl">
             <div className="h-px bg-gray-800 w-full my-4"></div>
             
-            <div className="flex flex-col sm:flex-row items-center justify-between">
-              <p className="text-gray-400 text-xs mb-2 sm:mb-0">
+            <div className="flex flex-col md:flex-row items-center justify-between">
+              <p className="text-gray-400 text-sm mb-3 md:mb-0">
                 Copyright © {currentYear} - Todos os direitos reservados
               </p>
-              <p className="text-gray-400 text-xs flex items-center">
-                Feito com <Heart size={12} className="mx-1 text-red-500 fill-red-500" /> por IMPULSEGRAM
+              <p className="text-gray-400 text-sm flex items-center">
+                Feito com <Heart size={14} className="mx-1 text-red-500 fill-red-500" /> por IMPULSEGRAM
               </p>
             </div>
           </div>

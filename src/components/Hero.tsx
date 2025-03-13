@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Star, ChevronRight } from 'lucide-react';
@@ -79,7 +80,7 @@ const Hero = () => {
             <div className="relative group w-full sm:w-auto">
               <div className="absolute inset-0 btn-gradient rounded-full blur opacity-75 group-hover:opacity-100 transition-opacity"></div>
               <Link to="/create" className="relative w-full sm:w-auto inline-flex items-center justify-center bg-gradient-to-r from-memred to-memred-light hover:from-memred-dark hover:to-memred-light text-white font-medium rounded-full px-6 sm:px-8 py-2.5 sm:py-3 text-base sm:text-lg transition-all duration-300">
-                Come��ar <ChevronRight size={18} className="ml-1" />
+                Começar <ChevronRight size={18} className="ml-1" />
               </Link>
             </div>
           </div>
@@ -108,9 +109,9 @@ const Hero = () => {
                   <g fill="none" fillRule="evenodd" transform="translate(1 2)">
                     <g transform="translate(8)">
                       <mask id="hero-heart-b" fill="#ffffff">
-                        <use xlinkHref="#hero-heart-a"></use>
+                        <use xlinkHref="#heart-a"></use>
                       </mask>
-                      <use fill="#D8D8D8" xlinkHref="#hero-heart-a"></use>
+                      <use fill="#D8D8D8" xlinkHref="#heart-a"></use>
                       <g fill="#FF3A3A" mask="url(#hero-heart-b)">
                         <rect width="24" height="24" transform="translate(-9 -2)"></rect>
                       </g>

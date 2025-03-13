@@ -43,19 +43,19 @@ const Navbar = () => {
                   </defs>
                   <g fill="none" fillRule="evenodd" transform="translate(1 2)">
                     <g transform="translate(8)">
-                      <mask id="heart-b" fill="#ffffff">
+                      <mask id="heart-nav-b" fill="#ffffff">
                         <use xlinkHref="#heart-a"></use>
                       </mask>
                       <use fill="#D8D8D8" xlinkHref="#heart-a"></use>
-                      <g fill="#FF3A3A" mask="url(#heart-b)">
+                      <g fill="#FFA0A0" mask="url(#heart-nav-b)">
                         <rect width="24" height="24" transform="translate(-9 -2)"></rect>
                       </g>
                     </g>
-                    <mask id="heart-d" fill="#ffffff">
+                    <mask id="heart-nav-d" fill="#ffffff">
                       <use xlinkHref="#heart-c"></use>
                     </mask>
                     <use fill="#000000" fillRule="nonzero" xlinkHref="#heart-c"></use>
-                    <g fill="#FF0000" mask="url(#heart-d)">
+                    <g fill="#7600FF" mask="url(#heart-nav-d)">
                       <rect width="24" height="24" transform="translate(-1 -2)"></rect>
                     </g>
                   </g>
