@@ -1,5 +1,5 @@
 
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image as ImageIcon, ChevronLeft, ChevronRight } from 'lucide-react';
 import {
   Carousel,
@@ -8,6 +8,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { useEmblaCarousel } from 'embla-carousel-react';
 
 interface PhotosCarouselProps {
   photos: string[];
@@ -15,11 +16,30 @@ interface PhotosCarouselProps {
 
 const PhotosCarousel: React.FC<PhotosCarouselProps> = ({ photos }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [emblaRef, emblaApi] = useEmblaCarousel();
   
   // Reset index when photos change
   useEffect(() => {
     setCurrentIndex(0);
   }, [photos]);
+
+  // Update the current index when the carousel slides
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const onSelect = () => {
+      setCurrentIndex(emblaApi.selectedScrollSnap());
+    };
+
+    emblaApi.on('select', onSelect);
+    
+    // Initial index
+    onSelect();
+
+    return () => {
+      emblaApi.off('select', onSelect);
+    };
+  }, [emblaApi]);
 
   if (photos.length === 0) {
     return (
@@ -31,10 +51,7 @@ const PhotosCarousel: React.FC<PhotosCarouselProps> = ({ photos }) => {
   
   return (
     <div className="mb-4">
-      <Carousel
-        className="w-full"
-        onSelect={(index) => setCurrentIndex(index)}
-      >
+      <Carousel ref={emblaRef} className="w-full">
         <CarouselContent>
           {photos.map((photo, index) => (
             <CarouselItem key={index}>
