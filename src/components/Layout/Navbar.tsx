@@ -6,6 +6,7 @@ import { Menu, X, ChevronDown, Globe } from 'lucide-react';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [promoVisible, setPromoVisible] = useState(true);
   const location = useLocation();
 
   useEffect(() => {
@@ -14,6 +15,12 @@ const Navbar = () => {
         setScrolled(true);
       } else {
         setScrolled(false);
+      }
+
+      if (window.scrollY > 50) {
+        setPromoVisible(false);
+      } else {
+        setPromoVisible(true);
       }
     };
 
@@ -30,7 +37,7 @@ const Navbar = () => {
   const closeMenu = () => setIsOpen(false);
 
   return (
-    <header className={`fixed w-full top-10 z-40 transition-all duration-300 ${scrolled ? 'bg-black/80 backdrop-blur-lg shadow-lg' : 'bg-transparent'}`}>
+    <header className={`fixed w-full ${promoVisible ? 'top-10' : 'top-0'} z-40 transition-all duration-300 ${scrolled ? 'bg-black/80 backdrop-blur-lg shadow-lg' : 'bg-transparent'}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
