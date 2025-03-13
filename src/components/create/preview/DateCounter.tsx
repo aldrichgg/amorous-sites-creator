@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { Calendar } from 'lucide-react';
+import { Calendar, Heart } from 'lucide-react';
 
 interface DateCounterProps {
   startDate: Date | null;
@@ -55,7 +55,7 @@ const DateCounter: React.FC<DateCounterProps> = ({ startDate }) => {
         {timeString}
       </div>
       <div className="flex items-center justify-center text-gray-300 text-xs">
-        <Calendar className="w-3 h-3 mr-1 text-memcyan" />
+        <Heart className="w-3 h-3 mr-1 text-[#ea384c] fill-[#ea384c]" />
         <span>Desde {formatDate(startDate)}</span>
       </div>
     </div>
