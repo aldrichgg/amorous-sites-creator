@@ -26,8 +26,8 @@ const Hero = () => {
           
           <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white leading-tight">
             Personalize <br />
-            <span className="text-gradient animate-text-shimmer bg-[length:200%_auto]">
-              <FlipWords words={flipWords} className="text-gradient animate-text-shimmer text-4xl md:text-5xl" />
+            <span>
+              <FlipWords words={flipWords} className="text-4xl md:text-5xl" />
             </span>
           </h1>
           
