@@ -27,7 +27,7 @@ const MobileDeviceFrame: React.FC<MobileDeviceFrameProps> = ({
         <div className="w-24 sm:w-40 h-3 sm:h-5 bg-black rounded-b-xl"></div>
       </div>
       
-      <div className="w-full h-full overflow-hidden">
+      <div className="w-full h-full overflow-hidden pt-3">
         {children}
       </div>
       

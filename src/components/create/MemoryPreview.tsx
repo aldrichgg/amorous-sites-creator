@@ -71,7 +71,7 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
           <MobileDeviceFrame previewWidth={previewWidth} previewHeight={previewHeight}>
             {/* Browser content */}
             <div className="w-full h-full overflow-y-auto bg-gradient-to-b from-gray-900 to-black flex flex-col">
-              <div className="w-full sticky top-0 z-20">
+              <div className="w-full sticky top-0 z-20 pt-2">
                 <BrowserHeader pageName={pageName} />
               </div>
               

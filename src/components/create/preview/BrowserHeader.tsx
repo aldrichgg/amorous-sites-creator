@@ -18,8 +18,8 @@ const BrowserHeader: React.FC<BrowserHeaderProps> = ({ pageName }) => {
         </div>
       </div>
       
-      {/* URL Bar */}
-      <div className="bg-gray-100 mx-2 my-1 p-2 rounded-md flex items-center">
+      {/* URL Bar with more spacing from top */}
+      <div className="bg-gray-100 mx-2 my-2 p-2 rounded-md flex items-center">
         <Globe className="w-4 h-4 mr-2 text-gray-500" />
         <div className="text-gray-800 text-sm font-medium truncate">
           loveiit.com/{pageName || 'sua-memoria'}
