@@ -122,25 +122,29 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
         >
           <MobileDeviceFrame previewWidth={previewWidth} previewHeight={previewHeight}>
             {/* Browser content */}
-            <div className="w-full h-full overflow-y-auto bg-gradient-to-b from-gray-900 to-black flex flex-col">
+            <div className="w-full h-full overflow-y-auto bg-gradient-to-b from-black via-purple-950/20 to-black flex flex-col">
               <div className="w-full sticky top-0 z-20 pt-2">
                 <BrowserHeader pageName={pageName} />
               </div>
               
-              {/* Content with the new order */}
+              {/* Content with the revised order */}
               <div className="flex-1 overflow-y-auto p-4 relative">
                 {/* Emoji Rain Effect - only in premium plan */}
                 {showEmojiRain && selectedEmoji && <EmojiRain emoji={selectedEmoji} />}
                 
                 {/* 1. Spotify Player at the top - only in premium plan */}
-                {showSpotify && <SpotifyPlayer spotifyTrackId={spotifyTrackId} spotifyUrl={spotifyUrl} />}
+                {showSpotify && spotifyTrackId && (
+                  <div className="mb-3">
+                    <SpotifyPlayer spotifyTrackId={spotifyTrackId} spotifyUrl={spotifyUrl} />
+                  </div>
+                )}
                 
                 {/* 2. Photos Carousel - with limit based on plan */}
                 <PhotosCarousel photos={limitedPhotos} />
                 
                 {/* 3. Title */}
                 <div className="text-center mt-4 mb-2">
-                  <h1 className="text-xl sm:text-2xl font-bold text-white">{pageTitle || 'Título da Memória'}</h1>
+                  <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-purple-200 to-pink-100 bg-clip-text text-transparent">{pageTitle || 'Título da Memória'}</h1>
                 </div>
                 
                 {/* 4. Date Counter */}
@@ -148,19 +152,12 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
                 
                 {/* Separator line */}
                 <div className="my-4">
-                  <Separator className="bg-gray-700" />
+                  <Separator className="bg-purple-400/30" />
                 </div>
                 
                 {/* 5. Message */}
                 <MessageDisplay message={message} />
                 
-                {/* Selected emoji as background - visible in both plans */}
-                {selectedEmoji && (
-                  <div className="absolute bottom-4 right-4 text-4xl sm:text-5xl opacity-20">
-                    {selectedEmoji}
-                  </div>
-                )}
-
                 {/* Plan limitation notice */}
                 {selectedPlan === 'annual' && (
                   <div className="mt-4 text-xs text-yellow-400 bg-yellow-900/20 p-2 rounded-md text-center">

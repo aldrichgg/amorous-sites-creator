@@ -74,7 +74,7 @@ const MemoryDisplay = () => {
 
   // Show appropriate UI based on loading state and data
   return (
-    <div className="min-h-screen bg-black text-white relative">
+    <div className="min-h-screen bg-gradient-to-b from-black via-purple-950/20 to-black text-white relative">
       <div className="relative overflow-hidden min-h-screen">
         <StarBackground intensity="high" color="mixed" />
         
@@ -91,16 +91,16 @@ const MemoryDisplay = () => {
           </div>
         ) : error ? (
           <div className="flex flex-col items-center justify-center min-h-screen p-4">
-            <div className="glass-card p-8 max-w-md text-center rounded-xl">
+            <div className="neo-blur p-8 max-w-md text-center rounded-xl">
               <h2 className="text-2xl font-bold text-red-400 mb-4">Oops!</h2>
               <p className="text-white mb-6">{error}</p>
-              <Button onClick={() => navigate('/search')} className="bg-memblue hover:bg-memcyan transition-colors">
+              <Button onClick={() => navigate('/search')} className="bg-gradient-to-r from-indigo-500 to-purple-500 hover:opacity-90 transition-opacity">
                 Buscar Minha Memória
               </Button>
             </div>
           </div>
         ) : memoryData && (
-          <main className="container mx-auto px-4 py-16 relative z-10 min-h-screen flex flex-col">
+          <main className="container mx-auto px-4 py-12 relative z-10 min-h-screen flex flex-col">
             <div className="max-w-3xl mx-auto w-full flex-grow">
               {/* Header */}
               <motion.div 
@@ -109,12 +109,10 @@ const MemoryDisplay = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2 font-script">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2 font-script bg-gradient-to-r from-purple-300 to-pink-200 bg-clip-text text-transparent">
                   {memoryData.pageTitle}
                 </h1>
-                {memoryData.selectedEmoji && (
-                  <div className="text-4xl sm:text-5xl mb-2">{memoryData.selectedEmoji}</div>
-                )}
+                {/* Emoji removed from below title */}
               </motion.div>
               
               {/* Emoji Rain Effect - only display for forever plan */}
@@ -124,7 +122,7 @@ const MemoryDisplay = () => {
               
               {/* Main Content Card with new order */}
               <motion.div 
-                className="glass-card rounded-2xl overflow-hidden backdrop-blur-sm mb-8"
+                className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl overflow-hidden mb-8 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.5)]"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
@@ -132,7 +130,7 @@ const MemoryDisplay = () => {
                 {/* 1. Spotify Player at the top - only display for forever plan */}
                 {memoryData.selectedPlan === 'forever' && memoryData.spotifyTrackId && (
                   <div className="px-4 pt-6 pb-2">
-                    <div className="flex items-center justify-center gap-2 mb-2 text-memcyan">
+                    <div className="flex items-center justify-center gap-2 mb-2 text-purple-300">
                       <Music className="w-5 h-5" />
                       <h2 className="text-xl font-medium">Nossa Música</h2>
                     </div>
@@ -152,12 +150,14 @@ const MemoryDisplay = () => {
                 
                 {/* 3. Page Title */}
                 <div className="px-4 pt-2 pb-2 text-center">
-                  <h2 className="text-2xl font-bold text-white">{memoryData.pageTitle}</h2>
+                  <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-200 to-pink-100 bg-clip-text text-transparent">
+                    {memoryData.pageTitle}
+                  </h2>
                 </div>
                 
                 {/* 4. Counter */}
                 <div className="px-4 py-2 text-center">
-                  <div className="flex items-center justify-center gap-2 mb-2 text-memcyan">
+                  <div className="flex items-center justify-center gap-2 mb-2 text-purple-300">
                     <Calendar className="w-5 h-5" />
                     <h2 className="text-xl font-medium">Contador de Tempo</h2>
                   </div>
@@ -166,13 +166,13 @@ const MemoryDisplay = () => {
                 
                 {/* Separator line */}
                 <div className="px-8 py-2">
-                  <Separator className="bg-gray-700" />
+                  <Separator className="bg-purple-400/30" />
                 </div>
                 
                 {/* 5. Message */}
                 {memoryData.message && (
                   <div className="px-4 py-4">
-                    <div className="flex items-center justify-center gap-2 mb-2 text-memcyan">
+                    <div className="flex items-center justify-center gap-2 mb-2 text-purple-300">
                       <Heart className="w-5 h-5" />
                       <h2 className="text-xl font-medium">Mensagem</h2>
                     </div>
@@ -183,13 +183,13 @@ const MemoryDisplay = () => {
                 {/* Photos Grid (if there are photos) - moved to bottom */}
                 {photos && photos.length > 1 && (
                   <div className="px-4 pb-6">
-                    <div className="flex items-center justify-center gap-2 mb-2 text-memcyan">
+                    <div className="flex items-center justify-center gap-2 mb-2 text-purple-300">
                       <Camera className="w-5 h-5" />
                       <h2 className="text-xl font-medium">Nossas Fotos</h2>
                     </div>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                       {photos.map((photo: string, index: number) => (
-                        <div key={index} className="relative aspect-square rounded-lg overflow-hidden">
+                        <div key={index} className="relative aspect-square rounded-lg overflow-hidden shadow-md transform transition-transform hover:scale-105">
                           <img
                             src={photo}
                             alt={`Memória ${index + 1}`}
@@ -211,7 +211,7 @@ const MemoryDisplay = () => {
               >
                 <Button 
                   onClick={handleShare}
-                  className="bg-gradient-to-r from-memblue to-memcyan hover:from-memblue-dark hover:to-memcyan-dark text-white py-3 px-6 rounded-full flex items-center gap-2"
+                  className="bg-gradient-to-r from-indigo-500 to-purple-500 hover:shadow-lg hover:opacity-90 text-white py-3 px-6 rounded-full flex items-center gap-2 shadow-[0_4px_12px_-2px_rgba(0,0,0,0.3)]"
                 >
                   <Share2 className="w-5 h-5" />
                   Compartilhar Esta Memória
@@ -224,7 +224,7 @@ const MemoryDisplay = () => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6 }}
               >
-                Criado com 💙 no LoveIit.com
+                Criado com 💜 no LoveIit.com
               </motion.div>
             </div>
           </main>
