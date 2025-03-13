@@ -30,9 +30,6 @@ const Footer = () => {
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 mb-6">
-            <Link to="/legal" className="text-memblue hover:text-memblue-light text-sm uppercase transition-colors">
-              LEGAL
-            </Link>
             <Link to="/terms" className="text-gray-300 hover:text-white text-sm transition-colors">
               Termos de uso
             </Link>
