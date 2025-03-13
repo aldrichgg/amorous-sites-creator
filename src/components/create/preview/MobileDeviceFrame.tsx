@@ -26,7 +26,9 @@ const MobileDeviceFrame: React.FC<MobileDeviceFrameProps> = ({
         <div className="w-24 sm:w-40 h-3 sm:h-5 bg-black rounded-b-xl"></div>
       </div>
       
-      {children}
+      <div className="w-full h-full overflow-hidden">
+        {children}
+      </div>
       
       {/* Home button/indicator */}
       <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-1/3 h-1 bg-gray-600 rounded-full"></div>

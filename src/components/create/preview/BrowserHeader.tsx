@@ -8,7 +8,7 @@ interface BrowserHeaderProps {
 
 const BrowserHeader: React.FC<BrowserHeaderProps> = ({ pageName }) => {
   return (
-    <>
+    <div className="w-full">
       {/* Browser Header */}
       <div className="bg-gray-800 p-2 flex items-center space-x-2">
         <div className="flex space-x-1.5">
@@ -22,10 +22,10 @@ const BrowserHeader: React.FC<BrowserHeaderProps> = ({ pageName }) => {
       <div className="bg-gray-100 mx-2 my-1 p-2 rounded-md flex items-center">
         <Globe className="w-4 h-4 mr-2 text-gray-500" />
         <div className="text-gray-800 text-sm font-medium truncate">
-          memoryiit.com/{pageName || 'sua-memoria'}
+          loveiit.com/{pageName || 'sua-memoria'}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
