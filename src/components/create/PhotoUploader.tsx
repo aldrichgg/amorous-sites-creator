@@ -86,7 +86,7 @@ const PhotoUploader: React.FC<PhotoUploaderProps> = ({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        Adicione fotos
+        Adicione álbum de fotos
       </motion.h2>
       
       <motion.p 
