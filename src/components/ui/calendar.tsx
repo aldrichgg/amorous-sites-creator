@@ -1,7 +1,7 @@
 
 import * as React from "react";
 import { ChevronLeft, ChevronRight, Heart } from "lucide-react";
-import { DayPicker } from "react-day-picker";
+import { DayPicker, DayProps } from "react-day-picker";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
@@ -55,11 +55,11 @@ function Calendar({
       components={{
         IconLeft: ({ ..._props }) => <ChevronLeft className="h-4 w-4" />,
         IconRight: ({ ..._props }) => <ChevronRight className="h-4 w-4" />,
-        Day: (props) => {
+        Day: (props: DayProps) => {
           // Add a heart shape for selected days
-          const { selected, date, disabled } = props;
+          const isSelected = props.selected && !props.disabled;
           
-          if (selected && !disabled) {
+          if (isSelected) {
             return (
               <div className="relative flex items-center justify-center h-9 w-9">
                 <Heart 
@@ -67,13 +67,13 @@ function Calendar({
                   aria-hidden="true"
                 />
                 <span className="relative z-10 font-bold">
-                  {date.getDate()}
+                  {props.date.getDate()}
                 </span>
               </div>
             );
           }
           
-          return <div className="flex items-center justify-center">{date.getDate()}</div>;
+          return <div className="flex items-center justify-center">{props.date.getDate()}</div>;
         },
       }}
       {...props}
