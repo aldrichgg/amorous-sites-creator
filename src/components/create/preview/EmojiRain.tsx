@@ -71,7 +71,7 @@ const EmojiRain: React.FC<EmojiRainProps> = ({ emoji }) => {
   };
   
   return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none z-10 h-full min-h-screen">
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-10">
       <AnimatePresence>
         {drops.map((drop) => (
           <motion.div
@@ -87,7 +87,7 @@ const EmojiRain: React.FC<EmojiRainProps> = ({ emoji }) => {
               scale: drop.scale,
             }}
             animate={{ 
-              y: '200vh', // Maintains the full height to ensure it reaches the bottom
+              y: '100vh', 
               opacity: 0.7,
               rotate: drop.rotation + 360,
             }}
