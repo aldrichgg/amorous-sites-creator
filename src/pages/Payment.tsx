@@ -1,8 +1,8 @@
 
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { CheckCircle2, CreditCard, ArrowRight, QrCode } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { CheckCircle2, CreditCard, ArrowRight, QrCode, Loader2 } from 'lucide-react';
 import { toast } from "sonner";
 
 import Navbar from '../components/Layout/Navbar';
@@ -10,7 +10,6 @@ import Footer from '../components/Layout/Footer';
 import StarBackground from '../components/StarBackground';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 
 const Payment = () => {
@@ -60,6 +59,10 @@ const Payment = () => {
       }, 1500);
     }, 2000);
   };
+
+  const selectPaymentMethod = (method: 'card' | 'pix') => {
+    setPaymentMethod(method);
+  };
   
   return (
     <div className="min-h-screen bg-black text-white">
@@ -104,123 +107,198 @@ const Payment = () => {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <RadioGroup 
-                      value={paymentMethod || ''} 
-                      onValueChange={(value) => setPaymentMethod(value as 'card' | 'pix')}
-                      className="space-y-4"
-                    >
-                      <div className="flex items-center space-x-2 rounded-md border border-gray-700 p-4 cursor-pointer hover:bg-gray-800/50 transition-colors">
-                        <RadioGroupItem value="card" id="card" className="text-memcyan" />
-                        <Label htmlFor="card" className="flex items-center cursor-pointer">
+                    <div className="space-y-4">
+                      <motion.div 
+                        className={`relative flex items-center space-x-2 rounded-md border ${paymentMethod === 'card' ? 'border-memcyan bg-gray-800/80' : 'border-gray-700'} p-6 cursor-pointer hover:bg-gray-800/50 transition-colors`}
+                        onClick={() => selectPaymentMethod('card')}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <div className={`w-6 h-6 rounded-full flex items-center justify-center ${paymentMethod === 'card' ? 'bg-memcyan' : 'border border-gray-500'}`}>
+                          {paymentMethod === 'card' && (
+                            <motion.div
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                            >
+                              <CheckCircle2 className="w-5 h-5 text-black" />
+                            </motion.div>
+                          )}
+                        </div>
+                        <Label className="flex items-center cursor-pointer">
                           <CreditCard className="w-5 h-5 mr-2 text-gray-400" />
                           <span>Cartão de Crédito</span>
                         </Label>
-                      </div>
+                        {paymentMethod === 'card' && (
+                          <motion.div
+                            className="absolute top-1 right-2"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                          >
+                            <div className="text-xs font-medium text-memcyan">Selecionado</div>
+                          </motion.div>
+                        )}
+                      </motion.div>
                       
-                      <div className="flex items-center space-x-2 rounded-md border border-gray-700 p-4 cursor-pointer hover:bg-gray-800/50 transition-colors">
-                        <RadioGroupItem value="pix" id="pix" className="text-memcyan" />
-                        <Label htmlFor="pix" className="flex items-center cursor-pointer">
+                      <motion.div 
+                        className={`relative flex items-center space-x-2 rounded-md border ${paymentMethod === 'pix' ? 'border-memcyan bg-gray-800/80' : 'border-gray-700'} p-6 cursor-pointer hover:bg-gray-800/50 transition-colors`}
+                        onClick={() => selectPaymentMethod('pix')}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <div className={`w-6 h-6 rounded-full flex items-center justify-center ${paymentMethod === 'pix' ? 'bg-memcyan' : 'border border-gray-500'}`}>
+                          {paymentMethod === 'pix' && (
+                            <motion.div
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                            >
+                              <CheckCircle2 className="w-5 h-5 text-black" />
+                            </motion.div>
+                          )}
+                        </div>
+                        <Label className="flex items-center cursor-pointer">
                           <QrCode className="w-5 h-5 mr-2 text-gray-400" />
                           <span>PIX (Apenas Brasil)</span>
                         </Label>
-                      </div>
-                    </RadioGroup>
+                        {paymentMethod === 'pix' && (
+                          <motion.div
+                            className="absolute top-1 right-2"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                          >
+                            <div className="text-xs font-medium text-memcyan">Selecionado</div>
+                          </motion.div>
+                        )}
+                      </motion.div>
+                    </div>
                   </CardContent>
                 </Card>
                 
-                {paymentMethod === 'card' && (
-                  <Card className="bg-gray-900/70 border-gray-800 text-white">
-                    <CardHeader>
-                      <CardTitle>Detalhes do Cartão</CardTitle>
-                      <CardDescription className="text-gray-400">
-                        Insira suas informações de pagamento
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      {/* Simplificado para demonstração - em uma aplicação real, você teria um formulário completo */}
-                      <div className="space-y-2">
-                        <label className="text-sm text-gray-300">Número do Cartão</label>
-                        <div className="relative">
-                          <input 
-                            type="text" 
-                            placeholder="1234 5678 9012 3456" 
-                            className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-memcyan"
-                          />
-                          <CreditCard className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
-                        </div>
-                      </div>
-                      
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <label className="text-sm text-gray-300">Data de Validade</label>
-                          <input 
-                            type="text" 
-                            placeholder="MM/AA" 
-                            className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-memcyan"
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <label className="text-sm text-gray-300">CVV</label>
-                          <input 
-                            type="text" 
-                            placeholder="123" 
-                            className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-memcyan"
-                          />
-                        </div>
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <label className="text-sm text-gray-300">Nome no Cartão</label>
-                        <input 
-                          type="text" 
-                          placeholder="Nome completo" 
-                          className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-memcyan"
-                        />
-                      </div>
-                    </CardContent>
-                  </Card>
-                )}
-                
-                {paymentMethod === 'pix' && (
-                  <Card className="bg-gray-900/70 border-gray-800 text-white">
-                    <CardHeader>
-                      <CardTitle>Pagamento via PIX</CardTitle>
-                      <CardDescription className="text-gray-400">
-                        Escaneie o QR Code ou copie o código PIX
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4 flex flex-col items-center">
-                      <div className="w-48 h-48 bg-white p-4 rounded-md flex items-center justify-center">
-                        <div className="w-full h-full border-2 border-black bg-gray-100 rounded flex items-center justify-center">
-                          <QrCode className="w-32 h-32 text-black" />
-                        </div>
-                      </div>
-                      <div className="space-y-2 w-full mt-4">
-                        <label className="text-sm text-gray-300">Código PIX</label>
-                        <div className="relative">
-                          <input 
-                            type="text" 
-                            value="00020126330014BR.GOV.BCB.PIX0111EXAMPLE1234520400005303986540527.005802BR5915MEMORY ETERNAL6009SAO PAULO62150511MEMORY12345"
-                            readOnly
-                            className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-memcyan text-xs"
-                          />
-                          <button 
-                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
-                            onClick={() => {
-                              navigator.clipboard.writeText("00020126330014BR.GOV.BCB.PIX0111EXAMPLE1234520400005303986540527.005802BR5915MEMORY ETERNAL6009SAO PAULO62150511MEMORY12345");
-                              toast.success("Código PIX copiado!");
-                            }}
+                <AnimatePresence mode="wait">
+                  {paymentMethod === 'card' && (
+                    <motion.div
+                      key="card-form"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <Card className="bg-gray-900/70 border-gray-800 text-white">
+                        <CardHeader>
+                          <CardTitle>Detalhes do Cartão</CardTitle>
+                          <CardDescription className="text-gray-400">
+                            Insira suas informações de pagamento
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                          <div className="space-y-2">
+                            <label className="text-sm text-gray-300">Número do Cartão</label>
+                            <div className="relative">
+                              <input 
+                                type="text" 
+                                placeholder="1234 5678 9012 3456" 
+                                className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-memcyan"
+                              />
+                              <CreditCard className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
+                            </div>
+                          </div>
+                          
+                          <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                              <label className="text-sm text-gray-300">Data de Validade</label>
+                              <input 
+                                type="text" 
+                                placeholder="MM/AA" 
+                                className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-memcyan"
+                              />
+                            </div>
+                            <div className="space-y-2">
+                              <label className="text-sm text-gray-300">CVV</label>
+                              <input 
+                                type="text" 
+                                placeholder="123" 
+                                className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-memcyan"
+                              />
+                            </div>
+                          </div>
+                          
+                          <div className="space-y-2">
+                            <label className="text-sm text-gray-300">Nome no Cartão</label>
+                            <input 
+                              type="text" 
+                              placeholder="Nome completo" 
+                              className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-memcyan"
+                            />
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  )}
+                  
+                  {paymentMethod === 'pix' && (
+                    <motion.div
+                      key="pix-form"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <Card className="bg-gray-900/70 border-gray-800 text-white">
+                        <CardHeader>
+                          <CardTitle>Pagamento via PIX</CardTitle>
+                          <CardDescription className="text-gray-400">
+                            Escaneie o QR Code ou copie o código PIX
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent className="space-y-4 flex flex-col items-center">
+                          <motion.div 
+                            className="w-48 h-48 bg-white p-4 rounded-md flex items-center justify-center"
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{ duration: 0.3 }}
                           >
-                            Copiar
-                          </button>
-                        </div>
-                      </div>
-                      <div className="text-yellow-400 mt-4 text-sm text-center">
-                        Após realizar o pagamento, você receberá um e-mail com o link para sua memória.
-                      </div>
-                    </CardContent>
-                  </Card>
-                )}
+                            <div className="w-full h-full border-2 border-black bg-gray-100 rounded flex items-center justify-center">
+                              <QrCode className="w-32 h-32 text-black" />
+                            </div>
+                          </motion.div>
+                          <div className="space-y-2 w-full mt-4">
+                            <label className="text-sm text-gray-300">Código PIX</label>
+                            <div className="relative">
+                              <input 
+                                type="text" 
+                                value="00020126330014BR.GOV.BCB.PIX0111EXAMPLE1234520400005303986540527.005802BR5915MEMORY ETERNAL6009SAO PAULO62150511MEMORY12345"
+                                readOnly
+                                className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-memcyan text-xs"
+                              />
+                              <button 
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+                                onClick={() => {
+                                  navigator.clipboard.writeText("00020126330014BR.GOV.BCB.PIX0111EXAMPLE1234520400005303986540527.005802BR5915MEMORY ETERNAL6009SAO PAULO62150511MEMORY12345");
+                                  toast.success("Código PIX copiado!");
+                                }}
+                              >
+                                Copiar
+                              </button>
+                            </div>
+                          </div>
+                          <motion.div 
+                            className="text-yellow-400 mt-4 text-sm text-center"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.3 }}
+                          >
+                            Após realizar o pagamento, você receberá um e-mail com o link para sua memória.
+                          </motion.div>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
                 
                 <div className="space-y-2 mt-6">
                   <label className="text-sm text-gray-300">E-mail para receber a confirmação</label>
@@ -281,19 +359,19 @@ const Payment = () => {
                       }`}
                     >
                       {processing ? (
-                        <div className="flex items-center">
-                          <motion.div
-                            animate={{ rotate: 360 }}
-                            transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-                            className="w-5 h-5 border-t-2 border-white rounded-full mr-2"
-                          />
+                        <div className="flex items-center justify-center">
+                          <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                           Processando...
                         </div>
                       ) : (
-                        <div className="flex items-center">
+                        <motion.div 
+                          className="flex items-center justify-center"
+                          whileHover={{ x: 5 }}
+                          whileTap={{ scale: 0.98 }}
+                        >
                           Finalizar Pagamento
                           <ArrowRight className="ml-2 w-5 h-5" />
-                        </div>
+                        </motion.div>
                       )}
                     </Button>
                   </CardFooter>
