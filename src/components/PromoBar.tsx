@@ -1,10 +1,21 @@
 
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const PromoBar = () => {
   const isMobile = useIsMobile();
   const [visible, setVisible] = useState(true);
+  const location = useLocation();
+  
+  // Check if current path is Payment or Memory Display page
+  const hideOnPaths = ['/payment', '/memory'];
+  const shouldHidePromo = hideOnPaths.some(path => location.pathname.startsWith(path));
+  
+  // If we're on a page where the promo should be hidden, don't render it at all
+  if (shouldHidePromo) {
+    return null;
+  }
   
   useEffect(() => {
     const handleScroll = () => {
