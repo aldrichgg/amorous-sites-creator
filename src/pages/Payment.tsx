@@ -1,8 +1,7 @@
-
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle2, CreditCard, ArrowRight, QrCode, Loader2 } from 'lucide-react';
+import { CheckCircle2, CreditCard, ArrowRight, QrCode, Loader2, Shield, Clock, Gift, Heart } from 'lucide-react';
 import { toast } from "sonner";
 
 import Navbar from '../components/Layout/Navbar';
@@ -18,17 +17,14 @@ const Payment = () => {
   const [processing, setProcessing] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'pix' | null>(null);
   
-  // Get memory data from location state
   const memoryData = location.state?.memoryData;
   const memorySlug = location.state?.memorySlug || 'demo-memory';
   
-  // If no memory data was passed, redirect to create page
   if (!memoryData) {
     navigate('/create');
     return null;
   }
 
-  // Get correct price based on the selected plan
   const getPlanPrice = () => {
     if (memoryData.selectedPlan === 'forever') {
       return { regular: 54.00, discounted: 27.00 };
@@ -47,14 +43,11 @@ const Payment = () => {
     
     setProcessing(true);
     
-    // Simulate payment processing
     setTimeout(() => {
       toast.success("Pagamento aprovado! Redirecionando para sua memória...");
       
-      // Simulate delay before redirecting to the memory page
       setTimeout(() => {
         setProcessing(false);
-        // Navigate to the memory display page
         navigate(`/memory/${memorySlug}`);
       }, 1500);
     }, 2000);
@@ -73,7 +66,7 @@ const Payment = () => {
         
         <main className="container mx-auto px-4 py-16 relative z-10 min-h-screen">
           <motion.div 
-            className="max-w-3xl mx-auto pt-16 sm:pt-20" // Increased top padding here
+            className="max-w-3xl mx-auto pt-16 sm:pt-20"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -377,16 +370,46 @@ const Payment = () => {
                   </CardFooter>
                 </Card>
                 
-                <div className="mt-4 bg-gray-900/50 rounded-lg p-4 text-sm text-gray-400">
-                  <div className="flex items-start mb-2">
-                    <CheckCircle2 className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Pagamento seguro com criptografia SSL</span>
-                  </div>
-                  <div className="flex items-start">
-                    <CheckCircle2 className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
-                    <span>Após o pagamento, sua memória estará disponível imediatamente</span>
+                <div className="mt-4 bg-gray-900/50 rounded-lg p-4 text-sm">
+                  <h3 className="font-semibold text-memcyan mb-3">Vantagens da sua compra:</h3>
+                  <div className="space-y-3">
+                    <div className="flex items-start">
+                      <CheckCircle2 className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                      <span>Pagamento seguro com criptografia SSL</span>
+                    </div>
+                    <div className="flex items-start">
+                      <CheckCircle2 className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                      <span>Acesso imediato após o pagamento</span>
+                    </div>
+                    <div className="flex items-start">
+                      <Shield className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                      <span>Garantia de satisfação ou seu dinheiro de volta em até 7 dias</span>
+                    </div>
+                    <div className="flex items-start">
+                      <Clock className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                      <span>Suporte técnico 24/7 via e-mail</span>
+                    </div>
+                    <div className="flex items-start">
+                      <Gift className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                      <span>QR Code exclusivo para compartilhar sua memória</span>
+                    </div>
+                    <div className="flex items-start">
+                      <Heart className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                      <span>Atualizações gratuitas de recursos futuros</span>
+                    </div>
                   </div>
                 </div>
+                
+                <motion.div 
+                  className="mt-4 bg-memcyan/10 border border-memcyan/20 rounded-lg p-4 text-sm"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                >
+                  <p className="text-memcyan font-medium">
+                    ✨ Compre agora e ganhe acesso exclusivo ao próximo lançamento de recursos premium sem custo adicional!
+                  </p>
+                </motion.div>
               </div>
             </div>
           </motion.div>
