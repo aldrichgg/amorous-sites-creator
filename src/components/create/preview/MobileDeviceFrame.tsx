@@ -14,7 +14,7 @@ const MobileDeviceFrame: React.FC<MobileDeviceFrameProps> = ({
 }) => {
   return (
     <div 
-      className="relative rounded-[30px] sm:rounded-[40px] overflow-hidden bg-gray-900 border-4 sm:border-8 border-gray-800 shadow-2xl" 
+      className="relative rounded-[30px] sm:rounded-[40px] overflow-hidden bg-gray-900 border-4 sm:border-8 border-gray-800 shadow-2xl mx-auto" 
       style={{ 
         width: previewWidth, 
         height: previewHeight,

@@ -13,37 +13,117 @@ const Footer = () => {
         <div className="flex flex-col items-center justify-center">
           <div className="flex items-center mb-3">
             <div className="h-8 w-8 mr-2">
-              <svg viewBox="0 0 100 100" className="h-full w-full fill-current text-memcyan">
-                <path d="M70 30C76.0751 30 81 35.0294 81 41.25C81 44.6 79.4177 47.5706 76.9847 49.4294C79.0685 51.2118 80.375 53.9176 80.375 57C80.375 63.0706 75.4501 68 69.375 68C66.2922 68 63.5322 66.7118 61.75 64.6294C59.9678 66.7118 57.2078 68 54.125 68C51.0422 68 48.2822 66.7118 46.5 64.6294C44.7178 66.7118 41.9578 68 38.875 68C35.7922 68 33.0322 66.7118 31.25 64.6294C29.4678 66.7118 26.7078 68 23.625 68C17.5499 68 12.625 63.0706 12.625 57C12.625 53.9176 13.9315 51.2118 16.0153 49.4294C13.5823 47.5706 12 44.6 12 41.25C12 35.0294 16.9249 30 23 30C27.2187 30 30.9051 32.3588 32.7188 35.9C34.5324 35.3118 36.5875 35 38.75 35C40.9125 35 42.9676 35.3118 44.7812 35.9C46.5949 32.3588 50.2813 30 54.5 30C58.7187 30 62.4051 32.3588 64.2188 35.9C66.0324 35.3118 68.0875 35 70.25 35C70.5 35 70.75 35 71 35V30Z" />
-                <path d="M37.5 45C40.8137 45 43.5 42.3137 43.5 39C43.5 35.6863 40.8137 33 37.5 33C34.1863 33 31.5 35.6863 31.5 39C31.5 42.3137 34.1863 45 37.5 45Z" />
-                <path d="M62.5 45C65.8137 45 68.5 42.3137 68.5 39C68.5 35.6863 65.8137 33 62.5 33C59.1863 33 56.5 35.6863 56.5 39C56.5 42.3137 59.1863 45 62.5 45Z" />
-                <path d="M50 60C53.3137 60 56 57.3137 56 54C56 50.6863 53.3137 48 50 48C46.6863 48 44 50.6863 44 54C44 57.3137 46.6863 60 50 60Z" />
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <path id="heart-a" d="M7.64648437,1.19311523 C8.33056641,5.30135091 6.96142578,7.94555664 3.5390625,9.12573242 C0.116699219,10.3059082 -0.801757813,12.9492188 0.783691406,17.0556641 L3,19.2653809 L12.5229492,9.54785156 C13.5050456,6.41617839 12.8082682,3.82950846 10.4326172,1.7878418 C8.8577474,0.574951172 7.92903646,0.376708984 7.64648437,1.19311523 Z"></path>
+                  <path id="heart-c" d="M18.6707335,10.0469949 C20.4444204,8.20475335 20.4428931,5.22154308 18.6673208,3.38125356 C16.8917484,1.54096405 14.0134482,1.53938105 12.2359925,3.37771648 L10.9702069,4.68963823 L9.74663024,3.42106257 C7.97421677,1.58443498 5.10087015,1.58474944 3.32883095,3.42176494 C1.55679174,5.25878043 1.55709514,8.23685657 3.32950861,10.0734842 L10.9750473,18 L18.6707335,10.0469949 Z M9.53555048,19.3884699 L1.89036034,11.4623154 C-0.629744037,8.85090825 -0.630172509,4.64518565 1.88938959,2.03323745 C4.37655172,-0.545122756 8.39543397,-0.61732966 10.9687169,1.81730162 C13.5445576,-0.66312694 17.60123,-0.604129239 20.1066156,1.99257419 C22.6292352,4.60713978 22.6313904,8.81686087 20.1115002,11.434147 L12.4427074,19.3824584 C12.1544685,19.6812032 11.7964701,19.8704534 11.4198481,19.9502088 C10.7609371,20.0997637 10.0408904,19.9123813 9.53555048,19.3884699 Z"></path>
+                </defs>
+                <g fill="none" fillRule="evenodd" transform="translate(1 2)">
+                  <g transform="translate(8)">
+                    <mask id="heart-b" fill="#ffffff">
+                      <use xlinkHref="#heart-a"></use>
+                    </mask>
+                    <use fill="#D8D8D8" xlinkHref="#heart-a"></use>
+                    <g fill="#FF3A3A" mask="url(#heart-b)">
+                      <rect width="24" height="24" transform="translate(-9 -2)"></rect>
+                    </g>
+                  </g>
+                  <mask id="heart-d" fill="#ffffff">
+                    <use xlinkHref="#heart-c"></use>
+                  </mask>
+                  <use fill="#000000" fillRule="nonzero" xlinkHref="#heart-c"></use>
+                  <g fill="#FF0000" mask="url(#heart-d)">
+                    <rect width="24" height="24" transform="translate(-1 -2)"></rect>
+                  </g>
+                </g>
               </svg>
             </div>
             <span className="text-white font-bold text-xl">Loveiit</span>
           </div>
-          <p className="text-gray-300 text-sm mb-6">
-            Copyright © {currentYear} - Todos os direitos reservados
-          </p>
-          <p className="text-gray-300 text-sm flex items-center mb-6">
-            Feito com <Heart size={14} className="mx-1 text-red-500 fill-red-500" /> por IMPULSEGRAM
-          </p>
-
-          <div className="flex flex-wrap justify-center gap-4 mb-6">
-            <Link to="/terms" className="text-gray-300 hover:text-white text-sm transition-colors">
-              Termos de uso
-            </Link>
-            <Link to="/privacy" className="text-gray-300 hover:text-white text-sm transition-colors">
-              Política de privacidade
-            </Link>
-            <a 
-              href="https://casadosdados.com.br/solucao/cnpj/50195991-aldrich-larchert-azevedo-carvalho-da-gama-50195991000183" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="text-gray-300 hover:text-white text-sm transition-colors"
-            >
-              CNPJ: 50.195.991/0001-83
-            </a>
+          
+          <div className="w-full max-w-md mb-6">
+            <div className="h-px bg-gray-800 w-full my-4"></div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+              <div>
+                <h3 className="text-white font-semibold mb-2">Loveiit</h3>
+                <ul className="space-y-2">
+                  <li>
+                    <Link to="/" className="text-gray-400 hover:text-white text-sm transition-colors">
+                      Home
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/how-it-works" className="text-gray-400 hover:text-white text-sm transition-colors">
+                      Como Funciona
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/pricing" className="text-gray-400 hover:text-white text-sm transition-colors">
+                      Preços
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+              
+              <div>
+                <h3 className="text-white font-semibold mb-2">Ajuda</h3>
+                <ul className="space-y-2">
+                  <li>
+                    <Link to="/faq" className="text-gray-400 hover:text-white text-sm transition-colors">
+                      FAQ
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/terms" className="text-gray-400 hover:text-white text-sm transition-colors">
+                      Termos de uso
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/privacy" className="text-gray-400 hover:text-white text-sm transition-colors">
+                      Política de privacidade
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+              
+              <div>
+                <h3 className="text-white font-semibold mb-2">Contato</h3>
+                <ul className="space-y-2">
+                  <li>
+                    <a 
+                      href="mailto:contato@loveiit.com.br" 
+                      className="text-gray-400 hover:text-white text-sm transition-colors"
+                    >
+                      contato@loveiit.com.br
+                    </a>
+                  </li>
+                  <li>
+                    <a 
+                      href="https://casadosdados.com.br/solucao/cnpj/50195991-aldrich-larchert-azevedo-carvalho-da-gama-50195991000183" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="text-gray-400 hover:text-white text-sm transition-colors"
+                    >
+                      CNPJ: 50.195.991/0001-83
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div className="w-full max-w-md">
+            <div className="h-px bg-gray-800 w-full my-4"></div>
+            
+            <div className="flex flex-col sm:flex-row items-center justify-between">
+              <p className="text-gray-400 text-xs mb-2 sm:mb-0">
+                Copyright © {currentYear} - Todos os direitos reservados
+              </p>
+              <p className="text-gray-400 text-xs flex items-center">
+                Feito com <Heart size={12} className="mx-1 text-red-500 fill-red-500" /> por IMPULSEGRAM
+              </p>
+            </div>
           </div>
         </div>
       </div>

@@ -100,6 +100,34 @@ const Hero = () => {
         <div className="relative mx-auto max-w-4xl mt-8 md:mt-0">
           <div className="absolute -inset-0.5 bg-gradient-to-r from-memred to-memred-light rounded-2xl blur opacity-75 animate-pulse-soft"></div>
           <div className="relative bg-black rounded-2xl overflow-hidden">
+            <div className="flex justify-center items-center py-8">
+              <div className="w-24 h-24 md:w-32 md:h-32">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                  <defs>
+                    <path id="hero-heart-a" d="M7.64648437,1.19311523 C8.33056641,5.30135091 6.96142578,7.94555664 3.5390625,9.12573242 C0.116699219,10.3059082 -0.801757813,12.9492188 0.783691406,17.0556641 L3,19.2653809 L12.5229492,9.54785156 C13.5050456,6.41617839 12.8082682,3.82950846 10.4326172,1.7878418 C8.8577474,0.574951172 7.92903646,0.376708984 7.64648437,1.19311523 Z"></path>
+                    <path id="hero-heart-c" d="M18.6707335,10.0469949 C20.4444204,8.20475335 20.4428931,5.22154308 18.6673208,3.38125356 C16.8917484,1.54096405 14.0134482,1.53938105 12.2359925,3.37771648 L10.9702069,4.68963823 L9.74663024,3.42106257 C7.97421677,1.58443498 5.10087015,1.58474944 3.32883095,3.42176494 C1.55679174,5.25878043 1.55709514,8.23685657 3.32950861,10.0734842 L10.9750473,18 L18.6707335,10.0469949 Z M9.53555048,19.3884699 L1.89036034,11.4623154 C-0.629744037,8.85090825 -0.630172509,4.64518565 1.88938959,2.03323745 C4.37655172,-0.545122756 8.39543397,-0.61732966 10.9687169,1.81730162 C13.5445576,-0.66312694 17.60123,-0.604129239 20.1066156,1.99257419 C22.6292352,4.60713978 22.6313904,8.81686087 20.1115002,11.434147 L12.4427074,19.3824584 C12.1544685,19.6812032 11.7964701,19.8704534 11.4198481,19.9502088 C10.7609371,20.0997637 10.0408904,19.9123813 9.53555048,19.3884699 Z"></path>
+                  </defs>
+                  <g fill="none" fillRule="evenodd" transform="translate(1 2)">
+                    <g transform="translate(8)">
+                      <mask id="hero-heart-b" fill="#ffffff">
+                        <use xlinkHref="#hero-heart-a"></use>
+                      </mask>
+                      <use fill="#D8D8D8" xlinkHref="#hero-heart-a"></use>
+                      <g fill="#FF3A3A" mask="url(#hero-heart-b)">
+                        <rect width="24" height="24" transform="translate(-9 -2)"></rect>
+                      </g>
+                    </g>
+                    <mask id="hero-heart-d" fill="#ffffff">
+                      <use xlinkHref="#hero-heart-c"></use>
+                    </mask>
+                    <use fill="#000000" fillRule="nonzero" xlinkHref="#hero-heart-c"></use>
+                    <g fill="#FF0000" mask="url(#hero-heart-d)">
+                      <rect width="24" height="24" transform="translate(-1 -2)"></rect>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+            </div>
             <div className="absolute bottom-0 left-0 right-0 text-center pb-4 sm:pb-8">
               <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">Crie uma memória <br />em 4 etapas!</h2>
               <p className="text-gray-300 mx-auto max-w-md px-4 text-sm sm:text-base">
