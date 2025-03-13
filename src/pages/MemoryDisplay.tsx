@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -31,7 +30,6 @@ const MemoryDisplay = () => {
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
 
   useEffect(() => {
-    // Fetch memory data from Supabase
     const fetchMemory = async () => {
       setLoading(true);
       
@@ -72,7 +70,6 @@ const MemoryDisplay = () => {
       .then(() => console.log('Compartilhado com sucesso'))
       .catch((error) => console.log('Erro ao compartilhar', error));
     } else {
-      // Fallback for browsers that don't support navigator.share
       navigator.clipboard.writeText(window.location.href);
       toast.success("Link copiado para a área de transferência!");
     }
@@ -86,7 +83,6 @@ const MemoryDisplay = () => {
     setSelectedImageIndex(null);
   };
 
-  // Show appropriate UI based on loading state and data
   return (
     <div className="min-h-screen bg-gradient-to-b from-black via-purple-950/20 to-black text-white relative">
       <div className="relative overflow-hidden min-h-screen">
@@ -116,7 +112,6 @@ const MemoryDisplay = () => {
         ) : memoryData && (
           <main className="container mx-auto px-4 py-12 relative z-10 min-h-screen flex flex-col">
             <div className="max-w-3xl mx-auto w-full flex-grow">
-              {/* Header */}
               <motion.div 
                 className="text-center mb-8"
                 initial={{ opacity: 0, y: -20 }}
@@ -126,22 +121,18 @@ const MemoryDisplay = () => {
                 <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2 font-script bg-gradient-to-r from-purple-300 to-pink-200 bg-clip-text text-transparent">
                   {memoryData.pageTitle}
                 </h1>
-                {/* Emoji removed from below title */}
               </motion.div>
               
-              {/* Emoji Rain Effect - only display for forever plan */}
               {memoryData.selectedPlan === 'forever' && memoryData.selectedEmoji && (
                 <EmojiRain emoji={memoryData.selectedEmoji} />
               )}
               
-              {/* Main Content Card with new order */}
               <motion.div 
                 className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl overflow-hidden mb-8 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.5)]"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                {/* 1. Spotify Player at the top - only display for forever plan */}
                 {memoryData.selectedPlan === 'forever' && memoryData.spotifyTrackId && (
                   <div className="px-4 pt-6 pb-2">
                     <div className="flex items-center justify-center gap-2 mb-2 text-purple-300">
@@ -155,21 +146,18 @@ const MemoryDisplay = () => {
                   </div>
                 )}
                 
-                {/* 2. Photos Carousel */}
                 {photos && photos.length > 0 && (
                   <div className="p-4">
                     <PhotosCarousel photos={photos} />
                   </div>
                 )}
                 
-                {/* 3. Page Title */}
                 <div className="px-4 pt-2 pb-2 text-center">
                   <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-200 to-pink-100 bg-clip-text text-transparent">
                     {memoryData.pageTitle}
                   </h2>
                 </div>
                 
-                {/* 4. Counter */}
                 <div className="px-4 py-2 text-center">
                   <div className="flex items-center justify-center gap-2 mb-2 text-purple-300">
                     <Calendar className="w-5 h-5" />
@@ -178,12 +166,10 @@ const MemoryDisplay = () => {
                   <DateCounter startDate={memoryData.startDate} />
                 </div>
                 
-                {/* Separator line */}
                 <div className="px-8 py-2">
                   <Separator className="bg-purple-400/30" />
                 </div>
                 
-                {/* 5. Message */}
                 {memoryData.message && (
                   <div className="px-4 py-4">
                     <div className="flex items-center justify-center gap-2 mb-2 text-purple-300">
@@ -194,7 +180,6 @@ const MemoryDisplay = () => {
                   </div>
                 )}
                 
-                {/* Photos Grid (if there are photos) - moved to bottom */}
                 {photos && photos.length > 1 && (
                   <div className="px-4 pb-6">
                     <div className="flex items-center justify-center gap-2 mb-2 text-purple-300">
@@ -220,7 +205,6 @@ const MemoryDisplay = () => {
                 )}
               </motion.div>
               
-              {/* Share Button */}
               <motion.div 
                 className="flex justify-center mb-12"
                 initial={{ opacity: 0, y: 20 }}
@@ -249,10 +233,9 @@ const MemoryDisplay = () => {
         )}
       </div>
 
-      {/* Full-size image modal */}
       <Dialog open={selectedImageIndex !== null} onOpenChange={closeImageModal}>
         <DialogContent className="max-w-[95vw] sm:max-w-[90vw] md:max-w-[85vw] lg:max-w-[80vw] p-0 bg-black/90 border-none">
-          <DialogClose className="absolute right-3 top-3 z-10 rounded-full bg-black/50 p-2 text-white hover:bg-black/70">
+          <DialogClose className="absolute right-4 top-4 z-10 rounded-full p-2.5 bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 hover:scale-105 transition-all duration-200 shadow-lg">
             <X className="h-5 w-5" />
           </DialogClose>
           <div className="w-full h-full flex items-center justify-center p-4">

@@ -93,7 +93,7 @@ const PhotosCarousel: React.FC<PhotosCarouselProps> = ({ photos }) => {
       {/* Full-size image dialog */}
       <Dialog open={selectedImageIndex !== null} onOpenChange={closeImageModal}>
         <DialogContent className="max-w-[95vw] sm:max-w-[90vw] md:max-w-[85vw] lg:max-w-[80vw] p-0 bg-black/90 border-none">
-          <DialogClose className="absolute right-3 top-3 z-10 rounded-full bg-black/50 p-2 text-white hover:bg-black/70">
+          <DialogClose className="absolute right-4 top-4 z-10 rounded-full p-2.5 bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 hover:scale-105 transition-all duration-200 shadow-lg">
             <X className="h-5 w-5" />
           </DialogClose>
           <div className="w-full h-full flex items-center justify-center p-4">

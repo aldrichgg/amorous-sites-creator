@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { X } from 'lucide-react';
@@ -43,18 +42,14 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const isMobile = useIsMobile();
 
-  // Features availability based on plan
-  const showSpotify = selectedPlan === 'forever'; // Only available in the premium plan
-  const showEmojiRain = selectedPlan === 'forever'; // Only available in the premium plan
+  const showSpotify = selectedPlan === 'forever';
+  const showEmojiRain = selectedPlan === 'forever';
   const maxPhotos = selectedPlan === 'forever' ? 7 : 3;
   const limitedPhotos = photos.slice(0, maxPhotos);
 
   useEffect(() => {
-    // Extract Spotify track ID when spotifyUrl changes
     if (spotifyUrl) {
-      // Improved track ID extraction
       try {
-        // Handle standard format with various prefixes: spotify.com/track/ID or open.spotify.com/intl-pt/track/ID
         const match = spotifyUrl.match(/\/track\/([a-zA-Z0-9]+)/);
         if (match && match[1]) {
           console.log("Extracted Spotify track ID:", match[1], "from URL:", spotifyUrl);
@@ -62,7 +57,6 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
           return;
         }
         
-        // Handle spotify:track:ID format
         const uriMatch = spotifyUrl.match(/spotify:track:([a-zA-Z0-9]+)/);
         if (uriMatch && uriMatch[1]) {
           console.log("Extracted Spotify track ID from URI:", uriMatch[1]);
@@ -70,10 +64,8 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
           return;
         }
         
-        // Try parsing as URL for more complex cases
         try {
           const url = new URL(spotifyUrl);
-          // Check if the ID is in the pathname
           const pathMatch = url.pathname.match(/\/track\/([a-zA-Z0-9]+)/);
           if (pathMatch && pathMatch[1]) {
             console.log("Extracted Spotify track ID from path:", pathMatch[1]);
@@ -81,7 +73,6 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
             return;
           }
           
-          // As fallback, check query parameters
           const trackParam = url.searchParams.get('track');
           if (trackParam) {
             console.log("Extracted Spotify track ID from params:", trackParam);
@@ -92,7 +83,6 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
           console.log("Could not parse as URL:", urlError);
         }
         
-        // No valid ID found
         console.log("No valid Spotify track ID found in URL:", spotifyUrl);
         setSpotifyTrackId(null);
       } catch (e) {
@@ -104,7 +94,6 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
     }
   }, [spotifyUrl]);
 
-  // Adjust for smaller screens with more natural phone dimensions
   const previewWidth = isMobile ? "280px" : "320px";
   const previewHeight = isMobile ? "580px" : "650px";
 
@@ -136,44 +125,34 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
           style={{ maxWidth: "100%" }}
         >
           <MobileDeviceFrame previewWidth={previewWidth} previewHeight={previewHeight}>
-            {/* Browser content */}
             <div className="w-full h-full overflow-y-auto bg-gradient-to-b from-black via-purple-950/20 to-black flex flex-col">
               <div className="w-full sticky top-0 z-20 pt-2">
                 <BrowserHeader pageName={pageName} />
               </div>
               
-              {/* Content with the revised order */}
               <div className="flex-1 overflow-y-auto p-4 relative">
-                {/* Emoji Rain Effect - only in premium plan */}
                 {showEmojiRain && selectedEmoji && <EmojiRain emoji={selectedEmoji} />}
                 
-                {/* 1. Spotify Player at the top - only in premium plan */}
                 {showSpotify && spotifyTrackId && (
                   <div className="mb-3">
                     <SpotifyPlayer spotifyTrackId={spotifyTrackId} spotifyUrl={spotifyUrl} />
                   </div>
                 )}
                 
-                {/* 2. Photos Carousel - with limit based on plan */}
                 <PhotosCarousel photos={limitedPhotos} />
                 
-                {/* 3. Title */}
                 <div className="text-center mt-4 mb-2">
                   <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-purple-200 to-pink-100 bg-clip-text text-transparent">{pageTitle || 'Título da Memória'}</h1>
                 </div>
                 
-                {/* 4. Date Counter */}
                 <DateCounter startDate={startDate} />
                 
-                {/* Separator line */}
                 <div className="my-4">
                   <Separator className="bg-purple-400/30" />
                 </div>
                 
-                {/* 5. Message */}
                 <MessageDisplay message={message} />
                 
-                {/* Plan limitation notice */}
                 {selectedPlan === 'annual' && (
                   <div className="mt-4 text-xs text-yellow-400 bg-yellow-900/20 p-2 rounded-md text-center">
                     {!showSpotify && spotifyUrl ? "Música não disponível no plano Anual" : ""}
@@ -195,10 +174,9 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
         </motion.p>
       </div>
 
-      {/* Full-size image modal */}
       <Dialog open={selectedImageIndex !== null} onOpenChange={closeImageModal}>
         <DialogContent className="max-w-[95vw] sm:max-w-[90vw] md:max-w-[85vw] lg:max-w-[80vw] p-0 bg-black/90 border-none">
-          <DialogClose className="absolute right-3 top-3 z-10 rounded-full bg-black/50 p-2 text-white hover:bg-black/70">
+          <DialogClose className="absolute right-4 top-4 z-10 rounded-full p-2.5 bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 hover:scale-105 transition-all duration-200 shadow-lg">
             <X className="h-5 w-5" />
           </DialogClose>
           <div className="w-full h-full flex items-center justify-center p-4">
