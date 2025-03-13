@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, Globe } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -78,11 +78,6 @@ const Navbar = () => {
               <Link to="/how-it-works" className={`text-white hover:text-memred-light transition-colors ${location.pathname === '/how-it-works' ? 'font-medium' : ''}`}>Como Funciona</Link>
               <Link to="/pricing" className={`text-white hover:text-memred-light transition-colors ${location.pathname === '/pricing' ? 'font-medium' : ''}`}>Preços</Link>
               <Link to="/faq" className={`text-white hover:text-memred-light transition-colors ${location.pathname === '/faq' ? 'font-medium' : ''}`}>FAQ</Link>
-              <button className="flex items-center text-white hover:text-memred-light transition-colors">
-                <Globe size={16} className="mr-1" />
-                <span>PT</span>
-                <ChevronDown size={16} className="ml-1" />
-              </button>
               <div className="relative h-8">
                 <div className="absolute inset-0 btn-gradient rounded-full blur opacity-75"></div>
                 <Link to="/create" className="relative bg-gradient-to-r from-memred to-memred-light hover:from-memred-dark hover:to-memred text-white font-medium rounded-full px-5 py-2 transition-all duration-300">
@@ -112,11 +107,6 @@ const Navbar = () => {
             <Link to="/how-it-works" className="block text-white hover:text-memred-light py-2 px-3 rounded-md" onClick={closeMenu}>Como Funciona</Link>
             <Link to="/pricing" className="block text-white hover:text-memred-light py-2 px-3 rounded-md" onClick={closeMenu}>Preços</Link>
             <Link to="/faq" className="block text-white hover:text-memred-light py-2 px-3 rounded-md" onClick={closeMenu}>FAQ</Link>
-            <button className="flex items-center text-white hover:text-memred-light py-2 px-3 rounded-md w-full">
-              <Globe size={16} className="mr-1" />
-              <span>PT</span>
-              <ChevronDown size={16} className="ml-1" />
-            </button>
             <div className="pt-2">
               <Link to="/create" 
                 className="block w-full text-center btn-gradient text-white font-medium rounded-full px-5 py-2" 
