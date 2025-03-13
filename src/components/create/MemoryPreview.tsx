@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Heart, Calendar, Music, Image as ImageIcon } from 'lucide-react';
+import { Heart, Calendar, Music, Image as ImageIcon, Globe } from 'lucide-react';
 
 interface MemoryPreviewProps {
   pageTitle: string;
@@ -77,50 +77,30 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
       </motion.h3>
       
       <motion.div
-        className="w-full rounded-lg overflow-hidden bg-gradient-to-b from-black to-gray-900 border border-gray-800"
+        className="w-full rounded-lg overflow-hidden bg-gradient-to-b from-gray-900 to-black border border-gray-800"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        {/* Header */}
-        <div className="bg-black p-4 border-b border-gray-800 flex items-center justify-between">
-          <div className="flex items-center">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-memblue to-memcyan flex items-center justify-center">
-              <Heart className="w-4 h-4 text-white" />
-            </div>
-            <div className="ml-2">
-              <h4 className="text-sm font-bold text-white">{pageName || 'Sua Memória'}</h4>
-            </div>
+        {/* Browser Header */}
+        <div className="bg-gray-800 p-2 flex items-center space-x-2">
+          <div className="flex space-x-1.5">
+            <div className="w-3 h-3 rounded-full bg-red-500"></div>
+            <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+            <div className="w-3 h-3 rounded-full bg-green-500"></div>
+          </div>
+        </div>
+        
+        {/* URL Bar */}
+        <div className="bg-gray-100 mx-2 my-1 p-2 rounded-md flex items-center">
+          <Globe className="w-4 h-4 mr-2 text-gray-500" />
+          <div className="text-gray-800 text-sm font-medium">
+            memoryiit.com/{pageName || 'sua-memoria'}
           </div>
         </div>
         
         {/* Content */}
-        <div className="p-4">
-          {/* Title and counter */}
-          <div className="text-center mb-6">
-            <h1 className="text-xl font-bold text-white mb-1">{pageTitle || 'Título da Memória'}</h1>
-            {startDate && (
-              <div className="text-2xl font-bold text-memcyan">
-                {calculateTimeDifference(startDate)}
-              </div>
-            )}
-          </div>
-          
-          {/* Date */}
-          {startDate && (
-            <div className="flex items-center justify-center mb-4 text-gray-300 text-sm">
-              <Calendar className="w-4 h-4 mr-2 text-memcyan" />
-              <span>Desde {formatDate(startDate)}</span>
-            </div>
-          )}
-          
-          {/* Message */}
-          {message && (
-            <div className="bg-black/40 p-3 rounded-lg mb-4 text-white text-sm">
-              <p className="whitespace-pre-line">{message}</p>
-            </div>
-          )}
-          
+        <div className="p-4 relative">
           {/* Spotify Embed */}
           {spotifyTrackId && (
             <div className="mb-4">
@@ -140,42 +120,73 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
           
           {/* Spotify indication (when URL exists but embed not shown) */}
           {spotifyUrl && !spotifyTrackId && (
-            <div className="flex items-center text-gray-300 text-sm mb-4">
+            <div className="flex items-center text-gray-300 text-sm mb-4 bg-black/40 p-3 rounded-lg">
               <Music className="w-4 h-4 mr-2 text-green-500" />
-              <span>Música vinculada</span>
+              <span>Música vinculada do Spotify</span>
             </div>
           )}
           
           {/* Photos */}
           {photos.length > 0 && (
             <div className="mb-4">
-              <div className="grid grid-cols-3 gap-2">
-                {photos.slice(0, 3).map((photo, index) => (
-                  <div key={index} className="aspect-square rounded-md overflow-hidden">
-                    <img src={photo} alt="Memory" className="w-full h-full object-cover" />
-                  </div>
-                ))}
+              <div className="aspect-[4/3] rounded-md overflow-hidden bg-gray-800 flex items-center justify-center">
+                {photos.length > 0 ? (
+                  <img src={photos[0]} alt="Memory" className="w-full h-full object-contain" />
+                ) : (
+                  <ImageIcon className="w-12 h-12 text-gray-600" />
+                )}
               </div>
-              {photos.length > 3 && (
-                <div className="text-center mt-2 text-sm text-gray-400">
-                  +{photos.length - 3} mais fotos
+              {photos.length > 1 && (
+                <div className="flex justify-center mt-2 space-x-1">
+                  {photos.slice(0, 5).map((_, index) => (
+                    <div 
+                      key={index} 
+                      className={`w-2 h-2 rounded-full ${index === 0 ? 'bg-memcyan' : 'bg-gray-500'}`}
+                    ></div>
+                  ))}
                 </div>
               )}
             </div>
           )}
           
+          {/* Title */}
+          <div className="text-center mb-2">
+            <h1 className="text-2xl font-bold text-white">{pageTitle || 'Título da Memória'}</h1>
+          </div>
+          
+          {/* Counter */}
+          {startDate && (
+            <div className="text-center mb-4">
+              <div className="text-2xl font-bold text-memcyan">
+                {calculateTimeDifference(startDate)}
+              </div>
+              <div className="flex items-center justify-center text-gray-300 text-xs">
+                <Calendar className="w-3 h-3 mr-1 text-memcyan" />
+                <span>Desde {formatDate(startDate)}</span>
+              </div>
+            </div>
+          )}
+          
+          {/* Message */}
+          {message && (
+            <div className="bg-black/40 p-3 rounded-lg text-white text-sm mb-4">
+              <p className="whitespace-pre-line">{message}</p>
+            </div>
+          )}
+          
           {/* If no photos are selected */}
           {photos.length === 0 && (
-            <div className="flex items-center justify-center text-gray-500 mb-4">
-              <ImageIcon className="w-4 h-4 mr-2" />
-              <span className="text-sm">Adicione fotos para sua memória</span>
+            <div className="flex items-center justify-center text-gray-500 mb-4 p-8 bg-gray-800/50 rounded-lg">
+              <ImageIcon className="w-10 h-10 opacity-40" />
             </div>
           )}
           
           {/* Selected emoji as background */}
-          <div className="absolute bottom-4 right-4 text-5xl opacity-20">
-            {selectedEmoji}
-          </div>
+          {selectedEmoji && (
+            <div className="absolute bottom-4 right-4 text-5xl opacity-20">
+              {selectedEmoji}
+            </div>
+          )}
         </div>
       </motion.div>
       
