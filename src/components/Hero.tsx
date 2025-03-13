@@ -3,10 +3,51 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Star, ChevronRight } from 'lucide-react';
 import { FlipWords } from '@/components/ui/flip-words';
+import { AnimatedTooltip } from '@/components/ui/animated-tooltip';
 
 const Hero = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const flipWords = ["suas memórias", "seus momentos", "suas experiências"];
+
+  // Sample couple data for the tooltip
+  const couples = [
+    {
+      id: 1,
+      name: "João & Maria",
+      designation: "Casamento",
+      image: "https://images.unsplash.com/photo-1587721865940-a8c58e27526d?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
+    },
+    {
+      id: 2,
+      name: "Ricardo & Ana",
+      designation: "Noivado",
+      image: "https://images.unsplash.com/photo-1591553160972-2ea1fddce0fc?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
+    },
+    {
+      id: 3,
+      name: "Paulo & Carla",
+      designation: "Aniversário",
+      image: "https://images.unsplash.com/photo-1617551307578-7d5c5f9270e4?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
+    },
+    {
+      id: 4,
+      name: "Marcos & Júlia",
+      designation: "Bodas de Prata",
+      image: "https://images.unsplash.com/photo-1590030699878-a5f1d6a2a2dc?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
+    },
+    {
+      id: 5,
+      name: "Lucas & Fernanda",
+      designation: "Namoro",
+      image: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
+    },
+    {
+      id: 6,
+      name: "Eduardo & Beatriz",
+      designation: "Celebração",
+      image: "https://images.unsplash.com/photo-1522435229388-6f7a422e3f3b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
+    },
+  ];
 
   useEffect(() => {
     setIsLoaded(true);
@@ -46,10 +87,8 @@ const Hero = () => {
           </div>
           
           <div className="mt-10 flex flex-col items-center">
-            <div className="flex -space-x-2 mb-2">
-              {[1, 2, 3, 4, 5, 6].map(id => <div key={id} className="w-8 h-8 rounded-full border-2 border-black overflow-hidden">
-                  <img src={`https://randomuser.me/api/portraits/men/${20 + id}.jpg`} alt="User avatar" className="w-full h-full object-cover" />
-                </div>)}
+            <div className="flex items-center justify-center mb-4">
+              <AnimatedTooltip items={couples} />
             </div>
             <div className="flex items-center">
               {[1, 2, 3, 4, 5].map(id => <Star key={id} size={16} className="text-yellow-400 fill-yellow-400" />)}
