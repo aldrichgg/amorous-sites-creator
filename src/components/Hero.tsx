@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Star, ChevronRight } from 'lucide-react';
@@ -9,7 +8,6 @@ const Hero = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const flipWords = ["suas memórias", "seus momentos", "suas experiências"];
 
-  // Updated couple data with the new images
   const couples = [
     {
       id: 1,
@@ -81,7 +79,7 @@ const Hero = () => {
             <div className="relative group w-full sm:w-auto">
               <div className="absolute inset-0 btn-gradient rounded-full blur opacity-75 group-hover:opacity-100 transition-opacity"></div>
               <Link to="/create" className="relative w-full sm:w-auto inline-flex items-center justify-center bg-gradient-to-r from-memred to-memred-light hover:from-memred-dark hover:to-memred-light text-white font-medium rounded-full px-6 sm:px-8 py-2.5 sm:py-3 text-base sm:text-lg transition-all duration-300">
-                Começar <ChevronRight size={18} className="ml-1" />
+                Come��ar <ChevronRight size={18} className="ml-1" />
               </Link>
             </div>
           </div>
@@ -97,10 +95,10 @@ const Hero = () => {
           </div>
         </div>
         
-        <div className="relative mx-auto max-w-4xl mt-8 md:mt-0">
+        <div className="relative mx-auto max-w-4xl mt-8 md:mt-0 mb-12">
           <div className="absolute -inset-0.5 bg-gradient-to-r from-memred to-memred-light rounded-2xl blur opacity-75 animate-pulse-soft"></div>
           <div className="relative bg-black rounded-2xl overflow-hidden">
-            <div className="flex justify-center items-center py-8">
+            <div className="flex justify-center items-center py-12">
               <div className="w-24 h-24 md:w-32 md:h-32">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
                   <defs>
@@ -128,7 +126,7 @@ const Hero = () => {
                 </svg>
               </div>
             </div>
-            <div className="absolute bottom-0 left-0 right-0 text-center pb-4 sm:pb-8">
+            <div className="relative bottom-0 left-0 right-0 text-center pb-8 sm:pb-10">
               <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">Crie uma memória <br />em 4 etapas!</h2>
               <p className="text-gray-300 mx-auto max-w-md px-4 text-sm sm:text-base">
                 Surpreenda alguém especial com uma memória personalizada. É fácil, seguro e rápido!
