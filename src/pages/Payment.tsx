@@ -73,7 +73,7 @@ const Payment = () => {
         
         <main className="container mx-auto px-4 py-16 relative z-10 min-h-screen">
           <motion.div 
-            className="max-w-3xl mx-auto"
+            className="max-w-3xl mx-auto pt-16 sm:pt-20" // Increased top padding here
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
