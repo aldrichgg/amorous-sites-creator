@@ -132,7 +132,7 @@ const MemoryDisplay = () => {
                   <div className="px-4 pt-6 pb-2">
                     <div className="flex items-center justify-center gap-2 mb-2 text-purple-300">
                       <Music className="w-5 h-5" />
-                      <h2 className="text-xl font-medium">Nossa Música</h2>
+                      <h2 className="text-xl font-medium">Música</h2>
                     </div>
                     <SpotifyPlayer 
                       spotifyTrackId={memoryData.spotifyTrackId} 
@@ -185,7 +185,7 @@ const MemoryDisplay = () => {
                   <div className="px-4 pb-6">
                     <div className="flex items-center justify-center gap-2 mb-2 text-purple-300">
                       <Camera className="w-5 h-5" />
-                      <h2 className="text-xl font-medium">Nossas Fotos</h2>
+                      <h2 className="text-xl font-medium">Fotos</h2>
                     </div>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                       {photos.map((photo: string, index: number) => (
