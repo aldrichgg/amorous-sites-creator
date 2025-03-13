@@ -57,7 +57,7 @@ function Calendar({
         IconRight: ({ ..._props }) => <ChevronRight className="h-4 w-4" />,
         Day: (props) => {
           // Add a heart shape for selected days
-          const isSelected = props.selected && !props.disabled;
+          const isSelected = props.day?.isSelected && !props.day?.isDisabled;
           
           if (isSelected) {
             return (
