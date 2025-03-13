@@ -1,7 +1,8 @@
+
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CheckCircle2, CreditCard, ArrowRight, QrCode, Loader2, Shield, Clock, Gift, Heart } from 'lucide-react';
+import { CheckCircle2, CreditCard, ArrowRight, QrCode, Loader2, Shield, Clock, Gift, Heart, Music } from 'lucide-react';
 import { toast } from "sonner";
 
 import Navbar from '../components/Layout/Navbar';
@@ -324,6 +325,17 @@ const Payment = () => {
                       <div className="flex justify-between">
                         <span>Fotos:</span>
                         <span className="font-medium">{memoryData.photos.length}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Música:</span>
+                        {memoryData.spotifyUrl ? (
+                          <span className="font-medium flex items-center">
+                            <Music className="w-4 h-4 mr-1 text-green-500" />
+                            Incluída
+                          </span>
+                        ) : (
+                          <span className="font-medium text-gray-400">Não incluída</span>
+                        )}
                       </div>
                       <div className="pt-4 border-t border-gray-700">
                         <div className="flex justify-between text-lg font-bold">
