@@ -1,8 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, AlertCircle } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { Mail } from 'lucide-react';
 
 interface EmailInputProps {
   email: string;
@@ -41,7 +40,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
   return (
     <div className="w-full max-w-lg mx-auto pb-6">
       <motion.h2 
-        className="text-3xl font-bold mb-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400 font-spectral"
+        className="text-3xl font-bold mb-4 text-center text-white"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -50,7 +49,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
       </motion.h2>
       
       <motion.p 
-        className="text-gray-300 mb-6 text-center font-manrope"
+        className="text-gray-300 mb-6 text-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
@@ -64,31 +63,29 @@ const EmailInput: React.FC<EmailInputProps> = ({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
       >
-        <div className="relative group">
-          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-            <Mail className={`h-5 w-5 ${isValid ? 'text-memcyan group-hover:text-memcyan/80' : 'text-red-500'} transition-colors`} />
-          </div>
-          
-          <Input
-            type="email"
-            value={inputValue}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            placeholder="Digite seu melhor email..."
-            className={`w-full pl-12 bg-black/60 backdrop-blur-sm border ${
-              isValid ? 'border-white/20 focus:border-memcyan/50' : 'border-red-500'
-            } text-white transition-all duration-300 shadow-lg shadow-black/30 font-manrope`}
-          />
+        <input
+          type="email"
+          value={inputValue}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          placeholder="seu-email@exemplo.com"
+          className={`w-full px-10 py-3 rounded-lg bg-black/60 border ${
+            isValid ? 'border-memblue/30' : 'border-red-500'
+          } text-white focus:outline-none focus:ring-2 ${
+            isValid ? 'focus:ring-memcyan' : 'focus:ring-red-500'
+          } transition-all duration-300 placeholder-gray-500`}
+        />
+        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <Mail className={`h-5 w-5 ${isValid ? 'text-memcyan' : 'text-red-500'}`} />
         </div>
         
         {!isValid && (
           <motion.p
-            className="text-red-500 text-sm mt-2 flex items-center pl-2 font-manrope"
+            className="text-red-500 text-sm mt-1"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <AlertCircle className="w-4 h-4 mr-1" />
             Por favor, insira um e-mail válido
           </motion.p>
         )}
