@@ -20,7 +20,7 @@ const DateDisplay: React.FC<DateDisplayProps> = ({ selectedDate }) => {
         <label className="text-sm text-gray-400">Data selecionada:</label>
         <Input
           value={format(selectedDate, 'dd/MM/yyyy')}
-          className="bg-gray-800 border-gray-700 text-white text-center"
+          className="bg-gray-800 border-gray-700 text-white text-center shadow-inner"
           readOnly
         />
       </div>

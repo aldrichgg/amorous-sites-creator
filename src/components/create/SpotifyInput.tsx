@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Music, AlertCircle } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 
 interface SpotifyInputProps {
   spotifyUrl: string;
@@ -65,29 +66,29 @@ const SpotifyInput: React.FC<SpotifyInputProps> = ({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
       >
-        <div className="relative">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <Music className="h-5 w-5 text-memcyan" />
+        <div className="relative group">
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+            <Music className="h-5 w-5 text-memcyan group-hover:text-green-400 transition-colors" />
           </div>
-          <input
+          <Input
             type="text"
             value={inputValue}
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder="https://open.spotify.com/track/..."
-            className={`w-full pl-10 px-4 py-3 rounded-lg bg-black/60 border ${error ? 'border-red-500' : 'border-memblue/30'} text-white focus:outline-none focus:ring-2 focus:ring-memcyan transition-all duration-300 placeholder-gray-500`}
+            className={`w-full pl-12 bg-black/60 backdrop-blur-sm border ${error ? 'border-red-500' : 'border-memblue/30'} shadow-lg shadow-black/30 text-white focus:outline-none focus:ring-2 focus:ring-green-500/50 transition-all duration-300 placeholder-gray-500`}
           />
         </div>
         
         {error && (
-          <div className="text-red-500 text-sm flex items-center">
+          <div className="text-red-500 text-sm flex items-center pl-2">
             <AlertCircle className="w-4 h-4 mr-2" />
             {error}
           </div>
         )}
         
-        <div className="text-gray-400 text-sm bg-black/40 p-3 rounded-lg">
-          <p className="mb-2">Como pegar o link da música:</p>
+        <div className="text-gray-400 text-sm bg-black/40 backdrop-blur-sm p-4 rounded-2xl border border-white/5 shadow-lg">
+          <p className="mb-2 font-medium text-white/80">Como pegar o link da música:</p>
           <ol className="list-decimal pl-5 space-y-1">
             <li>Abra o Spotify e encontre a música desejada</li>
             <li>Clique com o botão direito na música e selecione "Compartilhar"</li>
@@ -98,7 +99,7 @@ const SpotifyInput: React.FC<SpotifyInputProps> = ({
         
         <motion.button
           onClick={handleSpotifyOpen}
-          className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center"
+          className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-3 px-4 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center"
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
         >

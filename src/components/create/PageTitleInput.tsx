@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Edit3 } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 
 interface PageTitleInputProps {
   title: string;
@@ -54,16 +55,18 @@ const PageTitleInput: React.FC<PageTitleInputProps> = ({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
       >
-        <input
-          type="text"
-          value={inputValue}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          placeholder={placeholder}
-          className="w-full px-4 py-3 rounded-lg bg-black/60 border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-memcyan transition-all duration-300 placeholder-gray-500 shadow-inner"
-        />
-        <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-          <Edit3 className="h-5 w-5 text-memcyan" />
+        <div className="group relative">
+          <Input
+            type="text"
+            value={inputValue}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            placeholder={placeholder}
+            className="w-full pl-4 pr-10 py-3 bg-black/60 border border-white/20 text-white focus:border-memcyan/50 transition-all duration-300 placeholder-gray-500 shadow-lg shadow-black/30 backdrop-blur-sm"
+          />
+          <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none group-hover:text-memcyan transition-colors">
+            <Edit3 className="h-5 w-5 text-gray-400 group-hover:text-memcyan group-focus-within:text-memcyan transition-colors" />
+          </div>
         </div>
       </motion.div>
     </div>

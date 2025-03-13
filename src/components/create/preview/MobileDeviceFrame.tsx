@@ -22,11 +22,11 @@ const MobileDeviceFrame: React.FC<MobileDeviceFrameProps> = ({
       }}
     >
       {/* Device notch */}
-      <div className="absolute top-0 left-0 right-0 h-4 sm:h-6 bg-black z-10 flex justify-center items-center">
+      <div className="absolute top-0 left-0 right-0 h-4 sm:h-6 bg-black z-20 flex justify-center items-center">
         <div className="w-24 sm:w-40 h-3 sm:h-5 bg-black rounded-b-xl"></div>
       </div>
       
-      <div className="w-full h-full overflow-hidden">
+      <div className="w-full h-full overflow-y-auto overflow-x-hidden">
         {children}
       </div>
       

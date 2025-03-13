@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, Type } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
 
 interface MessageEditorProps {
   message: string;
@@ -47,10 +48,10 @@ const MessageEditor: React.FC<MessageEditorProps> = ({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
       >
-        <div className="flex items-center space-x-1 bg-gray-900/80 rounded-t-lg p-2 border-b border-gray-700">
+        <div className="flex items-center space-x-1 bg-gray-900/80 backdrop-blur-sm rounded-t-2xl p-2 border-b border-gray-700 shadow-lg">
           <div className="flex items-center space-x-1 mr-2">
             <motion.button
-              className="p-2 rounded hover:bg-gray-700 transition-colors"
+              className="p-2 rounded-full hover:bg-gray-700 transition-colors"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => applyFormatting('bold')}
@@ -60,7 +61,7 @@ const MessageEditor: React.FC<MessageEditorProps> = ({
             </motion.button>
             
             <motion.button
-              className="p-2 rounded hover:bg-gray-700 transition-colors"
+              className="p-2 rounded-full hover:bg-gray-700 transition-colors"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => applyFormatting('italic')}
@@ -70,7 +71,7 @@ const MessageEditor: React.FC<MessageEditorProps> = ({
             </motion.button>
             
             <motion.button
-              className="p-2 rounded hover:bg-gray-700 transition-colors"
+              className="p-2 rounded-full hover:bg-gray-700 transition-colors"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => applyFormatting('underline')}
@@ -84,7 +85,7 @@ const MessageEditor: React.FC<MessageEditorProps> = ({
           
           <div className="flex items-center space-x-1">
             <motion.button
-              className="p-2 rounded hover:bg-gray-700 transition-colors"
+              className="p-2 rounded-full hover:bg-gray-700 transition-colors"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => applyFormatting('align-left')}
@@ -94,7 +95,7 @@ const MessageEditor: React.FC<MessageEditorProps> = ({
             </motion.button>
             
             <motion.button
-              className="p-2 rounded hover:bg-gray-700 transition-colors"
+              className="p-2 rounded-full hover:bg-gray-700 transition-colors"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => applyFormatting('align-center')}
@@ -104,7 +105,7 @@ const MessageEditor: React.FC<MessageEditorProps> = ({
             </motion.button>
             
             <motion.button
-              className="p-2 rounded hover:bg-gray-700 transition-colors"
+              className="p-2 rounded-full hover:bg-gray-700 transition-colors"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => applyFormatting('align-right')}
@@ -116,7 +117,7 @@ const MessageEditor: React.FC<MessageEditorProps> = ({
           
           <div className="ml-auto">
             <motion.button
-              className="p-2 rounded hover:bg-gray-700 transition-colors"
+              className="p-2 rounded-full hover:bg-gray-700 transition-colors"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => applyFormatting('font-size')}
@@ -127,14 +128,14 @@ const MessageEditor: React.FC<MessageEditorProps> = ({
           </div>
         </div>
         
-        <textarea
+        <Textarea
           value={message}
           onChange={handleChange}
           placeholder="Digite sua mensagem aqui..."
-          className="w-full h-40 p-4 bg-gray-900/80 rounded-b-lg text-white focus:outline-none focus:ring-1 focus:ring-memcyan transition-all duration-300 placeholder-gray-500 resize-none shadow-inner"
-        ></textarea>
+          className="w-full h-40 p-4 bg-gray-900/80 backdrop-blur-sm rounded-b-2xl text-white focus:outline-none focus:ring-1 focus:ring-memcyan transition-all duration-300 placeholder-gray-500 resize-none shadow-inner border-t-0"
+        />
         
-        <div className="flex justify-between items-center mt-2">
+        <div className="flex justify-between items-center mt-2 px-1">
           <span className="text-xs text-memcyan">
             Use sua criatividade para escrever algo especial
           </span>

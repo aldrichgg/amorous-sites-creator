@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, AlertCircle } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 
 interface EmailInputProps {
   email: string;
@@ -63,25 +64,26 @@ const EmailInput: React.FC<EmailInputProps> = ({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
       >
-        <input
-          type="email"
-          value={inputValue}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          placeholder="seu-email@exemplo.com"
-          className={`w-full px-10 py-3 rounded-lg bg-black/60 border ${
-            isValid ? 'border-white/20' : 'border-red-500'
-          } text-white focus:outline-none focus:ring-2 ${
-            isValid ? 'focus:ring-memcyan' : 'focus:ring-red-500'
-          } transition-all duration-300 placeholder-gray-500 shadow-inner`}
-        />
-        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <Mail className={`h-5 w-5 ${isValid ? 'text-memcyan' : 'text-red-500'}`} />
+        <div className="relative group">
+          <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+            <Mail className={`h-5 w-5 ${isValid ? 'text-memcyan group-hover:text-memcyan/80' : 'text-red-500'} transition-colors`} />
+          </div>
+          
+          <Input
+            type="email"
+            value={inputValue}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            placeholder="seu-email@exemplo.com"
+            className={`w-full pl-12 bg-black/60 backdrop-blur-sm border ${
+              isValid ? 'border-white/20 focus:border-memcyan/50' : 'border-red-500'
+            } text-white transition-all duration-300 placeholder-gray-500 shadow-lg shadow-black/30`}
+          />
         </div>
         
         {!isValid && (
           <motion.p
-            className="text-red-500 text-sm mt-1 flex items-center"
+            className="text-red-500 text-sm mt-2 flex items-center pl-2"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
