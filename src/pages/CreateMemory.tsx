@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -28,7 +29,7 @@ const CreateMemory: React.FC = () => {
   const [selectedEmoji, setSelectedEmoji] = useState('😊');
   const [photos, setPhotos] = useState<string[]>([]);
   const [message, setMessage] = useState('');
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [startDate, setStartDate] = useState<Date | null>(null);
   const [pageTitle, setPageTitle] = useState('');
   const [pageName, setPageName] = useState('');
   const [email, setEmail] = useState('');
