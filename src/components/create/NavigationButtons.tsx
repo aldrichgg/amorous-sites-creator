@@ -11,6 +11,7 @@ interface NavigationButtonsProps {
   isLastStep: boolean;
   nextLabel?: string;
   isDisabled?: boolean;
+  memoryData?: any; // This would contain the full memory data
 }
 
 const NavigationButtons: React.FC<NavigationButtonsProps> = ({
@@ -19,14 +20,38 @@ const NavigationButtons: React.FC<NavigationButtonsProps> = ({
   isFirstStep,
   isLastStep,
   nextLabel = 'Próxima etapa',
-  isDisabled = false
+  isDisabled = false,
+  memoryData
 }) => {
   const navigate = useNavigate();
 
   const handleNext = () => {
     if (isLastStep) {
-      // Redirect to payment page when completing the final step
-      navigate('/payment');
+      // In a real app, you would save memoryData to your database first
+      // Then redirect to payment page with the memory ID
+      
+      // Mock the memory slug for our example
+      let memorySlug = "gabriel-clara";
+      if (memoryData && memoryData.pageName) {
+        // Create a slug from the pageName
+        memorySlug = memoryData.pageName
+          .toLowerCase()
+          .replace(/\s+/g, '-')
+          .replace(/[^\w-]+/g, '');
+      }
+      
+      // Simulate payment page redirection
+      // In a real app, you'd redirect to a payment gateway
+      // After payment, the gateway would redirect to your memory page
+      
+      // For the demo, we'll navigate to the payment directly
+      // and have a button there to proceed to the memory page
+      navigate('/payment', { 
+        state: { 
+          memorySlug,
+          memoryData
+        } 
+      });
     } else {
       onNext();
     }

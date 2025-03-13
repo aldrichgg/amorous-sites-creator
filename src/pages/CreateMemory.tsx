@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -63,6 +64,31 @@ const CreateMemory: React.FC = () => {
       default:
         return true; // Other steps don't have required fields
     }
+  };
+  
+  // Get Spotify track ID from URL if available
+  const getSpotifyTrackId = () => {
+    if (spotifyUrl) {
+      const match = spotifyUrl.match(/track\/([a-zA-Z0-9]+)/);
+      return match ? match[1] : null;
+    }
+    return null;
+  };
+  
+  // Prepare complete memory data to pass to the payment page
+  const getMemoryData = () => {
+    return {
+      pageTitle,
+      pageName,
+      email,
+      startDate,
+      message,
+      spotifyUrl,
+      spotifyTrackId: getSpotifyTrackId(),
+      selectedEmoji,
+      photos,
+      selectedPlan
+    };
   };
   
   const steps = [
@@ -133,6 +159,7 @@ const CreateMemory: React.FC = () => {
             isFirstStep={currentStep === 0}
             isLastStep={currentStep === steps.length - 1}
             isStepValid={isStepValid()}
+            memoryData={getMemoryData()}
           >
             {steps[currentStep]}
           </StepContent>

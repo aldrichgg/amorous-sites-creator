@@ -11,6 +11,7 @@ interface StepContentProps {
   isFirstStep: boolean;
   isLastStep: boolean;
   isStepValid: boolean;
+  memoryData?: any; // Add this to pass memory data
 }
 
 const StepContent: React.FC<StepContentProps> = ({
@@ -20,7 +21,8 @@ const StepContent: React.FC<StepContentProps> = ({
   onPrevious,
   isFirstStep,
   isLastStep,
-  isStepValid
+  isStepValid,
+  memoryData
 }) => {
   return (
     <div className="max-w-4xl mx-auto glass-card rounded-xl p-4 sm:p-6 mb-8">
@@ -42,6 +44,7 @@ const StepContent: React.FC<StepContentProps> = ({
         isFirstStep={isFirstStep}
         isLastStep={isLastStep}
         isDisabled={!isStepValid}
+        memoryData={memoryData}
       />
     </div>
   );
