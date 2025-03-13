@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Smile } from 'lucide-react';
+import { Search, Smile, Cat, Coffee, Trophy } from 'lucide-react';
 
 // Lista simplificada de emojis para o exemplo
 const emojiCategories = {
@@ -39,6 +39,19 @@ const EmojiSelector: React.FC<EmojiSelectorProps> = ({
     setSearchTerm(e.target.value);
   };
   
+  const handleCategoryChange = (category: string) => {
+    setActiveCategory(category);
+    setSearchTerm(''); // Clear search when changing category
+  };
+  
+  // Map category names to icons
+  const categoryIcons = {
+    "Smiles & People": <Smile className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300" />,
+    "Animals & Nature": <Cat className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300" />,
+    "Food & Drink": <Coffee className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300" />,
+    "Activities": <Trophy className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300" />,
+  };
+  
   // Filtrar emojis baseado na busca
   const filteredEmojis = searchTerm
     ? Object.values(emojiCategories).flat().filter(emoji => 
@@ -72,30 +85,23 @@ const EmojiSelector: React.FC<EmojiSelectorProps> = ({
         transition={{ duration: 0.5, delay: 0.3 }}
       >
         <div className="flex overflow-x-auto space-x-2 pb-2 mb-3 hide-scrollbar">
-          <button className="flex-shrink-0 p-2 rounded-md bg-gray-800/50 hover:bg-gray-700/50 transition-colors">
-            <Smile className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300" />
-          </button>
-          <button className="flex-shrink-0 p-2 rounded-md bg-gray-800/50 hover:bg-gray-700/50 transition-colors">
-            <span className="text-lg sm:text-xl">🐱</span>
-          </button>
-          <button className="flex-shrink-0 p-2 rounded-md bg-gray-800/50 hover:bg-gray-700/50 transition-colors">
-            <span className="text-lg sm:text-xl">🍕</span>
-          </button>
-          <button className="flex-shrink-0 p-2 rounded-md bg-gray-800/50 hover:bg-gray-700/50 transition-colors">
-            <span className="text-lg sm:text-xl">⚽</span>
-          </button>
-          <button className="flex-shrink-0 p-2 rounded-md bg-gray-800/50 hover:bg-gray-700/50 transition-colors">
-            <span className="text-lg sm:text-xl">🚗</span>
-          </button>
-          <button className="flex-shrink-0 p-2 rounded-md bg-gray-800/50 hover:bg-gray-700/50 transition-colors">
-            <span className="text-lg sm:text-xl">💡</span>
-          </button>
-          <button className="flex-shrink-0 p-2 rounded-md bg-gray-800/50 hover:bg-gray-700/50 transition-colors">
-            <span className="text-lg sm:text-xl">#</span>
-          </button>
-          <button className="flex-shrink-0 p-2 rounded-md bg-gray-800/50 hover:bg-gray-700/50 transition-colors">
-            <span className="text-lg sm:text-xl">🏳️</span>
-          </button>
+          {Object.keys(emojiCategories).map((category) => (
+            <button 
+              key={category}
+              className={`flex-shrink-0 p-2 rounded-md transition-colors ${
+                activeCategory === category 
+                  ? 'bg-memcyan/20 ring-1 ring-memcyan' 
+                  : 'bg-gray-800/50 hover:bg-gray-700/50'
+              }`}
+              onClick={() => handleCategoryChange(category)}
+              title={category}
+            >
+              {category === "Smiles & People" && <Smile className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300" />}
+              {category === "Animals & Nature" && <Cat className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300" />}
+              {category === "Food & Drink" && <Coffee className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300" />}
+              {category === "Activities" && <Trophy className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300" />}
+            </button>
+          ))}
         </div>
         
         <div className="relative mb-3">
