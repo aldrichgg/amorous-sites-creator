@@ -59,7 +59,7 @@ const Hero = () => {
         <div className="max-w-3xl mx-auto text-center mb-20">
           <div className="inline-block bg-white/10 backdrop-blur-sm rounded-full px-4 py-1.5 mb-6">
             <div className="flex items-center">
-              <button className="bg-memblue/20 backdrop-blur-sm rounded-full text-white px-4 py-1 text-sm">
+              <button className="bg-memred/20 backdrop-blur-sm rounded-full text-white px-4 py-1 text-sm">
                 Buscar memórias
               </button>
             </div>
@@ -80,7 +80,7 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <div className="relative group w-full sm:w-auto">
               <div className="absolute inset-0 btn-gradient rounded-full blur opacity-75 group-hover:opacity-100 transition-opacity"></div>
-              <Link to="/create" className="relative w-full sm:w-auto inline-flex items-center justify-center bg-gradient-to-r from-memblue to-memcyan hover:from-memblue-dark hover:to-memcyan-dark text-white font-medium rounded-full px-8 py-3 text-lg transition-all duration-300">
+              <Link to="/create" className="relative w-full sm:w-auto inline-flex items-center justify-center bg-gradient-to-r from-memred to-memred-light hover:from-memred-dark hover:to-memred-light text-white font-medium rounded-full px-8 py-3 text-lg transition-all duration-300">
                 Começar <ChevronRight size={20} className="ml-1" />
               </Link>
             </div>
@@ -91,14 +91,14 @@ const Hero = () => {
               <AnimatedTooltip items={couples} />
             </div>
             <div className="flex items-center">
-              {[1, 2, 3, 4, 5].map(id => <Star key={id} size={16} className="text-yellow-400 fill-yellow-400" />)}
+              {[1, 2, 3, 4, 5].map(id => <Star key={id} size={16} className="text-memred-light fill-memred-light" />)}
               <span className="ml-2 text-white font-medium">1730 memórias eternizadas</span>
             </div>
           </div>
         </div>
         
         <div className="relative mx-auto max-w-4xl">
-          <div className="absolute -inset-0.5 bg-gradient-to-r from-memblue to-memcyan rounded-2xl blur opacity-75 animate-pulse-soft"></div>
+          <div className="absolute -inset-0.5 bg-gradient-to-r from-memred to-memred-light rounded-2xl blur opacity-75 animate-pulse-soft"></div>
           <div className="relative bg-black rounded-2xl overflow-hidden">
             
             
@@ -114,13 +114,13 @@ const Hero = () => {
       
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black opacity-80 pointer-events-none"></div>
       
-      <div className="absolute top-1/4 left-10 w-20 h-20 bg-memblue/20 rounded-full blur-3xl animate-float" style={{
+      <div className="absolute top-1/4 left-10 w-20 h-20 bg-memred/20 rounded-full blur-3xl animate-float" style={{
       animationDelay: '0s'
     }}></div>
-      <div className="absolute bottom-1/3 right-10 w-32 h-32 bg-memcyan/20 rounded-full blur-3xl animate-float" style={{
+      <div className="absolute bottom-1/3 right-10 w-32 h-32 bg-memred-light/20 rounded-full blur-3xl animate-float" style={{
       animationDelay: '1s'
     }}></div>
-      <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-purple-500/10 rounded-full blur-3xl animate-float" style={{
+      <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-memred-dark/10 rounded-full blur-3xl animate-float" style={{
       animationDelay: '2s'
     }}></div>
     </section>

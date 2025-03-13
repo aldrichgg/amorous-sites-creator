@@ -63,15 +63,15 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        memblue: {
-          light: "#60a5fa",
-          DEFAULT: "#3b82f6",
-          dark: "#2563eb",
+        memred: {
+          light: "#ff6b6b",
+          DEFAULT: "#ea384c",
+          dark: "#cc1f33",
         },
-        memcyan: {
-          light: "#22d3ee",
-          DEFAULT: "#06b6d4",
-          dark: "#0891b2",
+        memblack: {
+          light: "#333333",
+          DEFAULT: "#000000",
+          dark: "#111111",
         },
       },
       borderRadius: {
