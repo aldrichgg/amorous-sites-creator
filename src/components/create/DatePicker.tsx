@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
 import { format, addMonths, subMonths, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isToday, isSameDay, setMonth, setYear } from 'date-fns';
 import { pt } from 'date-fns/locale';
+import { Input } from '@/components/ui/input';
 
 interface DatePickerProps {
   selectedDate: Date | null;
@@ -207,6 +208,25 @@ const DatePicker: React.FC<DatePickerProps> = ({
             </div>
           )}
         </AnimatePresence>
+        
+        {/* Display the selected date in an input below the calendar */}
+        {selectedDate && (
+          <motion.div 
+            className="p-3 sm:p-4 border-t border-gray-700"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="flex flex-col sm:flex-row items-center gap-2">
+              <label className="text-sm text-gray-400">Data selecionada:</label>
+              <Input
+                value={format(selectedDate, 'dd/MM/yyyy')}
+                className="bg-gray-800 border-gray-700 text-white text-center"
+                readOnly
+              />
+            </div>
+          </motion.div>
+        )}
       </motion.div>
     </div>
   );
