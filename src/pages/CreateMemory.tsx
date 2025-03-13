@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -40,20 +39,6 @@ const CreateMemory: React.FC = () => {
     if (currentStep < totalSteps - 1) {
       setCurrentStep(currentStep + 1);
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      console.log('Formulário completo:', {
-        selectedPlan,
-        spotifyUrl,
-        selectedEmoji,
-        photos,
-        message,
-        startDate,
-        pageTitle,
-        pageName,
-        email
-      });
-      
-      navigate('/payment');
     }
   };
   

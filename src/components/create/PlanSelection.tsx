@@ -68,10 +68,6 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
     }
   ];
 
-  const handleChoosePlan = () => {
-    setShowPaymentModal(true);
-  };
-
   const handlePaymentSelection = (method: 'pix' | 'card') => {
     toast({
       title: "Método de pagamento selecionado",
@@ -169,17 +165,6 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
             )}
           </motion.div>
         ))}
-      </div>
-      
-      <div className="mt-8 max-w-lg mx-auto">
-        <motion.button
-          onClick={handleChoosePlan}
-          className="w-full bg-gradient-to-r from-memblue to-memcyan text-white font-medium py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center hover:opacity-90"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          Escolher este plano
-        </motion.button>
       </div>
       
       {/* Payment Modal */}
