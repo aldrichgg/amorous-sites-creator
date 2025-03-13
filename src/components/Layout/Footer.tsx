@@ -26,7 +26,7 @@ const Footer = () => {
             Copyright © {currentYear} - Todos os direitos reservados
           </p>
           <p className="text-gray-300 text-sm flex items-center mb-6">
-            Feito com <Heart size={14} className="mx-1 text-red-500 fill-red-500" /> por Davi Souza
+            Feito com <Heart size={14} className="mx-1 text-red-500 fill-red-500" /> por IMPULSEGRAM
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 mb-6">
