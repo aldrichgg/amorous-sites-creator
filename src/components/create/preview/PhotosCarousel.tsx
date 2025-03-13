@@ -56,11 +56,12 @@ const PhotosCarousel: React.FC<PhotosCarouselProps> = ({ photos }) => {
         <CarouselContent>
           {photos.map((photo, index) => (
             <CarouselItem key={index}>
-              <div className="aspect-[4/3] rounded-md overflow-hidden bg-transparent flex items-center justify-center">
+              <div className="aspect-[4/3] rounded-lg overflow-hidden bg-transparent flex items-center justify-center">
                 <img 
                   src={photo} 
                   alt={`Memory photo ${index + 1}`} 
-                  className="w-full h-full object-contain border border-gray-400/40 rounded-lg"
+                  className="w-full h-full object-contain rounded-lg"
+                  style={{ border: '1px solid rgba(156, 163, 175, 0.4)' }}
                 />
               </div>
             </CarouselItem>

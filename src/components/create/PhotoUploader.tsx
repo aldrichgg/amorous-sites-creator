@@ -126,7 +126,8 @@ const PhotoUploader: React.FC<PhotoUploaderProps> = ({
                     <img
                       src={photo}
                       alt={`Photo ${index + 1}`}
-                      className="w-full h-full object-cover border border-gray-400/40 rounded-lg"
+                      className="w-full h-full object-cover rounded-lg"
+                      style={{ border: '1px solid rgba(156, 163, 175, 0.4)' }}
                     />
                   </div>
                   
