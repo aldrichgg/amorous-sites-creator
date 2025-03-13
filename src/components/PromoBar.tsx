@@ -8,15 +8,7 @@ const PromoBar = () => {
   const [visible, setVisible] = useState(true);
   const location = useLocation();
   
-  // Check if current path is Payment or Memory Display page
-  const hideOnPaths = ['/payment', '/memory'];
-  const shouldHidePromo = hideOnPaths.some(path => location.pathname.startsWith(path));
-  
-  // If we're on a page where the promo should be hidden, don't render it at all
-  if (shouldHidePromo) {
-    return null;
-  }
-  
+  // Define effect for scroll behavior - moving this before the early return
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -29,6 +21,15 @@ const PromoBar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+  
+  // Check if current path is Payment or Memory Display page
+  const hideOnPaths = ['/payment', '/memory'];
+  const shouldHidePromo = hideOnPaths.some(path => location.pathname.startsWith(path));
+  
+  // If we're on a page where the promo should be hidden, don't render it at all
+  if (shouldHidePromo) {
+    return null;
+  }
   
   return (
     <div 
