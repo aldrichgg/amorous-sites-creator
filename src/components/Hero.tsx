@@ -53,7 +53,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="min-h-[calc(100vh-40px)] bg-black bg-mesh relative flex flex-col justify-center items-center overflow-hidden pt-24 md:pt-24 px-4 sm:px-0">
+    <section className="min-h-[calc(100vh-40px)] bg-black bg-mesh relative flex flex-col justify-center items-center overflow-hidden pt-32 md:pt-32 px-4 sm:px-0">
       <div className={`container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 transition-all duration-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         <div className="max-w-3xl mx-auto text-center mb-12 md:mb-20">
           <div className="inline-block bg-white/10 backdrop-blur-sm rounded-full px-3 py-1 mb-4 md:mb-6">
