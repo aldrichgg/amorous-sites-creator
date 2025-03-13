@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Calendar } from 'lucide-react';
 
 interface DateCounterProps {
@@ -7,6 +7,22 @@ interface DateCounterProps {
 }
 
 const DateCounter: React.FC<DateCounterProps> = ({ startDate }) => {
+  const [timeString, setTimeString] = useState<string>('');
+  
+  useEffect(() => {
+    if (!startDate) return;
+    
+    // Update the counter every second
+    const timer = setInterval(() => {
+      setTimeString(calculateTimeDifference(startDate));
+    }, 1000);
+    
+    // Initial calculation
+    setTimeString(calculateTimeDifference(startDate));
+    
+    return () => clearInterval(timer);
+  }, [startDate]);
+  
   if (!startDate) return null;
   
   // Format date for display
@@ -18,27 +34,25 @@ const DateCounter: React.FC<DateCounterProps> = ({ startDate }) => {
     }).format(date);
   };
 
-  // Calculate time difference
-  const calculateTimeDifference = (date: Date) => {
+  // Calculate time difference in detailed format (hours, minutes, seconds)
+  const calculateTimeDifference = (date: Date): string => {
     const now = new Date();
     const diffTime = Math.abs(now.getTime() - date.getTime());
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    const diffMonths = Math.floor(diffDays / 30);
-    const diffYears = Math.floor(diffDays / 365);
     
-    if (diffYears > 0) {
-      return `${diffYears} ${diffYears === 1 ? 'ano' : 'anos'}`;
-    } else if (diffMonths > 0) {
-      return `${diffMonths} ${diffMonths === 1 ? 'mês' : 'meses'}`;
-    } else {
-      return `${diffDays} ${diffDays === 1 ? 'dia' : 'dias'}`;
-    }
+    // Calculate hours, minutes, and seconds
+    const totalSeconds = Math.floor(diffTime / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    
+    // Format the string
+    return `${hours} ${hours === 1 ? 'hora' : 'horas'}, ${minutes} ${minutes === 1 ? 'minuto' : 'minutos'} e ${seconds} ${seconds === 1 ? 'segundo' : 'segundos'}`;
   };
   
   return (
     <div className="text-center mb-4">
       <div className="text-2xl font-bold text-memcyan">
-        {calculateTimeDifference(startDate)}
+        {timeString}
       </div>
       <div className="flex items-center justify-center text-gray-300 text-xs">
         <Calendar className="w-3 h-3 mr-1 text-memcyan" />
