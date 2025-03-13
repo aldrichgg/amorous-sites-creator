@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Music, AlertCircle } from 'lucide-react';
@@ -15,16 +14,42 @@ const SpotifyInput: React.FC<SpotifyInputProps> = ({
   const [inputValue, setInputValue] = useState(spotifyUrl);
   const [error, setError] = useState<string | null>(null);
   
-  // Improved Spotify URL validation
+  // Enhanced Spotify URL validation
   const validateSpotifyUrl = (url: string): boolean => {
     if (!url) return true; // Empty is valid
     
     // Check for common Spotify URL patterns
-    const isTrackUrl = url.includes('spotify.com/track/');
-    const isOpenSpotifyUrl = url.includes('open.spotify.com');
-    const hasTrackId = /track\/([a-zA-Z0-9]+)/.test(url);
-    
-    return (isTrackUrl || (isOpenSpotifyUrl && hasTrackId));
+    try {
+      // Match standard track URL patterns
+      const standardPatterns = [
+        /spotify\.com\/track\/[a-zA-Z0-9]+/,
+        /spotify\.com\/intl-[a-z]+\/track\/[a-zA-Z0-9]+/,
+        /open\.spotify\.com\/track\/[a-zA-Z0-9]+/,
+        /open\.spotify\.com\/intl-[a-z]+\/track\/[a-zA-Z0-9]+/,
+        /spotify:track:[a-zA-Z0-9]+/
+      ];
+      
+      if (standardPatterns.some(pattern => pattern.test(url))) {
+        return true;
+      }
+      
+      // Try parsing as URL for more complex cases
+      try {
+        const parsedUrl = new URL(url);
+        if (parsedUrl.hostname.includes('spotify.com') && 
+            (parsedUrl.pathname.includes('/track/') || 
+             parsedUrl.searchParams.has('track'))) {
+          return true;
+        }
+      } catch {
+        // Not a valid URL, continue with other checks
+      }
+      
+      return false;
+    } catch (e) {
+      console.error("Error validating Spotify URL:", e);
+      return false;
+    }
   };
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

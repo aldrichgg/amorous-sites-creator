@@ -15,8 +15,9 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({ spotifyTrackId, spotifyUr
     if (spotifyUrl) {
       // Handle different Spotify URL formats
       try {
-        // Extract ID format: spotify.com/track/ID or open.spotify.com/track/ID
-        const match = spotifyUrl.match(/track\/([a-zA-Z0-9]+)/);
+        // Extract ID from URLs like 'spotify.com/intl-pt/track/ID' or 'open.spotify.com/track/ID'
+        // This pattern will match track IDs regardless of language prefix or domains
+        const match = spotifyUrl.match(/\/track\/([a-zA-Z0-9]+)/);
         if (match && match[1]) return match[1];
         
         // Handle spotify:track:ID format
@@ -24,9 +25,18 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({ spotifyTrackId, spotifyUr
         if (uriMatch && uriMatch[1]) return uriMatch[1];
         
         // Try getting ID from URL parameters if embedded in a link
-        const url = new URL(spotifyUrl);
-        const trackParam = url.searchParams.get('track');
-        if (trackParam) return trackParam;
+        try {
+          const url = new URL(spotifyUrl);
+          // Some Spotify urls have the ID in the pathname rather than as a parameter
+          const pathMatch = url.pathname.match(/\/track\/([a-zA-Z0-9]+)/);
+          if (pathMatch && pathMatch[1]) return pathMatch[1];
+          
+          // As fallback, check query parameters
+          const trackParam = url.searchParams.get('track');
+          if (trackParam) return trackParam;
+        } catch {
+          console.log('Could not parse as URL');
+        }
       } catch (e) {
         console.log('Error parsing Spotify URL:', e);
         return null;

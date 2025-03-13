@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useIsMobile } from '../../hooks/use-mobile';
@@ -38,8 +37,8 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
     if (spotifyUrl) {
       // Improved track ID extraction
       try {
-        // Handle standard format: spotify.com/track/ID
-        const match = spotifyUrl.match(/track\/([a-zA-Z0-9]+)/);
+        // Handle standard format with various prefixes: spotify.com/track/ID or open.spotify.com/intl-pt/track/ID
+        const match = spotifyUrl.match(/\/track\/([a-zA-Z0-9]+)/);
         if (match && match[1]) {
           console.log("Extracted Spotify track ID:", match[1], "from URL:", spotifyUrl);
           setSpotifyTrackId(match[1]);
@@ -54,13 +53,26 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
           return;
         }
         
-        // Try URL object for embedded parameters
-        const url = new URL(spotifyUrl);
-        const trackParam = url.searchParams.get('track');
-        if (trackParam) {
-          console.log("Extracted Spotify track ID from params:", trackParam);
-          setSpotifyTrackId(trackParam);
-          return;
+        // Try parsing as URL for more complex cases
+        try {
+          const url = new URL(spotifyUrl);
+          // Check if the ID is in the pathname
+          const pathMatch = url.pathname.match(/\/track\/([a-zA-Z0-9]+)/);
+          if (pathMatch && pathMatch[1]) {
+            console.log("Extracted Spotify track ID from path:", pathMatch[1]);
+            setSpotifyTrackId(pathMatch[1]);
+            return;
+          }
+          
+          // As fallback, check query parameters
+          const trackParam = url.searchParams.get('track');
+          if (trackParam) {
+            console.log("Extracted Spotify track ID from params:", trackParam);
+            setSpotifyTrackId(trackParam);
+            return;
+          }
+        } catch (urlError) {
+          console.log("Could not parse as URL:", urlError);
         }
         
         // No valid ID found
