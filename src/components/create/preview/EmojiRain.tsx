@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -66,12 +67,12 @@ const EmojiRain: React.FC<EmojiRainProps> = ({ emoji }) => {
   };
   
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <div className="fixed inset-0 overflow-hidden pointer-events-none z-10 h-full min-h-screen">
       <AnimatePresence>
         {drops.map((drop) => (
           <motion.div
             key={drop.id}
-            className="absolute top-0 text-xl sm:text-2xl z-10"
+            className="absolute top-0 text-xl sm:text-2xl"
             style={{
               left: `${drop.x}%`,
             }}
@@ -82,7 +83,7 @@ const EmojiRain: React.FC<EmojiRainProps> = ({ emoji }) => {
               scale: drop.scale,
             }}
             animate={{ 
-              y: '120vh',
+              y: '200vh', // Increased from 120vh to 200vh to ensure it goes all the way to the bottom
               opacity: 0.7,
               rotate: drop.rotation + 360,
             }}
