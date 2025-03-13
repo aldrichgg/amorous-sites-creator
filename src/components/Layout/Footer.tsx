@@ -39,9 +39,14 @@ const Footer = () => {
             <Link to="/privacy" className="text-gray-300 hover:text-white text-sm transition-colors">
               Política de privacidade
             </Link>
-            <Link to="/cnpj" className="text-gray-300 hover:text-white text-sm transition-colors">
-              CNPJ: 00.000.000/0001-00
-            </Link>
+            <a 
+              href="https://casadosdados.com.br/solucao/cnpj/50195991-aldrich-larchert-azevedo-carvalho-da-gama-50195991000183" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-gray-300 hover:text-white text-sm transition-colors"
+            >
+              CNPJ: 50.195.991/0001-83
+            </a>
           </div>
         </div>
       </div>
