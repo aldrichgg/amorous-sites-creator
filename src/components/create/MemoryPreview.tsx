@@ -44,14 +44,15 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
     }
   }, [spotifyUrl]);
 
-  const previewWidth = isMobile ? "100%" : "375px";
-  const previewHeight = "700px";
+  // Adjust for smaller screens
+  const previewWidth = isMobile ? "95%" : "350px";
+  const previewHeight = isMobile ? "600px" : "700px";
 
   return (
     <div className="w-full mx-auto mt-8 flex justify-center">
       <div className="flex flex-col items-center">
         <motion.h3 
-          className="text-xl font-semibold mb-4 text-center text-white"
+          className="text-lg sm:text-xl font-semibold mb-4 text-center text-white"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -64,6 +65,7 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
+          style={{ maxWidth: "100%" }}
         >
           <MobileDeviceFrame previewWidth={previewWidth} previewHeight={previewHeight}>
             {/* Browser content */}
@@ -77,7 +79,7 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
                 
                 {/* Title */}
                 <div className="text-center mb-2">
-                  <h1 className="text-2xl font-bold text-white">{pageTitle || 'Título da Memória'}</h1>
+                  <h1 className="text-xl sm:text-2xl font-bold text-white">{pageTitle || 'Título da Memória'}</h1>
                 </div>
                 
                 <DateCounter startDate={startDate} />
@@ -85,7 +87,7 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
                 
                 {/* Selected emoji as background */}
                 {selectedEmoji && (
-                  <div className="absolute bottom-4 right-4 text-5xl opacity-20">
+                  <div className="absolute bottom-4 right-4 text-4xl sm:text-5xl opacity-20">
                     {selectedEmoji}
                   </div>
                 )}

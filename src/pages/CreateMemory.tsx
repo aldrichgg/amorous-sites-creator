@@ -135,7 +135,6 @@ const CreateMemory: React.FC = () => {
       <div className="relative overflow-hidden">
         <StarBackground intensity="medium" color="mixed" />
         
-        <PromoBar />
         <Navbar />
         
         <main className="container mx-auto px-4 py-8 relative z-10 pt-32 pb-20">
@@ -153,7 +152,7 @@ const CreateMemory: React.FC = () => {
             {steps[currentStep]}
           </StepContent>
           
-          <div className="mt-12 mb-8">
+          <div className="mt-8 sm:mt-12 mb-8">
             <MemoryPreview
               pageTitle={pageTitle}
               pageName={pageName}

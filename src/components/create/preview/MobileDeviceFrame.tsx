@@ -13,10 +13,17 @@ const MobileDeviceFrame: React.FC<MobileDeviceFrameProps> = ({
   previewHeight
 }) => {
   return (
-    <div className="relative rounded-[40px] overflow-hidden bg-gray-900 border-8 border-gray-800 shadow-2xl" style={{ width: previewWidth, height: previewHeight }}>
+    <div 
+      className="relative rounded-[30px] sm:rounded-[40px] overflow-hidden bg-gray-900 border-4 sm:border-8 border-gray-800 shadow-2xl" 
+      style={{ 
+        width: previewWidth, 
+        height: previewHeight,
+        maxWidth: "100%"
+      }}
+    >
       {/* Device notch */}
-      <div className="absolute top-0 left-0 right-0 h-6 bg-black z-10 flex justify-center items-center">
-        <div className="w-40 h-5 bg-black rounded-b-xl"></div>
+      <div className="absolute top-0 left-0 right-0 h-4 sm:h-6 bg-black z-10 flex justify-center items-center">
+        <div className="w-24 sm:w-40 h-3 sm:h-5 bg-black rounded-b-xl"></div>
       </div>
       
       {children}

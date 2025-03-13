@@ -54,25 +54,25 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="min-h-[calc(100vh-40px)] bg-black bg-mesh relative flex flex-col justify-center items-center overflow-hidden pt-20 md:pt-24">
+    <section className="min-h-[calc(100vh-40px)] bg-black bg-mesh relative flex flex-col justify-center items-center overflow-hidden pt-24 md:pt-24 px-4 sm:px-0">
       <div className={`container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 transition-all duration-700 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-        <div className="max-w-3xl mx-auto text-center mb-20">
-          <div className="inline-block bg-white/10 backdrop-blur-sm rounded-full px-4 py-1.5 mb-6">
+        <div className="max-w-3xl mx-auto text-center mb-12 md:mb-20">
+          <div className="inline-block bg-white/10 backdrop-blur-sm rounded-full px-3 py-1 mb-4 md:mb-6">
             <div className="flex items-center">
-              <button className="bg-memred/20 backdrop-blur-sm rounded-full text-white px-4 py-1 text-sm">
+              <button className="bg-memred/20 backdrop-blur-sm rounded-full text-white px-3 py-1 text-xs sm:text-sm">
                 Buscar memórias
               </button>
             </div>
           </div>
           
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white leading-tight">
-            Personalize <br />
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 md:mb-6 text-white leading-tight">
+            Personalize <br className="sm:hidden" />
             <span>
-              <FlipWords words={flipWords} className="text-4xl md:text-5xl" />
+              <FlipWords words={flipWords} className="text-3xl sm:text-4xl md:text-5xl" />
             </span>
           </h1>
           
-          <p className="text-gray-300 text-lg md:text-xl mb-8">
+          <p className="text-gray-300 text-base md:text-lg lg:text-xl mb-6 md:mb-8">
             Preencha o formulário, receba seu site único e um QR Code para compartilhar.
             Adicione imagens, mensagens e um contador dinâmico para tornar o presente ainda mais especial. ✨
           </p>
@@ -80,31 +80,29 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <div className="relative group w-full sm:w-auto">
               <div className="absolute inset-0 btn-gradient rounded-full blur opacity-75 group-hover:opacity-100 transition-opacity"></div>
-              <Link to="/create" className="relative w-full sm:w-auto inline-flex items-center justify-center bg-gradient-to-r from-memred to-memred-light hover:from-memred-dark hover:to-memred-light text-white font-medium rounded-full px-8 py-3 text-lg transition-all duration-300">
-                Começar <ChevronRight size={20} className="ml-1" />
+              <Link to="/create" className="relative w-full sm:w-auto inline-flex items-center justify-center bg-gradient-to-r from-memred to-memred-light hover:from-memred-dark hover:to-memred-light text-white font-medium rounded-full px-6 sm:px-8 py-2.5 sm:py-3 text-base sm:text-lg transition-all duration-300">
+                Começar <ChevronRight size={18} className="ml-1" />
               </Link>
             </div>
           </div>
           
-          <div className="mt-10 flex flex-col items-center">
+          <div className="mt-8 md:mt-10 flex flex-col items-center">
             <div className="flex items-center justify-center mb-4">
               <AnimatedTooltip items={couples} />
             </div>
             <div className="flex items-center">
-              {[1, 2, 3, 4, 5].map(id => <Star key={id} size={16} className="text-memred-light fill-memred-light" />)}
-              <span className="ml-2 text-white font-medium">1730 memórias eternizadas</span>
+              {[1, 2, 3, 4, 5].map(id => <Star key={id} size={14} className="text-memred-light fill-memred-light" />)}
+              <span className="ml-2 text-white text-sm font-medium">1730 memórias eternizadas</span>
             </div>
           </div>
         </div>
         
-        <div className="relative mx-auto max-w-4xl">
+        <div className="relative mx-auto max-w-4xl mt-8 md:mt-0">
           <div className="absolute -inset-0.5 bg-gradient-to-r from-memred to-memred-light rounded-2xl blur opacity-75 animate-pulse-soft"></div>
           <div className="relative bg-black rounded-2xl overflow-hidden">
-            
-            
-            <div className="absolute bottom-0 left-0 right-0 text-center pb-8">
-              <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Crie uma memória <br />em 4 etapas!</h2>
-              <p className="text-gray-300 mx-auto max-w-md px-4">
+            <div className="absolute bottom-0 left-0 right-0 text-center pb-4 sm:pb-8">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">Crie uma memória <br />em 4 etapas!</h2>
+              <p className="text-gray-300 mx-auto max-w-md px-4 text-sm sm:text-base">
                 Surpreenda alguém especial com uma memória personalizada. É fácil, seguro e rápido!
               </p>
             </div>
