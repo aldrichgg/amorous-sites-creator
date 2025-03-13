@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Heart, Calendar, Music, Camera, Share2, Loader2 } from 'lucide-react';
+import { Heart, Calendar, Music, Camera, Share2, Loader2, X } from 'lucide-react';
 import { toast } from "sonner";
 
 import StarBackground from '../components/StarBackground';
@@ -13,6 +13,11 @@ import MessageDisplay from '../components/create/preview/MessageDisplay';
 import EmojiRain from '../components/create/preview/EmojiRain';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { 
+  Dialog,
+  DialogContent,
+  DialogClose
+} from "@/components/ui/dialog";
 import { getMemoryByPageName } from '@/services/memoryService';
 import { Memory, MemoryPhoto } from '@/types/memory';
 
@@ -23,6 +28,7 @@ const MemoryDisplay = () => {
   const [memoryData, setMemoryData] = useState<Memory | null>(null);
   const [photos, setPhotos] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
 
   useEffect(() => {
     // Fetch memory data from Supabase
@@ -70,6 +76,14 @@ const MemoryDisplay = () => {
       navigator.clipboard.writeText(window.location.href);
       toast.success("Link copiado para a área de transferência!");
     }
+  };
+
+  const openImageModal = (index: number) => {
+    setSelectedImageIndex(index);
+  };
+
+  const closeImageModal = () => {
+    setSelectedImageIndex(null);
   };
 
   // Show appropriate UI based on loading state and data
@@ -189,7 +203,11 @@ const MemoryDisplay = () => {
                     </div>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                       {photos.map((photo: string, index: number) => (
-                        <div key={index} className="relative aspect-square rounded-lg overflow-hidden shadow-md transform transition-transform hover:scale-105">
+                        <div 
+                          key={index} 
+                          className="relative aspect-square rounded-lg overflow-hidden shadow-md transform transition-transform hover:scale-105 cursor-pointer"
+                          onClick={() => openImageModal(index)}
+                        >
                           <img
                             src={photo}
                             alt={`Memória ${index + 1}`}
@@ -230,6 +248,24 @@ const MemoryDisplay = () => {
           </main>
         )}
       </div>
+
+      {/* Full-size image modal */}
+      <Dialog open={selectedImageIndex !== null} onOpenChange={closeImageModal}>
+        <DialogContent className="max-w-[95vw] sm:max-w-[90vw] md:max-w-[85vw] lg:max-w-[80vw] p-0 bg-black/90 border-none">
+          <DialogClose className="absolute right-3 top-3 z-10 rounded-full bg-black/50 p-2 text-white hover:bg-black/70">
+            <X className="h-5 w-5" />
+          </DialogClose>
+          <div className="w-full h-full flex items-center justify-center p-4">
+            {selectedImageIndex !== null && photos[selectedImageIndex] && (
+              <img
+                src={photos[selectedImageIndex]}
+                alt={`Full-size photo ${selectedImageIndex + 1}`}
+                className="max-w-full max-h-[90vh] object-contain"
+              />
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

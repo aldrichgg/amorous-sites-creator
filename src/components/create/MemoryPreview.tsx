@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { X } from 'lucide-react';
 import { useIsMobile } from '../../hooks/use-mobile';
 
 import MobileDeviceFrame from './preview/MobileDeviceFrame';
@@ -11,6 +12,11 @@ import DateCounter from './preview/DateCounter';
 import MessageDisplay from './preview/MessageDisplay';
 import EmojiRain from './preview/EmojiRain';
 import { Separator } from "@/components/ui/separator";
+import {
+  Dialog,
+  DialogContent,
+  DialogClose
+} from "@/components/ui/dialog";
 
 interface MemoryPreviewProps {
   pageTitle: string;
@@ -34,6 +40,7 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
   selectedPlan = 'forever'
 }) => {
   const [spotifyTrackId, setSpotifyTrackId] = useState<string | null>(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const isMobile = useIsMobile();
 
   // Features availability based on plan
@@ -100,6 +107,14 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
   // Adjust for smaller screens with more natural phone dimensions
   const previewWidth = isMobile ? "280px" : "320px";
   const previewHeight = isMobile ? "580px" : "650px";
+
+  const openImageModal = (index: number) => {
+    setSelectedImageIndex(index);
+  };
+
+  const closeImageModal = () => {
+    setSelectedImageIndex(null);
+  };
 
   return (
     <div className="w-full mx-auto mt-8 flex justify-center">
@@ -179,6 +194,24 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
           Esta é apenas uma prévia. A página final pode ter pequenas diferenças.
         </motion.p>
       </div>
+
+      {/* Full-size image modal */}
+      <Dialog open={selectedImageIndex !== null} onOpenChange={closeImageModal}>
+        <DialogContent className="max-w-[95vw] sm:max-w-[90vw] md:max-w-[85vw] lg:max-w-[80vw] p-0 bg-black/90 border-none">
+          <DialogClose className="absolute right-3 top-3 z-10 rounded-full bg-black/50 p-2 text-white hover:bg-black/70">
+            <X className="h-5 w-5" />
+          </DialogClose>
+          <div className="w-full h-full flex items-center justify-center p-4">
+            {selectedImageIndex !== null && limitedPhotos[selectedImageIndex] && (
+              <img
+                src={limitedPhotos[selectedImageIndex]}
+                alt={`Full-size photo ${selectedImageIndex + 1}`}
+                className="max-w-full max-h-[90vh] object-contain"
+              />
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
