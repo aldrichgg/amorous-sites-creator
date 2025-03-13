@@ -1,7 +1,6 @@
-
 import * as React from "react";
-import { ChevronLeft, ChevronRight, Heart } from "lucide-react";
-import { DayPicker, type DayProps } from "react-day-picker";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { DayPicker } from "react-day-picker";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
@@ -17,7 +16,7 @@ function Calendar({
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
-      className={cn("p-3 pointer-events-auto", className)}
+      className={cn("p-3", className)}
       classNames={{
         months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
         month: "space-y-4",
@@ -42,7 +41,7 @@ function Calendar({
         ),
         day_range_end: "day-range-end",
         day_selected:
-          "bg-transparent text-white hover:bg-transparent hover:text-white focus:bg-transparent focus:text-white relative",
+          "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
         day_today: "bg-accent text-accent-foreground",
         day_outside:
           "day-outside text-muted-foreground opacity-50 aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30",
@@ -55,26 +54,6 @@ function Calendar({
       components={{
         IconLeft: ({ ..._props }) => <ChevronLeft className="h-4 w-4" />,
         IconRight: ({ ..._props }) => <ChevronRight className="h-4 w-4" />,
-        Day: (props) => {
-          // Add a heart shape for selected days
-          const isSelected = Boolean(props.selected) && !props.disabled;
-          
-          if (isSelected) {
-            return (
-              <div className="relative flex items-center justify-center h-9 w-9">
-                <Heart 
-                  className="absolute text-[#ea384c] w-8 h-8 fill-[#ea384c]" 
-                  aria-hidden="true"
-                />
-                <span className="relative z-10 font-bold">
-                  {props.date.getDate()}
-                </span>
-              </div>
-            );
-          }
-          
-          return <div className="flex items-center justify-center">{props.date.getDate()}</div>;
-        },
       }}
       {...props}
     />
