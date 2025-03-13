@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { format, isSameDay, isSameMonth, isToday } from 'date-fns';
+import { useDatePicker } from './useDatePicker';
 
 interface DaysGridProps {
   currentMonth: Date;
@@ -15,6 +16,8 @@ const DaysGrid: React.FC<DaysGridProps> = ({
   selectedDate,
   onDateSelect
 }) => {
+  const { isDaySelected, isDayToday, isDayInCurrentMonth } = useDatePicker();
+  
   // Days of the week
   const daysOfWeek = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
   
@@ -37,13 +40,13 @@ const DaysGrid: React.FC<DaysGridProps> = ({
         ))}
         
         {daysInMonth.map((day, i) => {
-          const isSelected = selectedDate ? isSameDay(day, selectedDate) : false;
+          const isSelected = isDaySelected(day, selectedDate);
           return (
             <button
               key={i}
               className={`h-6 w-6 sm:h-8 sm:w-8 rounded-full flex items-center justify-center text-xs sm:text-sm transition-colors ${
-                isToday(day) ? 'text-memcyan font-bold' : 
-                isSameMonth(day, currentMonth) ? 'text-white' : 'text-gray-600'
+                isDayToday(day) ? 'text-memcyan font-bold' : 
+                isDayInCurrentMonth(day) ? 'text-white' : 'text-gray-600'
               } ${
                 isSelected ? 'bg-memblue text-white' : 'hover:bg-gray-800'
               }`}
