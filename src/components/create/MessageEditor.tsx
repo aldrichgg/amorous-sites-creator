@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Bold, Italic, Underline, AlignLeft } from 'lucide-react';
+import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight, Type } from 'lucide-react';
 
 interface MessageEditorProps {
   message: string;
@@ -24,7 +24,7 @@ const MessageEditor: React.FC<MessageEditorProps> = ({
   return (
     <div className="w-full max-w-lg mx-auto pb-6">
       <motion.h2 
-        className="text-3xl font-bold mb-4 text-center text-white"
+        className="text-3xl font-bold mb-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -47,54 +47,97 @@ const MessageEditor: React.FC<MessageEditorProps> = ({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
       >
-        <div className="flex items-center space-x-1 bg-gray-900 rounded-t-lg p-2 border-b border-gray-700">
-          <motion.button
-            className="p-2 rounded hover:bg-gray-700 transition-colors"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => applyFormatting('bold')}
-          >
-            <Bold className="w-4 h-4 text-gray-300" />
-          </motion.button>
-          
-          <motion.button
-            className="p-2 rounded hover:bg-gray-700 transition-colors"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => applyFormatting('italic')}
-          >
-            <Italic className="w-4 h-4 text-gray-300" />
-          </motion.button>
-          
-          <motion.button
-            className="p-2 rounded hover:bg-gray-700 transition-colors"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => applyFormatting('underline')}
-          >
-            <Underline className="w-4 h-4 text-gray-300" />
-          </motion.button>
+        <div className="flex items-center space-x-1 bg-gray-900/80 rounded-t-lg p-2 border-b border-gray-700">
+          <div className="flex items-center space-x-1 mr-2">
+            <motion.button
+              className="p-2 rounded hover:bg-gray-700 transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => applyFormatting('bold')}
+              title="Negrito"
+            >
+              <Bold className="w-4 h-4 text-gray-300" />
+            </motion.button>
+            
+            <motion.button
+              className="p-2 rounded hover:bg-gray-700 transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => applyFormatting('italic')}
+              title="Itálico"
+            >
+              <Italic className="w-4 h-4 text-gray-300" />
+            </motion.button>
+            
+            <motion.button
+              className="p-2 rounded hover:bg-gray-700 transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => applyFormatting('underline')}
+              title="Sublinhado"
+            >
+              <Underline className="w-4 h-4 text-gray-300" />
+            </motion.button>
+          </div>
           
           <div className="h-5 w-px bg-gray-700 mx-1"></div>
           
-          <motion.button
-            className="p-2 rounded hover:bg-gray-700 transition-colors"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => applyFormatting('align')}
-          >
-            <AlignLeft className="w-4 h-4 text-gray-300" />
-          </motion.button>
+          <div className="flex items-center space-x-1">
+            <motion.button
+              className="p-2 rounded hover:bg-gray-700 transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => applyFormatting('align-left')}
+              title="Alinhar à esquerda"
+            >
+              <AlignLeft className="w-4 h-4 text-gray-300" />
+            </motion.button>
+            
+            <motion.button
+              className="p-2 rounded hover:bg-gray-700 transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => applyFormatting('align-center')}
+              title="Centralizar"
+            >
+              <AlignCenter className="w-4 h-4 text-gray-300" />
+            </motion.button>
+            
+            <motion.button
+              className="p-2 rounded hover:bg-gray-700 transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => applyFormatting('align-right')}
+              title="Alinhar à direita"
+            >
+              <AlignRight className="w-4 h-4 text-gray-300" />
+            </motion.button>
+          </div>
+          
+          <div className="ml-auto">
+            <motion.button
+              className="p-2 rounded hover:bg-gray-700 transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => applyFormatting('font-size')}
+              title="Tamanho da fonte"
+            >
+              <Type className="w-4 h-4 text-gray-300" />
+            </motion.button>
+          </div>
         </div>
         
         <textarea
           value={message}
           onChange={handleChange}
           placeholder="Digite sua mensagem aqui..."
-          className="w-full h-32 p-3 bg-gray-900 rounded-b-lg text-white focus:outline-none focus:ring-1 focus:ring-memcyan transition-all duration-300 placeholder-gray-500 resize-none"
+          className="w-full h-40 p-4 bg-gray-900/80 rounded-b-lg text-white focus:outline-none focus:ring-1 focus:ring-memcyan transition-all duration-300 placeholder-gray-500 resize-none shadow-inner"
         ></textarea>
         
-        <div className="flex justify-end">
+        <div className="flex justify-between items-center mt-2">
+          <span className="text-xs text-memcyan">
+            Use sua criatividade para escrever algo especial
+          </span>
           <span className="text-xs text-gray-500">
             {message.length} caracteres
           </span>

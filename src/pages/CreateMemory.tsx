@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 import Navbar from '../components/Layout/Navbar';
 import Footer from '../components/Layout/Footer';
@@ -131,42 +132,74 @@ const CreateMemory: React.FC = () => {
   }, []);
   
   return (
-    <div className="min-h-screen bg-black text-white relative">
+    <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black text-white relative">
       <div className="relative overflow-hidden">
-        <StarBackground intensity="medium" color="mixed" />
+        <div className="absolute inset-0 z-0 opacity-40">
+          <StarBackground intensity="medium" color="mixed" />
+        </div>
         
         <Navbar />
         
         <main className="container mx-auto px-4 py-8 relative z-10 pt-32 pb-20">
-          <CreateHeader />
-          <CreationStepper currentStep={currentStep} totalSteps={steps.length} />
-          
-          <StepContent
-            currentStep={currentStep}
-            onNext={handleNext}
-            onPrevious={handlePrevious}
-            isFirstStep={currentStep === 0}
-            isLastStep={currentStep === steps.length - 1}
-            isStepValid={isStepValid()}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
           >
-            {steps[currentStep]}
-          </StepContent>
+            <CreateHeader />
+          </motion.div>
           
-          <div className="mt-8 sm:mt-12 mb-8">
-            <MemoryPreview
-              pageTitle={pageTitle}
-              pageName={pageName}
-              startDate={startDate}
-              message={message}
-              spotifyUrl={spotifyUrl}
-              selectedEmoji={selectedEmoji}
-              photos={photos}
-            />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <CreationStepper currentStep={currentStep} totalSteps={steps.length} />
+          </motion.div>
+          
+          <div className="mt-8 grid md:grid-cols-3 gap-8 items-start">
+            <div className="md:col-span-2">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+              >
+                <StepContent
+                  currentStep={currentStep}
+                  onNext={handleNext}
+                  onPrevious={handlePrevious}
+                  isFirstStep={currentStep === 0}
+                  isLastStep={currentStep === steps.length - 1}
+                  isStepValid={isStepValid()}
+                >
+                  {steps[currentStep]}
+                </StepContent>
+              </motion.div>
+            </div>
+            
+            <div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="sticky top-24"
+              >
+                <h3 className="text-lg font-semibold mb-4 text-center text-white">Prévia da sua página</h3>
+                <MemoryPreview
+                  pageTitle={pageTitle}
+                  pageName={pageName}
+                  startDate={startDate}
+                  message={message}
+                  spotifyUrl={spotifyUrl}
+                  selectedEmoji={selectedEmoji}
+                  photos={photos}
+                />
+              </motion.div>
+            </div>
           </div>
         </main>
       </div>
       
-      {/* Footer em seção separada, fora do overflow-hidden */}
       <div className="relative z-20 mt-auto">
         <Footer />
       </div>

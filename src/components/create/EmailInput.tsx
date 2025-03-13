@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail } from 'lucide-react';
+import { Mail, AlertCircle } from 'lucide-react';
 
 interface EmailInputProps {
   email: string;
@@ -40,7 +40,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
   return (
     <div className="w-full max-w-lg mx-auto pb-6">
       <motion.h2 
-        className="text-3xl font-bold mb-4 text-center text-white"
+        className="text-3xl font-bold mb-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -70,10 +70,10 @@ const EmailInput: React.FC<EmailInputProps> = ({
           onBlur={handleBlur}
           placeholder="seu-email@exemplo.com"
           className={`w-full px-10 py-3 rounded-lg bg-black/60 border ${
-            isValid ? 'border-memblue/30' : 'border-red-500'
+            isValid ? 'border-white/20' : 'border-red-500'
           } text-white focus:outline-none focus:ring-2 ${
             isValid ? 'focus:ring-memcyan' : 'focus:ring-red-500'
-          } transition-all duration-300 placeholder-gray-500`}
+          } transition-all duration-300 placeholder-gray-500 shadow-inner`}
         />
         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
           <Mail className={`h-5 w-5 ${isValid ? 'text-memcyan' : 'text-red-500'}`} />
@@ -81,11 +81,12 @@ const EmailInput: React.FC<EmailInputProps> = ({
         
         {!isValid && (
           <motion.p
-            className="text-red-500 text-sm mt-1"
+            className="text-red-500 text-sm mt-1 flex items-center"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
+            <AlertCircle className="w-4 h-4 mr-1" />
             Por favor, insira um e-mail válido
           </motion.p>
         )}

@@ -23,14 +23,15 @@ const StepContent: React.FC<StepContentProps> = ({
   isStepValid
 }) => {
   return (
-    <div className="max-w-4xl mx-auto glass-card rounded-xl p-4 sm:p-6 mb-8">
+    <div className="max-w-4xl mx-auto bg-black/70 backdrop-blur-md border border-white/10 rounded-2xl p-6 sm:p-8 mb-8 shadow-xl shadow-black/30">
       <AnimatePresence mode="wait">
         <motion.div
           key={currentStep}
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className="pb-6"
         >
           {children}
         </motion.div>
