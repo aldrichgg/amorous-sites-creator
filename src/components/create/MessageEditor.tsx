@@ -25,7 +25,7 @@ const MessageEditor: React.FC<MessageEditorProps> = ({
   return (
     <div className="w-full max-w-lg mx-auto pb-6">
       <motion.h2 
-        className="text-3xl font-bold mb-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400"
+        className="text-3xl font-bold mb-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400 font-spectral"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -34,7 +34,7 @@ const MessageEditor: React.FC<MessageEditorProps> = ({
       </motion.h2>
       
       <motion.p 
-        className="text-gray-300 mb-6 text-center"
+        className="text-gray-300 mb-6 text-center font-manrope"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
@@ -48,7 +48,7 @@ const MessageEditor: React.FC<MessageEditorProps> = ({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
       >
-        <div className="flex items-center space-x-1 bg-gray-900/80 backdrop-blur-sm rounded-t-2xl p-2 border-b border-gray-700 shadow-lg">
+        <div className="flex items-center space-x-1 bg-gray-900/80 backdrop-blur-sm rounded-t-lg p-2 border-b border-gray-700 shadow-lg">
           <div className="flex items-center space-x-1 mr-2">
             <motion.button
               className="p-2 rounded-full hover:bg-gray-700 transition-colors"
@@ -131,15 +131,15 @@ const MessageEditor: React.FC<MessageEditorProps> = ({
         <Textarea
           value={message}
           onChange={handleChange}
-          placeholder="Digite sua mensagem aqui..."
-          className="w-full h-40 p-4 bg-gray-900/80 backdrop-blur-sm rounded-b-2xl text-white focus:outline-none focus:ring-1 focus:ring-memcyan transition-all duration-300 placeholder-gray-500 resize-none shadow-inner border-t-0"
+          placeholder="Compartilhe suas memórias, sentimentos e histórias especiais..."
+          className="w-full h-40 p-4 bg-gray-900/80 backdrop-blur-sm rounded-b-lg text-white focus:outline-none focus:ring-1 focus:ring-memcyan transition-all duration-300 resize-none shadow-inner border-t-0 font-manrope"
         />
         
         <div className="flex justify-between items-center mt-2 px-1">
-          <span className="text-xs text-memcyan">
+          <span className="text-xs text-memcyan font-manrope">
             Use sua criatividade para escrever algo especial
           </span>
-          <span className="text-xs text-gray-500">
+          <span className="text-xs text-gray-500 font-manrope">
             {message.length} caracteres
           </span>
         </div>

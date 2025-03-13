@@ -54,7 +54,7 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
       <div className="flex flex-col items-center w-full">
         <MobileDeviceFrame previewWidth={previewWidth} previewHeight={previewHeight}>
           {/* Browser content */}
-          <div className="w-full h-full overflow-y-auto bg-gradient-to-b from-gray-900 to-black flex flex-col">
+          <div className="w-full h-full overflow-y-auto bg-gradient-to-b from-gray-900 to-black flex flex-col pt-4">
             <BrowserHeader pageName={pageName} />
             
             {/* Content */}
@@ -67,7 +67,7 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
               
               {/* Title */}
               <div className="text-center mb-2">
-                <h1 className="text-xl sm:text-2xl font-bold text-white">{pageTitle || 'Título da Memória'}</h1>
+                <h1 className="text-xl sm:text-2xl font-bold text-white font-spectral">{pageTitle || 'Título da Memória'}</h1>
               </div>
               
               <DateCounter startDate={startDate} />
@@ -84,7 +84,7 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
         </MobileDeviceFrame>
         
         <motion.p 
-          className="text-xs text-gray-400 mt-2 text-center"
+          className="text-xs text-gray-400 mt-2 text-center font-manrope"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}

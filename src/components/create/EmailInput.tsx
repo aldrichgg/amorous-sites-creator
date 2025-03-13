@@ -41,7 +41,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
   return (
     <div className="w-full max-w-lg mx-auto pb-6">
       <motion.h2 
-        className="text-3xl font-bold mb-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400"
+        className="text-3xl font-bold mb-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400 font-spectral"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -50,7 +50,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
       </motion.h2>
       
       <motion.p 
-        className="text-gray-300 mb-6 text-center"
+        className="text-gray-300 mb-6 text-center font-manrope"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
@@ -74,16 +74,16 @@ const EmailInput: React.FC<EmailInputProps> = ({
             value={inputValue}
             onChange={handleChange}
             onBlur={handleBlur}
-            placeholder="seu-email@exemplo.com"
+            placeholder="Digite seu melhor email..."
             className={`w-full pl-12 bg-black/60 backdrop-blur-sm border ${
               isValid ? 'border-white/20 focus:border-memcyan/50' : 'border-red-500'
-            } text-white transition-all duration-300 placeholder-gray-500 shadow-lg shadow-black/30`}
+            } text-white transition-all duration-300 shadow-lg shadow-black/30 font-manrope`}
           />
         </div>
         
         {!isValid && (
           <motion.p
-            className="text-red-500 text-sm mt-2 flex items-center pl-2"
+            className="text-red-500 text-sm mt-2 flex items-center pl-2 font-manrope"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
