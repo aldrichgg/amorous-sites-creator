@@ -1,12 +1,26 @@
 
-import React from 'react';
-import { Image as ImageIcon } from 'lucide-react';
+import React, { useState, useCallback, useEffect } from 'react';
+import { Image as ImageIcon, ChevronLeft, ChevronRight } from 'lucide-react';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 interface PhotosCarouselProps {
   photos: string[];
 }
 
 const PhotosCarousel: React.FC<PhotosCarouselProps> = ({ photos }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  
+  // Reset index when photos change
+  useEffect(() => {
+    setCurrentIndex(0);
+  }, [photos]);
+
   if (photos.length === 0) {
     return (
       <div className="flex items-center justify-center text-gray-500 mb-4 p-8 bg-gray-800/50 rounded-lg">
@@ -17,17 +31,38 @@ const PhotosCarousel: React.FC<PhotosCarouselProps> = ({ photos }) => {
   
   return (
     <div className="mb-4">
-      <div className="aspect-[4/3] rounded-md overflow-hidden bg-gray-800 flex items-center justify-center">
-        {photos.length > 0 && (
-          <img src={photos[0]} alt="Memory" className="w-full h-full object-contain" />
+      <Carousel
+        className="w-full"
+        onSelect={(index) => setCurrentIndex(index)}
+      >
+        <CarouselContent>
+          {photos.map((photo, index) => (
+            <CarouselItem key={index}>
+              <div className="aspect-[4/3] rounded-md overflow-hidden bg-transparent flex items-center justify-center">
+                <img 
+                  src={photo} 
+                  alt={`Memory photo ${index + 1}`} 
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        
+        {photos.length > 1 && (
+          <>
+            <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white border-none hover:bg-black/70" />
+            <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white border-none hover:bg-black/70" />
+          </>
         )}
-      </div>
+      </Carousel>
+      
       {photos.length > 1 && (
         <div className="flex justify-center mt-2 space-x-1">
-          {photos.slice(0, 5).map((_, index) => (
+          {photos.map((_, index) => (
             <div 
               key={index} 
-              className={`w-2 h-2 rounded-full ${index === 0 ? 'bg-memcyan' : 'bg-gray-500'}`}
+              className={`w-2 h-2 rounded-full ${index === currentIndex ? 'bg-memcyan' : 'bg-gray-500'}`}
             ></div>
           ))}
         </div>
