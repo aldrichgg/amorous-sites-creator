@@ -1,12 +1,14 @@
 
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Heart } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const location = useLocation();
+  const isCreatePage = location.pathname.includes('/create');
 
   return (
-    <footer className="bg-gray-900 py-8 px-4 border-t border-gray-800">
+    <footer className={`${isCreatePage ? 'bg-gray-900' : 'bg-gray-900 backdrop-blur-lg'} py-8 px-4 border-t border-gray-800 relative z-10`}>
       <div className="container mx-auto">
         <div className="flex flex-col items-center justify-center">
           <div className="flex items-center mb-3">

@@ -131,41 +131,46 @@ const CreateMemory: React.FC = () => {
   }, []);
   
   return (
-    <div className="min-h-screen bg-black text-white relative overflow-hidden">
-      <StarBackground intensity="medium" color="mixed" />
-      
-      <PromoBar />
-      <Navbar />
-      
-      <main className="container mx-auto px-4 py-8 relative z-10 pt-32 pb-20">
-        <CreateHeader />
-        <CreationStepper currentStep={currentStep} totalSteps={steps.length} />
+    <div className="min-h-screen bg-black text-white relative">
+      <div className="relative overflow-hidden">
+        <StarBackground intensity="medium" color="mixed" />
         
-        <StepContent
-          currentStep={currentStep}
-          onNext={handleNext}
-          onPrevious={handlePrevious}
-          isFirstStep={currentStep === 0}
-          isLastStep={currentStep === steps.length - 1}
-          isStepValid={isStepValid()}
-        >
-          {steps[currentStep]}
-        </StepContent>
+        <PromoBar />
+        <Navbar />
         
-        <div className="mt-12 mb-8">
-          <MemoryPreview
-            pageTitle={pageTitle}
-            pageName={pageName}
-            startDate={startDate}
-            message={message}
-            spotifyUrl={spotifyUrl}
-            selectedEmoji={selectedEmoji}
-            photos={photos}
-          />
-        </div>
-      </main>
+        <main className="container mx-auto px-4 py-8 relative z-10 pt-32 pb-20">
+          <CreateHeader />
+          <CreationStepper currentStep={currentStep} totalSteps={steps.length} />
+          
+          <StepContent
+            currentStep={currentStep}
+            onNext={handleNext}
+            onPrevious={handlePrevious}
+            isFirstStep={currentStep === 0}
+            isLastStep={currentStep === steps.length - 1}
+            isStepValid={isStepValid()}
+          >
+            {steps[currentStep]}
+          </StepContent>
+          
+          <div className="mt-12 mb-8">
+            <MemoryPreview
+              pageTitle={pageTitle}
+              pageName={pageName}
+              startDate={startDate}
+              message={message}
+              spotifyUrl={spotifyUrl}
+              selectedEmoji={selectedEmoji}
+              photos={photos}
+            />
+          </div>
+        </main>
+      </div>
       
-      <Footer />
+      {/* Footer em seção separada, fora do overflow-hidden */}
+      <div className="relative z-20 mt-auto">
+        <Footer />
+      </div>
     </div>
   );
 };
