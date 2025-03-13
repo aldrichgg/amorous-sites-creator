@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Star, ChevronRight } from 'lucide-react';
@@ -58,9 +57,9 @@ const Hero = () => {
         <div className="max-w-3xl mx-auto text-center mb-12 md:mb-20">
           <div className="inline-block bg-white/10 backdrop-blur-sm rounded-full px-3 py-1 mb-4 md:mb-6">
             <div className="flex items-center">
-              <button className="bg-memred/20 backdrop-blur-sm rounded-full text-white px-3 py-1 text-xs sm:text-sm">
+              <Link to="/search" className="bg-memred/20 backdrop-blur-sm rounded-full text-white px-3 py-1 text-xs sm:text-sm hover:bg-memred/30 transition-colors">
                 Buscar memórias
-              </button>
+              </Link>
             </div>
           </div>
           
