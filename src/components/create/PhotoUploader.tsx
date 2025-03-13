@@ -1,186 +1,177 @@
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Upload, X, Image, AlertCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Image, Plus, Trash2 } from 'lucide-react';
+import { toast } from "sonner";
+import { uploadPhoto } from '@/services/memoryService';
 
 interface PhotoUploaderProps {
   maxPhotos: number;
   photos: string[];
   onPhotosChange: (photos: string[]) => void;
-  selectedPlan?: string;
 }
 
 const PhotoUploader: React.FC<PhotoUploaderProps> = ({
   maxPhotos,
   photos,
-  onPhotosChange,
-  selectedPlan = 'forever'
+  onPhotosChange
 }) => {
-  const [isDragging, setIsDragging] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   
-  // Set the photo limit based on the selected plan
-  const planPhotoLimit = selectedPlan === 'forever' ? 7 : 3;
-  const effectiveMaxPhotos = Math.min(maxPhotos, planPhotoLimit);
-  
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(true);
-  };
-  
-  const handleDragLeave = () => {
-    setIsDragging(false);
-  };
-  
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
     
-    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      handleFiles(e.dataTransfer.files);
+    if (files.length === 0) return;
+    
+    // Check if adding these files would exceed the maximum
+    if (photos.length + files.length > maxPhotos) {
+      toast.error(`Você pode adicionar no máximo ${maxPhotos} fotos`);
+      return;
+    }
+    
+    // Check file types and sizes
+    for (const file of files) {
+      if (!file.type.startsWith('image/')) {
+        toast.error("Por favor, selecione apenas arquivos de imagem");
+        return;
+      }
+      
+      // Check file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("As imagens devem ter no máximo 5MB");
+        return;
+      }
+    }
+    
+    setIsUploading(true);
+    
+    try {
+      const newPhotos = [...photos];
+      
+      // Upload each file
+      for (const file of files) {
+        const uploadedUrl = await uploadPhoto(file);
+        
+        if (uploadedUrl) {
+          newPhotos.push(uploadedUrl);
+        } else {
+          toast.error(`Falha ao enviar ${file.name}`);
+        }
+      }
+      
+      onPhotosChange(newPhotos);
+      toast.success("Fotos adicionadas com sucesso!");
+    } catch (error) {
+      console.error("Error uploading photos:", error);
+      toast.error("Ocorreu um erro ao enviar suas fotos");
+    } finally {
+      setIsUploading(false);
+      // Reset the input
+      e.target.value = '';
     }
   };
   
-  const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      handleFiles(e.target.files);
-    }
-  };
-  
-  const handleFiles = (files: FileList) => {
-    if (photos.length >= effectiveMaxPhotos) return;
-    
-    const newPhotos = [...photos];
-    const remainingSlots = effectiveMaxPhotos - photos.length;
-    
-    Array.from(files).slice(0, remainingSlots).forEach(file => {
-      const objectUrl = URL.createObjectURL(file);
-      newPhotos.push(objectUrl);
-    });
-    
-    onPhotosChange(newPhotos);
-  };
-  
-  const removePhoto = (index: number) => {
+  const handleRemovePhoto = (index: number) => {
     const newPhotos = [...photos];
     newPhotos.splice(index, 1);
     onPhotosChange(newPhotos);
+    toast.success("Foto removida");
   };
   
   return (
     <div className="w-full max-w-lg mx-auto pb-6">
       <motion.h2 
-        className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 text-center text-white"
+        className="text-3xl font-bold mb-4 text-center text-white"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        Fotos
+        Adicione fotos
       </motion.h2>
       
       <motion.p 
-        className="text-gray-300 text-sm sm:text-base mb-4 sm:mb-6 text-center"
+        className="text-gray-300 mb-6 text-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        Selecione fotos para personalizar a página. 
-        Você pode adicionar até {effectiveMaxPhotos} fotos no plano {selectedPlan === 'forever' ? 'Para sempre' : 'Anual'}.
+        {maxPhotos === 3 ? 
+          'No plano Anual, você pode adicionar até 3 fotos' : 
+          'No plano Para Sempre, você pode adicionar até 7 fotos'}
       </motion.p>
       
-      {selectedPlan === 'annual' && planPhotoLimit < maxPhotos && (
-        <motion.div 
-          className="bg-yellow-900/30 border border-yellow-500/30 rounded-lg p-3 mb-4 text-sm text-yellow-300 flex items-start"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.3 }}
-        >
-          <AlertCircle className="w-5 h-5 mr-2 flex-shrink-0 mt-0.5" />
-          <p>O plano Anual permite o uso de no máximo 3 fotos. Para adicionar até 7 fotos, escolha o plano Para sempre.</p>
-        </motion.div>
-      )}
-      
       <motion.div
-        className="space-y-4 sm:space-y-6"
+        className="space-y-4"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
       >
-        <label
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
-          onDrop={handleDrop}
-          className={`border-2 border-dashed rounded-xl p-4 sm:p-8 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 ${
-            isDragging ? 'border-memcyan bg-memcyan/10' : 'border-gray-600 hover:border-gray-400'
-          } ${photos.length >= effectiveMaxPhotos ? 'opacity-50 cursor-not-allowed' : ''}`}
-        >
-          <input
-            type="file"
-            multiple
-            accept="image/png, image/jpeg, image/jpg, image/gif"
-            className="hidden"
-            onChange={handleFileInput}
-            disabled={photos.length >= effectiveMaxPhotos}
-          />
-          
-          <Upload className={`w-8 h-8 sm:w-10 sm:h-10 mb-2 ${isDragging ? 'text-memcyan' : 'text-gray-400'}`} />
-          
-          <p className="text-center text-gray-300 text-sm sm:text-base">
-            {photos.length >= effectiveMaxPhotos 
-              ? `Limite de ${effectiveMaxPhotos} fotos atingido`
-              : 'Clique para adicionar fotos'}
-            <br />
-            <span className="text-xs sm:text-sm text-gray-500">
-              PNG, JPG, JPEG, GIF (max. {effectiveMaxPhotos} fotos)
-            </span>
-          </p>
-        </label>
-        
+        {/* Photo grid */}
         {photos.length > 0 && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
-            <AnimatePresence>
-              {photos.slice(0, effectiveMaxPhotos).map((photo, index) => (
-                <motion.div
-                  key={index}
-                  className="relative aspect-square rounded-lg overflow-hidden group"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{ duration: 0.3 }}
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-4">
+            {photos.map((photo, index) => (
+              <motion.div 
+                key={index}
+                className="relative aspect-square rounded-lg overflow-hidden border border-memblue/30 bg-black/40"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+              >
+                <img 
+                  src={photo} 
+                  alt={`Foto ${index + 1}`} 
+                  className="w-full h-full object-cover"
+                />
+                <motion.button
+                  className="absolute top-2 right-2 p-1 bg-black/70 rounded-full text-red-500 hover:bg-red-500 hover:text-white transition-colors"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => handleRemovePhoto(index)}
                 >
-                  <div className="w-full h-full bg-transparent">
-                    <img
-                      src={photo}
-                      alt={`Photo ${index + 1}`}
-                      className="w-full h-full object-cover rounded-lg"
-                      style={{ border: '1px solid rgba(156, 163, 175, 0.4)' }}
-                    />
-                  </div>
-                  
-                  <motion.button
-                    className="absolute top-2 right-2 w-6 h-6 rounded-full bg-red-500 flex items-center justify-center opacity-80 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    onClick={() => removePhoto(index)}
-                  >
-                    <X className="w-4 h-4 text-white" />
-                  </motion.button>
-                </motion.div>
-              ))}
-            </AnimatePresence>
+                  <Trash2 className="w-4 h-4" />
+                </motion.button>
+              </motion.div>
+            ))}
           </div>
         )}
         
-        {photos.length === 0 && (
-          <div className="flex justify-center">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="bg-red-500/20 rounded-lg p-2 sm:p-3 text-red-300 text-xs sm:text-sm flex items-center"
+        {/* Upload button */}
+        {photos.length < maxPhotos && (
+          <div>
+            <label 
+              htmlFor="photoUpload" 
+              className={`w-full flex flex-col items-center justify-center border-2 border-dashed ${
+                isUploading ? 'border-gray-600 bg-gray-800/30' : 'border-memblue/40 hover:border-memcyan/60 bg-black/40 hover:bg-black/60'
+              } rounded-lg p-6 cursor-pointer transition-all duration-300`}
             >
-              <Image className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-              Nenhuma foto selecionada ainda
-            </motion.div>
+              <div className="flex flex-col items-center justify-center">
+                {isUploading ? (
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
+                    className="w-10 h-10 border-t-2 border-memcyan rounded-full mb-3"
+                  />
+                ) : (
+                  <Plus className="w-10 h-10 text-memblue mb-3" />
+                )}
+                
+                <p className="text-sm text-gray-300 text-center">
+                  {isUploading ? 'Enviando...' : `Clique para adicionar fotos (${photos.length}/${maxPhotos})`}
+                </p>
+                <p className="text-xs text-gray-500 text-center mt-1">
+                  JPG, PNG ou GIF • Máximo 5MB
+                </p>
+              </div>
+              <input 
+                id="photoUpload"
+                type="file" 
+                accept="image/*" 
+                multiple 
+                className="hidden" 
+                onChange={handleFileChange}
+                disabled={isUploading || photos.length >= maxPhotos}
+              />
+            </label>
           </div>
         )}
       </motion.div>
