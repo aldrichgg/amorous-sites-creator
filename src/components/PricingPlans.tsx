@@ -1,14 +1,14 @@
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Check, X } from 'lucide-react';
+import { Check, X, Music, Image, Smile } from 'lucide-react';
 import { motion } from 'framer-motion';
 import StarBackground from './StarBackground';
 
 interface PlanProps {
   title: string;
   price: number;
-  features: { text: string; included: boolean }[];
+  features: { text: string; included: boolean; icon?: React.ReactNode }[];
   isPopular?: boolean;
   type: 'completo' | 'basico';
   activeTab: string;
@@ -91,7 +91,10 @@ const PlanCard = ({
               ) : (
                 <X size={16} className="text-red-500 mr-2 group-hover:scale-110 transition-transform duration-200 flex-shrink-0" />
               )}
-              <span className="group-hover:text-white transition-colors duration-200">{feature.text}</span>
+              <span className="group-hover:text-white transition-colors duration-200 flex items-center">
+                {feature.icon && <span className="mr-1">{feature.icon}</span>}
+                {feature.text}
+              </span>
             </motion.li>
           ))}
         </ul>
@@ -118,10 +121,10 @@ const PricingPlans = () => {
       title: 'Completo',
       price: 27,
       features: [
-        { text: '7 fotos', included: true },
+        { text: '7 fotos', included: true, icon: <Image size={14} className="text-memred" /> },
         { text: 'Para sempre', included: true },
-        { text: 'Selecionar chuva de emoji', included: true },
-        { text: 'Selecionar música', included: true },
+        { text: 'Selecionar chuva de emoji', included: true, icon: <Smile size={14} className="text-memred" /> },
+        { text: 'Selecionar música', included: true, icon: <Music size={14} className="text-memred" /> },
         { text: 'Contador regressivo', included: true },
         { text: 'Mensagem personalizada', included: true },
         { text: 'Suporte prioritário', included: true }
@@ -132,10 +135,10 @@ const PricingPlans = () => {
       title: 'Básico',
       price: 17,
       features: [
-        { text: '3 fotos', included: true },
+        { text: '3 fotos', included: true, icon: <Image size={14} className="text-gray-400" /> },
         { text: 'Duração de um ano', included: true },
-        { text: 'Selecionar chuva de emoji', included: false },
-        { text: 'Selecionar música', included: false },
+        { text: 'Selecionar chuva de emoji', included: false, icon: <Smile size={14} className="text-gray-400" /> },
+        { text: 'Selecionar música', included: false, icon: <Music size={14} className="text-gray-400" /> },
         { text: 'Contador regressivo', included: true },
         { text: 'Mensagem básica', included: true },
         { text: 'Suporte por email', included: true }

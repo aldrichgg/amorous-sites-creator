@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useIsMobile } from '../../hooks/use-mobile';
@@ -18,6 +19,7 @@ interface MemoryPreviewProps {
   spotifyUrl: string;
   selectedEmoji: string;
   photos: string[];
+  selectedPlan?: string;
 }
 
 const MemoryPreview: React.FC<MemoryPreviewProps> = ({
@@ -27,10 +29,17 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
   message,
   spotifyUrl,
   selectedEmoji,
-  photos
+  photos,
+  selectedPlan = 'forever'
 }) => {
   const [spotifyTrackId, setSpotifyTrackId] = useState<string | null>(null);
   const isMobile = useIsMobile();
+
+  // Features availability based on plan
+  const showSpotify = selectedPlan === 'forever'; // Only available in the premium plan
+  const showEmojiRain = selectedPlan === 'forever'; // Only available in the premium plan
+  const maxPhotos = selectedPlan === 'forever' ? 7 : 3;
+  const limitedPhotos = photos.slice(0, maxPhotos);
 
   useEffect(() => {
     // Extract Spotify track ID when spotifyUrl changes
@@ -119,11 +128,14 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
               
               {/* Content */}
               <div className="flex-1 overflow-y-auto p-4 relative">
-                {/* Emoji Rain Effect */}
-                {selectedEmoji && <EmojiRain emoji={selectedEmoji} />}
+                {/* Emoji Rain Effect - only in premium plan */}
+                {showEmojiRain && selectedEmoji && <EmojiRain emoji={selectedEmoji} />}
                 
-                <SpotifyPlayer spotifyTrackId={spotifyTrackId} spotifyUrl={spotifyUrl} />
-                <PhotosCarousel photos={photos} />
+                {/* Spotify Player - only in premium plan */}
+                {showSpotify && <SpotifyPlayer spotifyTrackId={spotifyTrackId} spotifyUrl={spotifyUrl} />}
+                
+                {/* Photos Carousel - with limit based on plan */}
+                <PhotosCarousel photos={limitedPhotos} />
                 
                 {/* Title */}
                 <div className="text-center mb-2">
@@ -133,10 +145,18 @@ const MemoryPreview: React.FC<MemoryPreviewProps> = ({
                 <DateCounter startDate={startDate} />
                 <MessageDisplay message={message} />
                 
-                {/* Selected emoji as background */}
+                {/* Selected emoji as background - visible in both plans */}
                 {selectedEmoji && (
                   <div className="absolute bottom-4 right-4 text-4xl sm:text-5xl opacity-20">
                     {selectedEmoji}
+                  </div>
+                )}
+
+                {/* Plan limitation notice */}
+                {selectedPlan === 'annual' && (
+                  <div className="mt-4 text-xs text-yellow-400 bg-yellow-900/20 p-2 rounded-md text-center">
+                    {!showSpotify && spotifyUrl ? "Música não disponível no plano Anual" : ""}
+                    {!showEmojiRain && selectedEmoji ? (showSpotify ? " • " : "") + "Chuva de emoji não disponível no plano Anual" : ""}
                   </div>
                 )}
               </div>

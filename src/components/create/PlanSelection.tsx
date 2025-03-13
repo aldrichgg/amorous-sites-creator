@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, Star, X } from 'lucide-react';
+import { Check, Star, X, Music, Image } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 
 interface PlanFeature {
@@ -16,6 +16,9 @@ interface Plan {
   discountedPrice?: number;
   features: PlanFeature[];
   popular?: boolean;
+  maxPhotos: number;
+  hasMusic: boolean;
+  hasEmojiRain: boolean;
 }
 
 interface PlanSelectionProps {
@@ -37,6 +40,9 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
       price: 54.00,
       discountedPrice: 27.00,
       popular: true,
+      maxPhotos: 7,
+      hasMusic: true,
+      hasEmojiRain: true,
       features: [
         { name: 'Texto dedicado', included: true },
         { name: 'Contador em tempo real', included: true },
@@ -54,13 +60,16 @@ const PlanSelection: React.FC<PlanSelectionProps> = ({
       name: 'Anual',
       price: 34.00,
       discountedPrice: 17.00,
+      maxPhotos: 3,
+      hasMusic: false,
+      hasEmojiRain: false,
       features: [
         { name: 'Texto dedicado', included: true },
         { name: 'Contador em tempo real', included: true },
         { name: 'QR Code exclusivo', included: true },
-        { name: 'Máximo de 3 imagens', included: false },
-        { name: 'A música será removida', included: false },
-        { name: 'A chuva de emojis será removida', included: false },
+        { name: 'Máximo de 3 imagens', included: true },
+        { name: 'Com música', included: false },
+        { name: 'Chuva de emojis', included: false },
         { name: 'URL personalizada', included: true },
         { name: 'Suporte 24 horas', included: true },
         { name: 'Uma memória', included: true },

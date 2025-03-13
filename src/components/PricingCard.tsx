@@ -1,5 +1,5 @@
 
-import { Check, X } from 'lucide-react';
+import { Check, X, Music, Image, Smile } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 interface PricingCardProps {
   title: string;
   price: number;
-  features: { text: string; included: boolean }[];
+  features: { text: string; included: boolean; icon?: React.ReactNode }[];
   isPopular?: boolean;
   handleTabChange: (tab: string) => void;
   activeTab: string;
@@ -83,11 +83,14 @@ const PricingCard: React.FC<PricingCardProps> = ({
                 className="flex items-center text-gray-300 group"
               >
                 {feature.included ? (
-                  <Check size={18} className="text-memcyan mr-2 group-hover:scale-110 transition-transform duration-200" />
+                  <Check size={18} className="text-memcyan mr-2 group-hover:scale-110 transition-transform duration-200 flex-shrink-0" />
                 ) : (
-                  <X size={18} className="text-red-500 mr-2 group-hover:scale-110 transition-transform duration-200" />
+                  <X size={18} className="text-red-500 mr-2 group-hover:scale-110 transition-transform duration-200 flex-shrink-0" />
                 )}
-                <span className="group-hover:text-white transition-colors duration-200">{feature.text}</span>
+                <span className="group-hover:text-white transition-colors duration-200 flex items-center">
+                  {feature.icon && <span className="mr-1">{feature.icon}</span>}
+                  {feature.text}
+                </span>
               </motion.li>
             ))}
           </ul>
@@ -119,10 +122,10 @@ const PricingTabs = () => {
       title: 'Completo',
       price: 27,
       features: [
-        { text: '7 fotos', included: true },
+        { text: '7 fotos', included: true, icon: <Image size={16} className="text-memcyan" /> },
         { text: 'Para sempre', included: true },
-        { text: 'Selecionar chuva de emoji', included: true },
-        { text: 'Selecionar música', included: true },
+        { text: 'Selecionar chuva de emoji', included: true, icon: <Smile size={16} className="text-memcyan" /> },
+        { text: 'Selecionar música', included: true, icon: <Music size={16} className="text-memcyan" /> },
         { text: 'Contador regressivo', included: true },
         { text: 'Mensagem personalizada', included: true },
         { text: 'Suporte prioritário', included: true }
@@ -133,10 +136,11 @@ const PricingTabs = () => {
       title: 'Básico',
       price: 17,
       features: [
-        { text: '3 fotos', included: true },
+        { text: '3 fotos', included: true, icon: <Image size={16} className="text-gray-400" /> },
         { text: 'Duração de um ano', included: true },
-        { text: 'Selecionar chuva de emoji', included: false },
-        { text: 'Selecionar música', included: false },
+        { text: 'Selecionar chuva de emoji', included: false, icon: <Smile size={16} className="text-gray-400" /> },
+        { text: 'Selecionar música', included: false, icon: <Music size={16} className="text-gray-400" /> },
+        { text: 'Contador regressivo', included: true },
         { text: 'Mensagem básica', included: true },
         { text: 'Suporte por email', included: true }
       ],

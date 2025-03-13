@@ -1,19 +1,26 @@
+
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Upload, X, Image } from 'lucide-react';
+import { Upload, X, Image, AlertCircle } from 'lucide-react';
 
 interface PhotoUploaderProps {
   maxPhotos: number;
   photos: string[];
   onPhotosChange: (photos: string[]) => void;
+  selectedPlan?: string;
 }
 
 const PhotoUploader: React.FC<PhotoUploaderProps> = ({
   maxPhotos,
   photos,
-  onPhotosChange
+  onPhotosChange,
+  selectedPlan = 'forever'
 }) => {
   const [isDragging, setIsDragging] = useState(false);
+  
+  // Set the photo limit based on the selected plan
+  const planPhotoLimit = selectedPlan === 'forever' ? 7 : 3;
+  const effectiveMaxPhotos = Math.min(maxPhotos, planPhotoLimit);
   
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -40,10 +47,10 @@ const PhotoUploader: React.FC<PhotoUploaderProps> = ({
   };
   
   const handleFiles = (files: FileList) => {
-    if (photos.length >= maxPhotos) return;
+    if (photos.length >= effectiveMaxPhotos) return;
     
     const newPhotos = [...photos];
-    const remainingSlots = maxPhotos - photos.length;
+    const remainingSlots = effectiveMaxPhotos - photos.length;
     
     Array.from(files).slice(0, remainingSlots).forEach(file => {
       const objectUrl = URL.createObjectURL(file);
@@ -76,8 +83,21 @@ const PhotoUploader: React.FC<PhotoUploaderProps> = ({
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        Selecione fotos para personalizar a página. Você pode adicionar até {maxPhotos} fotos.
+        Selecione fotos para personalizar a página. 
+        Você pode adicionar até {effectiveMaxPhotos} fotos no plano {selectedPlan === 'forever' ? 'Para sempre' : 'Anual'}.
       </motion.p>
+      
+      {selectedPlan === 'annual' && planPhotoLimit < maxPhotos && (
+        <motion.div 
+          className="bg-yellow-900/30 border border-yellow-500/30 rounded-lg p-3 mb-4 text-sm text-yellow-300 flex items-start"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.3 }}
+        >
+          <AlertCircle className="w-5 h-5 mr-2 flex-shrink-0 mt-0.5" />
+          <p>O plano Anual permite o uso de no máximo 3 fotos. Para adicionar até 7 fotos, escolha o plano Para sempre.</p>
+        </motion.div>
+      )}
       
       <motion.div
         className="space-y-4 sm:space-y-6"
@@ -91,7 +111,7 @@ const PhotoUploader: React.FC<PhotoUploaderProps> = ({
           onDrop={handleDrop}
           className={`border-2 border-dashed rounded-xl p-4 sm:p-8 flex flex-col items-center justify-center cursor-pointer transition-all duration-300 ${
             isDragging ? 'border-memcyan bg-memcyan/10' : 'border-gray-600 hover:border-gray-400'
-          }`}
+          } ${photos.length >= effectiveMaxPhotos ? 'opacity-50 cursor-not-allowed' : ''}`}
         >
           <input
             type="file"
@@ -99,21 +119,26 @@ const PhotoUploader: React.FC<PhotoUploaderProps> = ({
             accept="image/png, image/jpeg, image/jpg, image/gif"
             className="hidden"
             onChange={handleFileInput}
-            disabled={photos.length >= maxPhotos}
+            disabled={photos.length >= effectiveMaxPhotos}
           />
           
           <Upload className={`w-8 h-8 sm:w-10 sm:h-10 mb-2 ${isDragging ? 'text-memcyan' : 'text-gray-400'}`} />
           
           <p className="text-center text-gray-300 text-sm sm:text-base">
-            Clique para adicionar fotos<br />
-            <span className="text-xs sm:text-sm text-gray-500">PNG, JPG, JPEG, GIF (max. {maxPhotos} fotos)</span>
+            {photos.length >= effectiveMaxPhotos 
+              ? `Limite de ${effectiveMaxPhotos} fotos atingido`
+              : 'Clique para adicionar fotos'}
+            <br />
+            <span className="text-xs sm:text-sm text-gray-500">
+              PNG, JPG, JPEG, GIF (max. {effectiveMaxPhotos} fotos)
+            </span>
           </p>
         </label>
         
         {photos.length > 0 && (
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
             <AnimatePresence>
-              {photos.map((photo, index) => (
+              {photos.slice(0, effectiveMaxPhotos).map((photo, index) => (
                 <motion.div
                   key={index}
                   className="relative aspect-square rounded-lg overflow-hidden group"
