@@ -10,6 +10,7 @@ import FAQ from "./pages/FAQ";
 import Pricing from "./pages/Pricing";
 import HowItWorks from "./pages/HowItWorks";
 import CreateMemory from "./pages/CreateMemory";
+import CookieConsent from "./components/CookieConsent";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,7 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <CookieConsent />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
