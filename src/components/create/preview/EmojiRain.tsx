@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -22,17 +21,17 @@ const EmojiRain: React.FC<EmojiRainProps> = ({ emoji }) => {
     // Create initial set of drops
     createDrops();
     
-    // Create new drops periodically
+    // Create new drops more frequently (changed from 800ms to 400ms)
     const interval = setInterval(() => {
       createAdditionalDrop();
-    }, 800);
+    }, 400);
     
     return () => clearInterval(interval);
   }, [emoji]);
   
   const createDrops = () => {
     const initialDrops: EmojiDrop[] = [];
-    const count = Math.floor(Math.random() * 3) + 5; // 5-7 drops initially
+    const count = Math.floor(Math.random() * 5) + 8; // 8-12 drops initially (increased from 5-7)
     
     for (let i = 0; i < count; i++) {
       initialDrops.push(createDrop(i));
@@ -43,13 +42,18 @@ const EmojiRain: React.FC<EmojiRainProps> = ({ emoji }) => {
   
   const createAdditionalDrop = () => {
     setDrops(prevDrops => {
-      // Add one new drop
-      const newDrop = createDrop(Date.now());
+      // Add new drops
+      const newDropCount = Math.floor(Math.random() * 2) + 1; // Add 1-2 new drops at a time
+      const newDrops = [];
+      
+      for (let i = 0; i < newDropCount; i++) {
+        newDrops.push(createDrop(Date.now() + i));
+      }
       
       // Keep the array at a reasonable size by removing old drops
-      const updatedDrops = [...prevDrops, newDrop];
-      if (updatedDrops.length > 20) {
-        return updatedDrops.slice(-20);
+      const updatedDrops = [...prevDrops, ...newDrops];
+      if (updatedDrops.length > 30) { // Increased max drops from 20 to 30
+        return updatedDrops.slice(-30);
       }
       return updatedDrops;
     });
@@ -59,8 +63,8 @@ const EmojiRain: React.FC<EmojiRainProps> = ({ emoji }) => {
     return {
       id,
       x: Math.random() * 100, // random horizontal position (%)
-      delay: Math.random() * 0.5,
-      duration: Math.random() * 3 + 4, // 4-7 seconds
+      delay: Math.random() * 0.3, // Reduced max delay from 0.5 to 0.3
+      duration: Math.random() * 3 + 3, // 3-6 seconds (adjusted from 4-7)
       rotation: Math.random() * 360,
       scale: Math.random() * 0.5 + 0.5, // 0.5-1
     };
@@ -83,7 +87,7 @@ const EmojiRain: React.FC<EmojiRainProps> = ({ emoji }) => {
               scale: drop.scale,
             }}
             animate={{ 
-              y: '200vh', // Increased from 120vh to 200vh to ensure it goes all the way to the bottom
+              y: '200vh', // Maintains the full height to ensure it reaches the bottom
               opacity: 0.7,
               rotate: drop.rotation + 360,
             }}
