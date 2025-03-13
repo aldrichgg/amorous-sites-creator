@@ -9,43 +9,43 @@ const Hero = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const flipWords = ["suas memórias", "seus momentos", "suas experiências"];
 
-  // Sample couple data for the tooltip
+  // Updated couple data with the new images
   const couples = [
     {
       id: 1,
       name: "João & Maria",
       designation: "Casamento",
-      image: "https://images.unsplash.com/photo-1587721865940-a8c58e27526d?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
+      image: "https://i.pinimg.com/736x/c6/e6/64/c6e6648f850b1c9db9c21cda36a47fe2.jpg",
     },
     {
       id: 2,
       name: "Ricardo & Ana",
       designation: "Noivado",
-      image: "https://images.unsplash.com/photo-1591553160972-2ea1fddce0fc?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
+      image: "https://i.pinimg.com/736x/9d/9a/fc/9d9afcfdceed0174063d48705e7da943.jpg",
     },
     {
       id: 3,
       name: "Paulo & Carla",
       designation: "Aniversário",
-      image: "https://images.unsplash.com/photo-1617551307578-7d5c5f9270e4?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
+      image: "https://i.pinimg.com/736x/ad/b1/90/adb1902601fe7a7fe2ca68c27c7ea7d5.jpg",
     },
     {
       id: 4,
       name: "Marcos & Júlia",
       designation: "Bodas de Prata",
-      image: "https://images.unsplash.com/photo-1590030699878-a5f1d6a2a2dc?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
+      image: "https://i.pinimg.com/736x/52/00/6a/52006a2bb83f89f998975b8e0458cbb2.jpg",
     },
     {
       id: 5,
       name: "Lucas & Fernanda",
       designation: "Namoro",
-      image: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
+      image: "https://i.pinimg.com/736x/0d/c4/83/0dc483669e85ee8bf59b6a8e27ae5769.jpg",
     },
     {
       id: 6,
       name: "Eduardo & Beatriz",
       designation: "Celebração",
-      image: "https://images.unsplash.com/photo-1522435229388-6f7a422e3f3b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3",
+      image: "https://i.pinimg.com/736x/42/f1/7f/42f17fd237eca1d633bf7f6eaa30ff1b.jpg",
     },
   ];
 
