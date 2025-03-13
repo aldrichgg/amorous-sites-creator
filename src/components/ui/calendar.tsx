@@ -58,8 +58,8 @@ function Calendar({
         Day: (props) => {
           // Add a heart shape for selected days
           const isSelected = props.date && 
-                          props.isSelected && 
-                          !props.isDisabled;
+                          props.selected && 
+                          !props.disabled;
           
           if (isSelected) {
             return (
