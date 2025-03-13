@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Search, Mail, ArrowRight, Check, X } from 'lucide-react';
+import { Search, Mail, ArrowRight, Check, X, Headset } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/Layout/Navbar';
 import Footer from '@/components/Layout/Footer';
@@ -14,14 +13,12 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-// Definição do esquema de validação com Zod
 const searchSchema = z.object({
   email: z.string().email({ message: 'Insira um email válido' })
 });
 
 type SearchFormValues = z.infer<typeof searchSchema>;
 
-// Mock data for memory orders
 const mockOrders = [
   {
     id: 'mem-123456',
@@ -47,7 +44,6 @@ const mockOrders = [
   }
 ];
 
-// Status badge component
 const StatusBadge = ({ status }: { status: string }) => {
   const statusConfig = {
     active: {
@@ -92,9 +88,7 @@ const SearchMemory = () => {
   const onSubmit = (values: SearchFormValues) => {
     setIsSearching(true);
     
-    // Simulate API request
     setTimeout(() => {
-      // If email is test@example.com, show results, otherwise show empty
       if (values.email === 'test@example.com') {
         setSearchResults(mockOrders);
         toast({
@@ -278,6 +272,18 @@ const SearchMemory = () => {
                 >
                   Criar Nova Memória
                 </Link>
+                <Button 
+                  onClick={() => {
+                    toast({
+                      title: "Suporte",
+                      description: "Nossa equipe de suporte foi notificada e entrará em contato em breve.",
+                    });
+                  }}
+                  className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition"
+                >
+                  <Headset className="mr-2 h-5 w-5" />
+                  Suporte
+                </Button>
               </div>
             </div>
           </div>
