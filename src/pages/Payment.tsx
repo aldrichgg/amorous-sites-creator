@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { CheckCircle2, CreditCard, ArrowRight } from 'lucide-react';
+import { CheckCircle2, CreditCard, ArrowRight, QrCode } from 'lucide-react';
 import { toast } from "sonner";
 
 import Navbar from '../components/Layout/Navbar';
@@ -10,11 +10,14 @@ import Footer from '../components/Layout/Footer';
 import StarBackground from '../components/StarBackground';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Label } from '@/components/ui/label';
 
 const Payment = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [processing, setProcessing] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<'card' | 'pix' | null>(null);
   
   // Get memory data from location state
   const memoryData = location.state?.memoryData;
@@ -25,8 +28,24 @@ const Payment = () => {
     navigate('/create');
     return null;
   }
+
+  // Get correct price based on the selected plan
+  const getPlanPrice = () => {
+    if (memoryData.selectedPlan === 'forever') {
+      return { regular: 54.00, discounted: 27.00 };
+    } else {
+      return { regular: 34.00, discounted: 17.00 };
+    }
+  };
+  
+  const price = getPlanPrice();
   
   const handleCompletePurchase = () => {
+    if (!paymentMethod) {
+      toast.error("Por favor, selecione uma forma de pagamento.");
+      return;
+    }
+    
     setProcessing(true);
     
     // Simulate payment processing
@@ -77,66 +96,141 @@ const Payment = () => {
             
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 mb-8">
               <div className="lg:col-span-3">
-                <Card className="bg-gray-900/70 border-gray-800 text-white">
+                <Card className="bg-gray-900/70 border-gray-800 text-white mb-6">
                   <CardHeader>
-                    <CardTitle>Detalhes do Pagamento</CardTitle>
+                    <CardTitle>Forma de Pagamento</CardTitle>
                     <CardDescription className="text-gray-400">
-                      Insira suas informações de pagamento
+                      Escolha como deseja pagar
                     </CardDescription>
                   </CardHeader>
-                  <CardContent className="space-y-4">
-                    {/* Simplificado para demonstração - em uma aplicação real, você teria um formulário completo */}
-                    <div className="space-y-2">
-                      <label className="text-sm text-gray-300">Número do Cartão</label>
-                      <div className="relative">
-                        <input 
-                          type="text" 
-                          placeholder="1234 5678 9012 3456" 
-                          className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-memcyan"
-                        />
-                        <CreditCard className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
+                  <CardContent>
+                    <RadioGroup 
+                      value={paymentMethod || ''} 
+                      onValueChange={(value) => setPaymentMethod(value as 'card' | 'pix')}
+                      className="space-y-4"
+                    >
+                      <div className="flex items-center space-x-2 rounded-md border border-gray-700 p-4 cursor-pointer hover:bg-gray-800/50 transition-colors">
+                        <RadioGroupItem value="card" id="card" className="text-memcyan" />
+                        <Label htmlFor="card" className="flex items-center cursor-pointer">
+                          <CreditCard className="w-5 h-5 mr-2 text-gray-400" />
+                          <span>Cartão de Crédito</span>
+                        </Label>
                       </div>
-                    </div>
-                    
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <label className="text-sm text-gray-300">Data de Validade</label>
-                        <input 
-                          type="text" 
-                          placeholder="MM/AA" 
-                          className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-memcyan"
-                        />
+                      
+                      <div className="flex items-center space-x-2 rounded-md border border-gray-700 p-4 cursor-pointer hover:bg-gray-800/50 transition-colors">
+                        <RadioGroupItem value="pix" id="pix" className="text-memcyan" />
+                        <Label htmlFor="pix" className="flex items-center cursor-pointer">
+                          <QrCode className="w-5 h-5 mr-2 text-gray-400" />
+                          <span>PIX (Apenas Brasil)</span>
+                        </Label>
                       </div>
-                      <div className="space-y-2">
-                        <label className="text-sm text-gray-300">CVV</label>
-                        <input 
-                          type="text" 
-                          placeholder="123" 
-                          className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-memcyan"
-                        />
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <label className="text-sm text-gray-300">Nome no Cartão</label>
-                      <input 
-                        type="text" 
-                        placeholder="Nome completo" 
-                        className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-memcyan"
-                      />
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <label className="text-sm text-gray-300">E-mail</label>
-                      <input 
-                        type="email" 
-                        placeholder="seu@email.com" 
-                        value={memoryData.email || ''}
-                        className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-memcyan"
-                      />
-                    </div>
+                    </RadioGroup>
                   </CardContent>
                 </Card>
+                
+                {paymentMethod === 'card' && (
+                  <Card className="bg-gray-900/70 border-gray-800 text-white">
+                    <CardHeader>
+                      <CardTitle>Detalhes do Cartão</CardTitle>
+                      <CardDescription className="text-gray-400">
+                        Insira suas informações de pagamento
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      {/* Simplificado para demonstração - em uma aplicação real, você teria um formulário completo */}
+                      <div className="space-y-2">
+                        <label className="text-sm text-gray-300">Número do Cartão</label>
+                        <div className="relative">
+                          <input 
+                            type="text" 
+                            placeholder="1234 5678 9012 3456" 
+                            className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-memcyan"
+                          />
+                          <CreditCard className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
+                        </div>
+                      </div>
+                      
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <label className="text-sm text-gray-300">Data de Validade</label>
+                          <input 
+                            type="text" 
+                            placeholder="MM/AA" 
+                            className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-memcyan"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-sm text-gray-300">CVV</label>
+                          <input 
+                            type="text" 
+                            placeholder="123" 
+                            className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-memcyan"
+                          />
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <label className="text-sm text-gray-300">Nome no Cartão</label>
+                        <input 
+                          type="text" 
+                          placeholder="Nome completo" 
+                          className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-memcyan"
+                        />
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+                
+                {paymentMethod === 'pix' && (
+                  <Card className="bg-gray-900/70 border-gray-800 text-white">
+                    <CardHeader>
+                      <CardTitle>Pagamento via PIX</CardTitle>
+                      <CardDescription className="text-gray-400">
+                        Escaneie o QR Code ou copie o código PIX
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4 flex flex-col items-center">
+                      <div className="w-48 h-48 bg-white p-4 rounded-md flex items-center justify-center">
+                        <div className="w-full h-full border-2 border-black bg-gray-100 rounded flex items-center justify-center">
+                          <QrCode className="w-32 h-32 text-black" />
+                        </div>
+                      </div>
+                      <div className="space-y-2 w-full mt-4">
+                        <label className="text-sm text-gray-300">Código PIX</label>
+                        <div className="relative">
+                          <input 
+                            type="text" 
+                            value="00020126330014BR.GOV.BCB.PIX0111EXAMPLE1234520400005303986540527.005802BR5915MEMORY ETERNAL6009SAO PAULO62150511MEMORY12345"
+                            readOnly
+                            className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-memcyan text-xs"
+                          />
+                          <button 
+                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+                            onClick={() => {
+                              navigator.clipboard.writeText("00020126330014BR.GOV.BCB.PIX0111EXAMPLE1234520400005303986540527.005802BR5915MEMORY ETERNAL6009SAO PAULO62150511MEMORY12345");
+                              toast.success("Código PIX copiado!");
+                            }}
+                          >
+                            Copiar
+                          </button>
+                        </div>
+                      </div>
+                      <div className="text-yellow-400 mt-4 text-sm text-center">
+                        Após realizar o pagamento, você receberá um e-mail com o link para sua memória.
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+                
+                <div className="space-y-2 mt-6">
+                  <label className="text-sm text-gray-300">E-mail para receber a confirmação</label>
+                  <input 
+                    type="email" 
+                    placeholder="seu@email.com" 
+                    defaultValue={memoryData.email || ''}
+                    className="w-full bg-gray-800 border border-gray-700 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-memcyan"
+                  />
+                </div>
               </div>
               
               <div className="lg:col-span-2">
@@ -163,9 +257,17 @@ const Payment = () => {
                       <div className="pt-4 border-t border-gray-700">
                         <div className="flex justify-between text-lg font-bold">
                           <span>Total:</span>
-                          <span className="text-memcyan">
-                            {memoryData.selectedPlan === 'forever' ? 'R$ 99,90' : 'R$ 9,90/mês'}
-                          </span>
+                          <div className="text-right">
+                            <span className="text-red-500 line-through block text-sm">
+                              R$ {price.regular.toFixed(2).replace('.', ',')}
+                            </span>
+                            <span className="text-memcyan">
+                              R$ {price.discounted.toFixed(2).replace('.', ',')}
+                              <span className="text-xs text-gray-400 ml-1">
+                                {memoryData.selectedPlan === 'forever' ? '(uma vez)' : '(por ano)'}
+                              </span>
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -173,8 +275,10 @@ const Payment = () => {
                   <CardFooter>
                     <Button 
                       onClick={handleCompletePurchase}
-                      disabled={processing}
-                      className="w-full bg-gradient-to-r from-memblue to-memcyan hover:from-memblue-dark hover:to-memcyan-dark text-white py-6 rounded-lg"
+                      disabled={processing || !paymentMethod}
+                      className={`w-full bg-gradient-to-r from-memblue to-memcyan hover:from-memblue-dark hover:to-memcyan-dark text-white py-6 rounded-lg ${
+                        !paymentMethod && 'opacity-70 cursor-not-allowed hover:from-memblue hover:to-memcyan'
+                      }`}
                     >
                       {processing ? (
                         <div className="flex items-center">
