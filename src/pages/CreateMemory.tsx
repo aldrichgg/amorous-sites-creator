@@ -104,7 +104,8 @@ const CreateMemory: React.FC = () => {
       onTitleChange={setPageName} 
       label="Nome da página" 
       description="Escreva o nome da página (Usado no link para acessar). Ex: Gabriel & Clara ou Feliz Aniversário ou etc!" 
-      placeholder="Escreva o nome da página (Usado no link para acessar)" 
+      placeholder="Escreva o nome da página (Usado no link para acessar)"
+      checkAvailability={true}
     />,
     <EmailInput 
       email={email} 

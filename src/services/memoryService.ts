@@ -1,4 +1,3 @@
-
 import { supabase } from '@/integrations/supabase/client';
 import { Memory, MemoryPhoto } from '@/types/memory';
 import { v4 as uuidv4 } from 'uuid';
@@ -127,6 +126,38 @@ export const getMemoryByPageName = async (pageName: string): Promise<{ memory: M
   } catch (error) {
     console.error('Error in getMemoryByPageName:', error);
     return { memory: null, photos: [] };
+  }
+};
+
+// Check if a page name is available
+export const checkPageNameAvailability = async (pageName: string): Promise<boolean> => {
+  try {
+    // Format the page name (convert to lowercase, remove spaces, etc.)
+    const formattedPageName = pageName
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remove accents
+      .replace(/\s+/g, '-') // Replace spaces with hyphens
+      .replace(/[^\w-]+/g, ''); // Remove non-alphanumeric characters
+    
+    if (!formattedPageName) return false;
+    
+    // Check if there's already a memory with this page name
+    const { data, error } = await supabase
+      .from('memories')
+      .select('id')
+      .eq('page_name', formattedPageName)
+      .single();
+    
+    if (error && error.code === 'PGRST116') {
+      // Error code PGRST116 means no rows returned, which means name is available
+      return true;
+    }
+    
+    // If we got data, the name is taken
+    return !data;
+  } catch (error) {
+    console.error('Error checking page name availability:', error);
+    return false;
   }
 };
 
