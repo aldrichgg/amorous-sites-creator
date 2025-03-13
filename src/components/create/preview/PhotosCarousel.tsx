@@ -60,7 +60,7 @@ const PhotosCarousel: React.FC<PhotosCarouselProps> = ({ photos }) => {
                 <img 
                   src={photo} 
                   alt={`Memory photo ${index + 1}`} 
-                  className="w-full h-full object-contain border-2 border-gray-400/40 rounded-md"
+                  className="w-full h-full object-contain border border-gray-400/40 rounded-lg"
                 />
               </div>
             </CarouselItem>
@@ -74,23 +74,6 @@ const PhotosCarousel: React.FC<PhotosCarouselProps> = ({ photos }) => {
           </>
         )}
       </Carousel>
-      
-      {photos.length > 1 && (
-        <div className="flex justify-center mt-2 space-x-1">
-          {photos.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => emblaApi && emblaApi.scrollTo(index)}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                index === currentIndex 
-                  ? 'bg-memcyan w-3 h-3' 
-                  : 'bg-gray-500 opacity-60 hover:opacity-100'
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
-        </div>
-      )}
     </div>
   );
 };
