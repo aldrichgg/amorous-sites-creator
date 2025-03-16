@@ -34,7 +34,7 @@ const App = () => (
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/create" element={<CreateMemory />} />
           <Route path="/search" element={<SearchMemory />} />
-          <Route path="/memory/:memoryId" element={<MemoryDisplay />} />
+          <Route path="/memoria/:memoryId" element={<MemoryDisplay />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
