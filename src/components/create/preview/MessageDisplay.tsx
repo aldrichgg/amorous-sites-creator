@@ -1,5 +1,6 @@
 
 import React from 'react';
+import DOMPurify from 'dompurify';
 
 interface MessageDisplayProps {
   message: string;
@@ -8,9 +9,16 @@ interface MessageDisplayProps {
 const MessageDisplay: React.FC<MessageDisplayProps> = ({ message }) => {
   if (!message) return null;
   
+  const createMarkup = (html: string) => {
+    return { __html: DOMPurify.sanitize(html) };
+  };
+  
   return (
-    <div className="backdrop-blur-sm bg-white/5 border border-white/10 p-4 rounded-lg text-white text-sm mb-4 shadow-sm">
-      <p className="whitespace-pre-line">{message}</p>
+    <div className="backdrop-blur-sm bg-black/30 dark:bg-white/10 border border-white/10 p-4 rounded-lg text-white text-sm mb-4 shadow-sm">
+      <div 
+        className="whitespace-pre-line text-white dark:text-white"
+        dangerouslySetInnerHTML={createMarkup(message)}
+      />
     </div>
   );
 };
