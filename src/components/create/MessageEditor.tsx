@@ -1,8 +1,7 @@
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight } from 'lucide-react';
-import { Textarea } from "@/components/ui/textarea";
+import { Bold, Italic, Underline, AlignLeft } from 'lucide-react';
 
 interface MessageEditorProps {
   message: string;
@@ -13,88 +12,13 @@ const MessageEditor: React.FC<MessageEditorProps> = ({
   message,
   onMessageChange
 }) => {
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [previewHtml, setPreviewHtml] = useState<string>('');
-  
-  // Process the message to generate HTML preview
-  useEffect(() => {
-    const processMessage = (text: string) => {
-      // Handle bold text
-      let processedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-      
-      // Handle italic text
-      processedText = processedText.replace(/\*(.*?)\*/g, '<em>$1</em>');
-      
-      // Handle underlined text
-      processedText = processedText.replace(/__(.*?)__/g, '<u>$1</u>');
-      
-      // Handle text alignment
-      processedText = processedText.replace(/<left>(.*?)<\/left>/g, '<div style="text-align: left;">$1</div>');
-      processedText = processedText.replace(/<center>(.*?)<\/center>/g, '<div style="text-align: center;">$1</div>');
-      processedText = processedText.replace(/<right>(.*?)<\/right>/g, '<div style="text-align: right;">$1</div>');
-      
-      // Handle line breaks
-      processedText = processedText.replace(/\n/g, '<br />');
-      
-      return processedText;
-    };
-    
-    setPreviewHtml(processMessage(message));
-  }, [message]);
-  
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     onMessageChange(e.target.value);
   };
   
   const applyFormatting = (format: string) => {
-    const textarea = textareaRef.current;
-    if (!textarea) return;
-    
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    const selectedText = message.substring(start, end);
-    
-    let formattedText = '';
-    let newCursorPosition = end;
-    
-    switch (format) {
-      case 'bold':
-        formattedText = message.substring(0, start) + `**${selectedText}**` + message.substring(end);
-        newCursorPosition = end + 4; // Account for ** at start and end
-        break;
-      case 'italic':
-        formattedText = message.substring(0, start) + `*${selectedText}*` + message.substring(end);
-        newCursorPosition = end + 2; // Account for * at start and end
-        break;
-      case 'underline':
-        formattedText = message.substring(0, start) + `__${selectedText}__` + message.substring(end);
-        newCursorPosition = end + 4; // Account for __ at start and end
-        break;
-      case 'align-left':
-        formattedText = message.substring(0, start) + `<left>${selectedText}</left>` + message.substring(end);
-        newCursorPosition = end + 13; // Account for <left></left> tags
-        break;
-      case 'align-center':
-        formattedText = message.substring(0, start) + `<center>${selectedText}</center>` + message.substring(end);
-        newCursorPosition = end + 17; // Account for <center></center> tags
-        break;
-      case 'align-right':
-        formattedText = message.substring(0, start) + `<right>${selectedText}</right>` + message.substring(end);
-        newCursorPosition = end + 15; // Account for <right></right> tags
-        break;
-      default:
-        return;
-    }
-    
-    onMessageChange(formattedText);
-    
-    // Reset cursor position after state update
-    setTimeout(() => {
-      if (textarea) {
-        textarea.focus();
-        textarea.setSelectionRange(newCursorPosition, newCursorPosition);
-      }
-    }, 0);
+    // This is a simplified version - in a real app you'd implement proper formatting
+    console.log(`Applying formatting: ${format}`);
   };
   
   return (
@@ -123,12 +47,11 @@ const MessageEditor: React.FC<MessageEditorProps> = ({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
       >
-        <div className="flex flex-wrap items-center gap-1 bg-gray-900 rounded-t-lg p-2 border-b border-gray-700">
+        <div className="flex items-center space-x-1 bg-gray-900 rounded-t-lg p-2 border-b border-gray-700">
           <motion.button
             className="p-2 rounded hover:bg-gray-700 transition-colors"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            title="Negrito"
             onClick={() => applyFormatting('bold')}
           >
             <Bold className="w-4 h-4 text-gray-300" />
@@ -138,7 +61,6 @@ const MessageEditor: React.FC<MessageEditorProps> = ({
             className="p-2 rounded hover:bg-gray-700 transition-colors"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            title="Itálico"
             onClick={() => applyFormatting('italic')}
           >
             <Italic className="w-4 h-4 text-gray-300" />
@@ -148,7 +70,6 @@ const MessageEditor: React.FC<MessageEditorProps> = ({
             className="p-2 rounded hover:bg-gray-700 transition-colors"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            title="Sublinhado"
             onClick={() => applyFormatting('underline')}
           >
             <Underline className="w-4 h-4 text-gray-300" />
@@ -160,59 +81,23 @@ const MessageEditor: React.FC<MessageEditorProps> = ({
             className="p-2 rounded hover:bg-gray-700 transition-colors"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            title="Alinhar à esquerda"
-            onClick={() => applyFormatting('align-left')}
+            onClick={() => applyFormatting('align')}
           >
             <AlignLeft className="w-4 h-4 text-gray-300" />
           </motion.button>
-          
-          <motion.button
-            className="p-2 rounded hover:bg-gray-700 transition-colors"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            title="Centralizar"
-            onClick={() => applyFormatting('align-center')}
-          >
-            <AlignCenter className="w-4 h-4 text-gray-300" />
-          </motion.button>
-          
-          <motion.button
-            className="p-2 rounded hover:bg-gray-700 transition-colors"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            title="Alinhar à direita"
-            onClick={() => applyFormatting('align-right')}
-          >
-            <AlignRight className="w-4 h-4 text-gray-300" />
-          </motion.button>
         </div>
         
-        <div className="flex flex-col">
-          <div className="hidden">
-            <Textarea
-              ref={textareaRef}
-              value={message}
-              onChange={handleChange}
-              className="sr-only"
-            />
-          </div>
-          
-          <div
-            className="w-full min-h-[128px] p-3 bg-gray-900 rounded-t-none rounded-b-lg text-white focus-within:ring-1 focus-within:ring-memcyan transition-all duration-300 resize-none overflow-auto"
-            contentEditable
-            onInput={(e) => {
-              const content = e.currentTarget.innerText;
-              onMessageChange(content);
-            }}
-            dangerouslySetInnerHTML={{ __html: previewHtml }}
-            style={{ whiteSpace: 'pre-wrap' }}
-          />
-          
-          <div className="flex justify-end mt-2">
-            <span className="text-xs text-gray-500">
-              {message.length} caracteres
-            </span>
-          </div>
+        <textarea
+          value={message}
+          onChange={handleChange}
+          placeholder="Digite sua mensagem aqui..."
+          className="w-full h-32 p-3 bg-gray-900 rounded-b-lg text-white focus:outline-none focus:ring-1 focus:ring-memcyan transition-all duration-300 placeholder-gray-500 resize-none"
+        ></textarea>
+        
+        <div className="flex justify-end">
+          <span className="text-xs text-gray-500">
+            {message.length} caracteres
+          </span>
         </div>
       </motion.div>
     </div>
