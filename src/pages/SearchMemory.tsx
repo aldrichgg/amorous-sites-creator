@@ -1,7 +1,8 @@
+
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Mail, ArrowRight, Check, X, Headset } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Layout/Navbar';
 import Footer from '@/components/Layout/Footer';
 import { Input } from '@/components/ui/input';
@@ -12,6 +13,10 @@ import { useToast } from '@/components/ui/use-toast';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { getMemoriesByEmail } from '@/services/memoryService';
+import { Memory, MemoryPhoto } from '@/types/memory';
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 const searchSchema = z.object({
   email: z.string().email({ message: 'Insira um email válido' })
@@ -19,30 +24,9 @@ const searchSchema = z.object({
 
 type SearchFormValues = z.infer<typeof searchSchema>;
 
-const mockOrders = [
-  {
-    id: 'mem-123456',
-    title: 'Aniversário de Namoro',
-    date: '2023-06-15',
-    status: 'active',
-    url: '/memoria/aniversario-namoro',
-    previewImage: '/lovable-uploads/015a78b5-c0a0-435b-b89d-a831f5d038e0.png'
-  },
-  {
-    id: 'mem-789012',
-    title: 'Casamento João e Maria',
-    date: '2023-12-10',
-    status: 'processing',
-    previewImage: '/lovable-uploads/80317196-0422-4e31-a5e9-7dd628dccea3.png'
-  },
-  {
-    id: 'mem-345678',
-    title: 'Aniversário de 1 ano',
-    date: '2023-09-22',
-    status: 'expired',
-    previewImage: '/lovable-uploads/d25b6ba1-8d8c-4842-9cc4-74142010deb2.png'
-  }
-];
+interface MemoryWithPreviewPhoto extends Memory {
+  previewPhoto?: string;
+}
 
 const StatusBadge = ({ status }: { status: string }) => {
   const statusConfig = {
@@ -75,7 +59,8 @@ const StatusBadge = ({ status }: { status: string }) => {
 
 const SearchMemory = () => {
   const { toast } = useToast();
-  const [searchResults, setSearchResults] = useState<typeof mockOrders | null>(null);
+  const navigate = useNavigate();
+  const [searchResults, setSearchResults] = useState<MemoryWithPreviewPhoto[] | null>(null);
   const [isSearching, setIsSearching] = useState(false);
 
   const form = useForm<SearchFormValues>({
@@ -85,15 +70,27 @@ const SearchMemory = () => {
     }
   });
 
-  const onSubmit = (values: SearchFormValues) => {
+  const onSubmit = async (values: SearchFormValues) => {
     setIsSearching(true);
     
-    setTimeout(() => {
-      if (values.email === 'test@example.com') {
-        setSearchResults(mockOrders);
+    try {
+      const { memories, photos } = await getMemoriesByEmail(values.email);
+      
+      if (memories.length > 0) {
+        // Add preview photo to each memory
+        const memoriesWithPreview = memories.map(memory => {
+          const memoryPhotos = photos[memory.id] || [];
+          return {
+            ...memory,
+            previewPhoto: memoryPhotos.length > 0 ? memoryPhotos[0].photoUrl : '/placeholder.svg',
+            status: 'active' // We can refine this logic later if needed
+          };
+        });
+        
+        setSearchResults(memoriesWithPreview);
         toast({
           title: "Memórias encontradas",
-          description: "Encontramos as memórias associadas ao seu email.",
+          description: `Encontramos ${memories.length} memória(s) associada(s) ao seu email.`,
         });
       } else {
         setSearchResults([]);
@@ -103,8 +100,21 @@ const SearchMemory = () => {
           variant: "destructive"
         });
       }
+    } catch (error) {
+      console.error('Error searching memories:', error);
+      toast({
+        title: "Erro na busca",
+        description: "Ocorreu um erro ao buscar suas memórias. Tente novamente.",
+        variant: "destructive"
+      });
+      setSearchResults([]);
+    } finally {
       setIsSearching(false);
-    }, 1500);
+    }
+  };
+
+  const handleViewMemory = (pageName: string) => {
+    navigate(`/memoria/${pageName}`);
   };
 
   return (
@@ -210,45 +220,38 @@ const SearchMemory = () => {
                 </Card>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {searchResults.map(order => (
-                    <Card key={order.id} className="bg-gray-900 border-gray-800 overflow-hidden transition-all duration-300 hover:border-memred/40 hover:shadow-[0_0_15px_rgba(255,0,0,0.15)]">
+                  {searchResults.map(memory => (
+                    <Card key={memory.id} className="bg-gray-900 border-gray-800 overflow-hidden transition-all duration-300 hover:border-memred/40 hover:shadow-[0_0_15px_rgba(255,0,0,0.15)]">
                       <div className="aspect-video relative overflow-hidden">
                         <img 
-                          src={order.previewImage} 
-                          alt={order.title} 
+                          src={memory.previewPhoto} 
+                          alt={memory.pageTitle} 
                           className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
                         />
                         <div className="absolute top-2 right-2">
-                          <StatusBadge status={order.status} />
+                          <StatusBadge status="active" />
                         </div>
                       </div>
                       <CardHeader className="pb-2">
-                        <CardTitle>{order.title}</CardTitle>
+                        <CardTitle>{memory.pageTitle}</CardTitle>
                         <CardDescription className="text-gray-400">
-                          Criado em {new Date(order.date).toLocaleDateString('pt-BR')}
+                          Criado em {format(memory.createdAt, 'dd/MM/yyyy', { locale: ptBR })}
                         </CardDescription>
                       </CardHeader>
                       <CardFooter className="pt-0 flex justify-between">
-                        <span className="text-xs text-gray-400">ID: {order.id}</span>
-                        {order.url && order.status === 'active' ? (
-                          <Link 
-                            to={order.url} 
-                            className="text-memred-light hover:text-memred hover:underline text-sm flex items-center"
-                          >
-                            Ver memória <ArrowRight className="ml-1 h-3 w-3" />
-                          </Link>
-                        ) : (
-                          <span className="text-gray-500 text-sm">Indisponível</span>
-                        )}
+                        <span className="text-xs text-gray-400">ID: {memory.id.substring(0, 8)}...</span>
+                        <Button 
+                          variant="link" 
+                          className="text-memred-light hover:text-memred p-0 h-auto text-sm flex items-center"
+                          onClick={() => handleViewMemory(memory.pageName)}
+                        >
+                          Ver memória <ArrowRight className="ml-1 h-3 w-3" />
+                        </Button>
                       </CardFooter>
                     </Card>
                   ))}
                 </div>
               )}
-              
-              <p className="text-gray-400 text-sm mt-6 text-center">
-                Dica: Para esta demonstração, use o email <span className="text-memred-light">test@example.com</span> para ver resultados.
-              </p>
             </motion.div>
           )}
           

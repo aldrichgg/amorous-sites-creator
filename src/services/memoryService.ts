@@ -177,3 +177,64 @@ const mapDatabaseToMemory = (data: any): Memory => {
     createdAt: new Date(data.created_at)
   };
 };
+
+// Get all memories by email
+export const getMemoriesByEmail = async (email: string): Promise<{ memories: Memory[], photos: Record<string, MemoryPhoto[]> }> => {
+  try {
+    // Get all memories for the email
+    const { data: memoriesData, error: memoriesError } = await supabase
+      .from('memories')
+      .select('*')
+      .eq('email', email)
+      .order('created_at', { ascending: false });
+
+    if (memoriesError) {
+      console.error('Error fetching memories by email:', memoriesError);
+      return { memories: [], photos: {} };
+    }
+
+    if (!memoriesData || memoriesData.length === 0) {
+      return { memories: [], photos: {} };
+    }
+
+    // Map database records to Memory objects
+    const memories = memoriesData.map(mapDatabaseToMemory);
+    
+    // Get the memory IDs
+    const memoryIds = memories.map(memory => memory.id);
+    
+    // Get photos for all memories
+    const { data: photosData, error: photosError } = await supabase
+      .from('memory_photos')
+      .select('*')
+      .in('memory_id', memoryIds);
+    
+    if (photosError) {
+      console.error('Error fetching photos for memories:', photosError);
+      return { memories, photos: {} };
+    }
+    
+    // Organize photos by memory ID
+    const photos: Record<string, MemoryPhoto[]> = {};
+    
+    if (photosData) {
+      photosData.forEach(photo => {
+        if (!photos[photo.memory_id]) {
+          photos[photo.memory_id] = [];
+        }
+        
+        photos[photo.memory_id].push({
+          id: photo.id,
+          memoryId: photo.memory_id,
+          photoUrl: photo.photo_url,
+          createdAt: new Date(photo.created_at)
+        });
+      });
+    }
+    
+    return { memories, photos };
+  } catch (error) {
+    console.error('Error in getMemoriesByEmail:', error);
+    return { memories: [], photos: {} };
+  }
+};
