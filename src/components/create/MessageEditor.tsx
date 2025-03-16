@@ -1,5 +1,5 @@
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Bold, Italic, Underline, AlignLeft, AlignCenter, AlignRight } from 'lucide-react';
 import { Textarea } from "@/components/ui/textarea";
@@ -14,6 +14,33 @@ const MessageEditor: React.FC<MessageEditorProps> = ({
   onMessageChange
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [previewHtml, setPreviewHtml] = useState<string>('');
+  
+  // Process the message to generate HTML preview
+  useEffect(() => {
+    const processMessage = (text: string) => {
+      // Handle bold text
+      let processedText = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      
+      // Handle italic text
+      processedText = processedText.replace(/\*(.*?)\*/g, '<em>$1</em>');
+      
+      // Handle underlined text
+      processedText = processedText.replace(/__(.*?)__/g, '<u>$1</u>');
+      
+      // Handle text alignment
+      processedText = processedText.replace(/<left>(.*?)<\/left>/g, '<div style="text-align: left;">$1</div>');
+      processedText = processedText.replace(/<center>(.*?)<\/center>/g, '<div style="text-align: center;">$1</div>');
+      processedText = processedText.replace(/<right>(.*?)<\/right>/g, '<div style="text-align: right;">$1</div>');
+      
+      // Handle line breaks
+      processedText = processedText.replace(/\n/g, '<br />');
+      
+      return processedText;
+    };
+    
+    setPreviewHtml(processMessage(message));
+  }, [message]);
   
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     onMessageChange(e.target.value);
@@ -160,18 +187,32 @@ const MessageEditor: React.FC<MessageEditorProps> = ({
           </motion.button>
         </div>
         
-        <Textarea
-          ref={textareaRef}
-          value={message}
-          onChange={handleChange}
-          placeholder="Digite sua mensagem aqui..."
-          className="w-full h-32 p-3 bg-gray-900 rounded-b-lg text-white focus:outline-none focus:ring-1 focus:ring-memcyan transition-all duration-300 placeholder-gray-500 resize-none"
-        />
-        
-        <div className="flex justify-end">
-          <span className="text-xs text-gray-500">
-            {message.length} caracteres
-          </span>
+        <div className="flex flex-col">
+          <div className="hidden">
+            <Textarea
+              ref={textareaRef}
+              value={message}
+              onChange={handleChange}
+              className="sr-only"
+            />
+          </div>
+          
+          <div
+            className="w-full min-h-[128px] p-3 bg-gray-900 rounded-t-none rounded-b-lg text-white focus-within:ring-1 focus-within:ring-memcyan transition-all duration-300 resize-none overflow-auto"
+            contentEditable
+            onInput={(e) => {
+              const content = e.currentTarget.innerText;
+              onMessageChange(content);
+            }}
+            dangerouslySetInnerHTML={{ __html: previewHtml }}
+            style={{ whiteSpace: 'pre-wrap' }}
+          />
+          
+          <div className="flex justify-end mt-2">
+            <span className="text-xs text-gray-500">
+              {message.length} caracteres
+            </span>
+          </div>
         </div>
       </motion.div>
     </div>

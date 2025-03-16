@@ -33,7 +33,7 @@ const MessageDisplay: React.FC<MessageDisplayProps> = ({ message }) => {
   return (
     <div className="backdrop-blur-sm bg-black/30 dark:bg-black/50 border border-white/10 p-4 rounded-lg text-white text-sm mb-4 shadow-sm">
       <div 
-        className="whitespace-pre-line"
+        className="whitespace-pre-line text-white dark:text-white"
         dangerouslySetInnerHTML={{ __html: processMessage(message) }}
       />
     </div>
