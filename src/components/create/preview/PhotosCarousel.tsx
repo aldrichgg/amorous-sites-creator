@@ -9,7 +9,6 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import useEmblaCarousel from 'embla-carousel-react';
-import { EmblaCarouselType } from 'embla-carousel';
 import {
   Dialog,
   DialogContent,
@@ -32,7 +31,7 @@ const PhotosCarousel: React.FC<PhotosCarouselProps> = ({ photos }) => {
   }, [photos]);
 
   // Setup autoplay functionality
-  const autoplay = useCallback(() => {
+  useEffect(() => {
     if (!emblaApi || !autoplayEnabled) return;
     
     const autoplayInterval = setInterval(() => {
@@ -41,20 +40,12 @@ const PhotosCarousel: React.FC<PhotosCarouselProps> = ({ photos }) => {
       } else {
         emblaApi.scrollNext();
       }
-    }, 3000); // Change slide every 3 seconds
+    }, 3500); // Change slide every 3.5 seconds
     
     return () => {
       clearInterval(autoplayInterval);
     };
   }, [emblaApi, autoplayEnabled]);
-
-  // Start autoplay when component mounts or when emblaApi changes
-  useEffect(() => {
-    const cleanup = autoplay();
-    return () => {
-      if (cleanup) cleanup();
-    };
-  }, [emblaApi, autoplay]);
 
   // Update the current index when the carousel slides
   useEffect(() => {

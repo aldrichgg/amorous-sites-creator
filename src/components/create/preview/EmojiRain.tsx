@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -21,7 +22,7 @@ const EmojiRain: React.FC<EmojiRainProps> = ({ emoji }) => {
     // Create initial set of drops
     createDrops();
     
-    // Create new drops more frequently (changed from 800ms to 400ms)
+    // Create new drops more frequently
     const interval = setInterval(() => {
       createAdditionalDrop();
     }, 400);
@@ -31,7 +32,7 @@ const EmojiRain: React.FC<EmojiRainProps> = ({ emoji }) => {
   
   const createDrops = () => {
     const initialDrops: EmojiDrop[] = [];
-    const count = Math.floor(Math.random() * 5) + 8; // 8-12 drops initially (increased from 5-7)
+    const count = Math.floor(Math.random() * 5) + 8; // 8-12 drops initially
     
     for (let i = 0; i < count; i++) {
       initialDrops.push(createDrop(i));
@@ -52,7 +53,7 @@ const EmojiRain: React.FC<EmojiRainProps> = ({ emoji }) => {
       
       // Keep the array at a reasonable size by removing old drops
       const updatedDrops = [...prevDrops, ...newDrops];
-      if (updatedDrops.length > 30) { // Increased max drops from 20 to 30
+      if (updatedDrops.length > 30) {
         return updatedDrops.slice(-30);
       }
       return updatedDrops;
@@ -63,15 +64,15 @@ const EmojiRain: React.FC<EmojiRainProps> = ({ emoji }) => {
     return {
       id,
       x: Math.random() * 100, // random horizontal position (%)
-      delay: Math.random() * 0.3, // Reduced max delay from 0.5 to 0.3
-      duration: Math.random() * 3 + 3, // 3-6 seconds (adjusted from 4-7)
+      delay: Math.random() * 0.3,
+      duration: Math.random() * 3 + 3, // 3-6 seconds
       rotation: Math.random() * 360,
       scale: Math.random() * 0.5 + 0.5, // 0.5-1
     };
   };
   
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none z-10">
+    <div className="fixed inset-0 overflow-hidden pointer-events-none z-10 h-full">
       <AnimatePresence>
         {drops.map((drop) => (
           <motion.div
