@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { X, Cookie } from 'lucide-react';
+import { X, Cookie, Check } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
@@ -56,8 +56,9 @@ const CookieConsent = () => {
               <Button 
                 size="sm" 
                 onClick={acceptCookies} 
-                className="text-xs bg-memcyan hover:bg-memcyan/80 text-black"
+                className="text-xs bg-green-500 hover:bg-green-600 text-white flex items-center gap-1"
               >
+                <Check size={14} />
                 Aceitar
               </Button>
             </div>
