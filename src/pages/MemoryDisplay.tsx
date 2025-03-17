@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -19,6 +20,7 @@ import {
 } from "@/components/ui/dialog";
 import { getMemoryByPageName } from '@/services/memoryService';
 import { Memory, MemoryPhoto } from '@/types/memory';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const MemoryDisplay = () => {
   const { memoryId } = useParams();
@@ -28,6 +30,7 @@ const MemoryDisplay = () => {
   const [photos, setPhotos] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const fetchMemory = async () => {
@@ -110,15 +113,15 @@ const MemoryDisplay = () => {
             </div>
           </div>
         ) : memoryData && (
-          <main className="container mx-auto px-4 py-12 relative z-10 min-h-screen flex flex-col">
+          <main className="container mx-auto px-4 py-6 md:py-12 relative z-10 min-h-screen flex flex-col">
             <div className="max-w-3xl mx-auto w-full flex-grow">
               <motion.div 
-                className="text-center mb-8"
+                className="text-center mb-6 md:mb-8"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2 font-script bg-gradient-to-r from-purple-300 to-pink-200 bg-clip-text text-transparent">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2 font-script bg-gradient-to-r from-purple-300 to-pink-200 bg-clip-text text-transparent">
                   {memoryData.pageTitle}
                 </h1>
               </motion.div>
@@ -128,16 +131,16 @@ const MemoryDisplay = () => {
               )}
               
               <motion.div 
-                className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl overflow-hidden mb-8 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.5)]"
+                className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl overflow-hidden mb-6 md:mb-8 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.5)]"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
                 {memoryData.selectedPlan === 'forever' && memoryData.spotifyTrackId && (
-                  <div className="px-4 pt-6 pb-2">
+                  <div className="px-3 md:px-4 pt-4 md:pt-6 pb-2">
                     <div className="flex items-center justify-center gap-2 mb-2 text-purple-300">
-                      <Music className="w-5 h-5" />
-                      <h2 className="text-xl font-medium">Música</h2>
+                      <Music className="w-4 h-4 md:w-5 md:h-5" />
+                      <h2 className="text-lg md:text-xl font-medium">Música</h2>
                     </div>
                     <SpotifyPlayer 
                       spotifyTrackId={memoryData.spotifyTrackId} 
@@ -147,44 +150,44 @@ const MemoryDisplay = () => {
                 )}
                 
                 {photos && photos.length > 0 && (
-                  <div className="p-4">
+                  <div className="p-3 md:p-4">
                     <PhotosCarousel photos={photos} />
                   </div>
                 )}
                 
-                <div className="px-4 pt-2 pb-2 text-center">
-                  <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-200 to-pink-100 bg-clip-text text-transparent">
+                <div className="px-3 md:px-4 pt-2 pb-2 text-center">
+                  <h2 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-purple-200 to-pink-100 bg-clip-text text-transparent">
                     {memoryData.pageTitle}
                   </h2>
                 </div>
                 
-                <div className="px-4 py-2 text-center">
+                <div className="px-3 md:px-4 py-2 text-center">
                   <div className="flex items-center justify-center gap-2 mb-2 text-purple-300">
-                    <Calendar className="w-5 h-5" />
-                    <h2 className="text-xl font-medium">Contador de Tempo</h2>
+                    <Calendar className="w-4 h-4 md:w-5 md:h-5" />
+                    <h2 className="text-lg md:text-xl font-medium">Contador de Tempo</h2>
                   </div>
                   <DateCounter startDate={memoryData.startDate} />
                 </div>
                 
-                <div className="px-8 py-2">
+                <div className="px-4 md:px-8 py-2">
                   <Separator className="bg-purple-400/30" />
                 </div>
                 
                 {memoryData.message && (
-                  <div className="px-4 py-4">
+                  <div className="px-3 md:px-4 py-3 md:py-4">
                     <div className="flex items-center justify-center gap-2 mb-2 text-purple-300">
-                      <Heart className="w-5 h-5" />
-                      <h2 className="text-xl font-medium">Mensagem</h2>
+                      <Heart className="w-4 h-4 md:w-5 md:h-5" />
+                      <h2 className="text-lg md:text-xl font-medium">Mensagem</h2>
                     </div>
                     <MessageDisplay message={memoryData.message} />
                   </div>
                 )}
                 
                 {photos && photos.length > 1 && (
-                  <div className="px-4 pb-6">
+                  <div className="px-3 md:px-4 pb-4 md:pb-6">
                     <div className="flex items-center justify-center gap-2 mb-2 text-purple-300">
-                      <Camera className="w-5 h-5" />
-                      <h2 className="text-xl font-medium">Álbum de fotos</h2>
+                      <Camera className="w-4 h-4 md:w-5 md:h-5" />
+                      <h2 className="text-lg md:text-xl font-medium">Álbum de fotos</h2>
                     </div>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                       {photos.map((photo: string, index: number) => (
@@ -206,22 +209,23 @@ const MemoryDisplay = () => {
               </motion.div>
               
               <motion.div 
-                className="flex justify-center mb-12"
+                className="flex justify-center mb-8 md:mb-12"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
               >
                 <Button 
                   onClick={handleShare}
-                  className="bg-gradient-to-r from-indigo-500 to-purple-500 hover:shadow-lg hover:opacity-90 text-white py-3 px-6 rounded-full flex items-center gap-2 shadow-[0_4px_12px_-2px_rgba(0,0,0,0.3)]"
+                  className="bg-gradient-to-r from-indigo-500 to-purple-500 hover:shadow-lg hover:opacity-90 text-white py-2 md:py-3 px-4 md:px-6 rounded-full flex items-center gap-2 shadow-[0_4px_12px_-2px_rgba(0,0,0,0.3)]"
+                  size={isMobile ? "sm" : "default"}
                 >
-                  <Share2 className="w-5 h-5" />
+                  <Share2 className="w-4 h-4 md:w-5 md:h-5" />
                   Compartilhar Esta Memória
                 </Button>
               </motion.div>
               
               <motion.div 
-                className="text-center text-sm text-gray-400 mb-4"
+                className="text-center text-xs md:text-sm text-gray-400 mb-4"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6 }}

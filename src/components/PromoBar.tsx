@@ -23,7 +23,7 @@ const PromoBar = () => {
   }, []);
   
   // Check if current path is Payment or Memory Display page
-  const hideOnPaths = ['/payment', '/memory'];
+  const hideOnPaths = ['/payment', '/memoria'];
   const shouldHidePromo = hideOnPaths.some(path => location.pathname.startsWith(path));
   
   // If we're on a page where the promo should be hidden, don't render it at all

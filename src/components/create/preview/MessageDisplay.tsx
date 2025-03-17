@@ -14,9 +14,9 @@ const MessageDisplay: React.FC<MessageDisplayProps> = ({ message }) => {
   };
   
   return (
-    <div className="backdrop-blur-sm bg-black/30 dark:bg-white/10 border border-white/10 p-4 rounded-lg text-white text-sm mb-4 shadow-sm">
+    <div className="backdrop-blur-sm bg-black/30 dark:bg-white/10 border border-white/10 p-4 rounded-lg text-white mb-4 shadow-sm">
       <div 
-        className="whitespace-pre-line text-white dark:text-white"
+        className="whitespace-pre-line text-white"
         dangerouslySetInnerHTML={createMarkup(message)}
       />
     </div>
